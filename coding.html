@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Python Coding Challenges — Easy, Medium and Hard interview problems with solutions, complexity analysis and follow-up questions." />
+  <title>Coding Challenges — PyPrep Pro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Page Hero ─────────────────────────────────────── */
+    .page-hero {
+      padding: calc(var(--nav-height) + 48px) 0 48px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-glass);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -60px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,179,71,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero__inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    }
+
+    /* ── Layout ────────────────────────────────────────── */
+    .coding-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 40px 0 80px;
+    }
+
+    /* ── Sidebar ───────────────────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + 16px);
+      max-height: calc(100vh - var(--nav-height) - 32px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .sidebar__card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .sidebar__heading {
+      font-family: var(--font-display);
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-muted); margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .filter-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: var(--radius-sm);
+      background: none; border: none; width: 100%;
+      text-align: left; cursor: pointer;
+      font-size: 0.85rem; color: var(--text-secondary);
+      transition: all var(--transition);
+      font-family: var(--font-body);
+    }
+    .filter-btn:hover  { background: var(--bg-tag); color: var(--brand-primary); }
+    .filter-btn.active { background: rgba(79,142,247,0.14); color: var(--brand-primary); font-weight: 600; }
+    .filter-btn__count {
+      margin-left: auto; font-size: 0.72rem; color: var(--text-muted);
+      background: var(--bg-secondary);
+      padding: 2px 7px; border-radius: var(--radius-pill);
+    }
+
+    /* Progress in sidebar */
+    .solved-progress { margin-top: 6px; }
+    .solved-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem; margin-bottom: 8px;
+    }
+    .solved-row span:last-child { font-weight: 700; }
+
+    /* ── Toolbar ───────────────────────────────────────── */
+    .toolbar {
+      display: flex; gap: 12px;
+      align-items: center; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .toolbar .search-box { flex: 1; min-width: 220px; }
+
+    /* Difficulty chips */
+    .diff-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .diff-chip {
+      padding: 6px 14px; border-radius: var(--radius-pill);
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      border: 1.5px solid var(--border-glass);
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .diff-chip:hover { border-color: var(--brand-primary); }
+    .diff-chip.active--all    { background:var(--grad-primary); color:#fff; border-color:transparent; }
+    .diff-chip.active--easy   { background:rgba(76,222,154,0.20); color:var(--brand-success); border-color:var(--brand-success); }
+    .diff-chip.active--medium { background:rgba(255,179,71,0.20); color:var(--brand-warning); border-color:var(--brand-warning); }
+    .diff-chip.active--hard   { background:rgba(255,92,92,0.20);  color:var(--brand-danger);  border-color:var(--brand-danger); }
+
+    /* ── Challenge Card ────────────────────────────────── */
+    .challenge-card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .challenge-card:hover   { border-color: rgba(255,179,71,0.25); box-shadow: var(--shadow-card); }
+    .challenge-card.open    { border-color: rgba(255,179,71,0.35); box-shadow: var(--shadow-hover); }
+    .challenge-card.solved  { border-left: 3px solid var(--brand-success); }
+
+    /* Card Header */
+    .cc-header {
+      display: flex; align-items: center;
+      gap: 12px; padding: 18px 20px;
+      cursor: pointer; user-select: none;
+    }
+    .cc-num {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--text-muted); background: var(--bg-secondary);
+      padding: 3px 8px; border-radius: var(--radius-sm); flex-shrink: 0;
+    }
+    .cc-title {
+      flex: 1; font-size: 0.95rem; font-weight: 600;
+      color: var(--text-primary);
+    }
+    .cc-badges { display: flex; gap: 6px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
+    .cc-solved-mark {
+      font-size: 0.85rem; color: var(--brand-success);
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .challenge-card.solved .cc-solved-mark { opacity: 1; }
+    .cc-bookmark {
+      width: 30px; height: 30px; border-radius: var(--radius-sm);
+      background: none; border: 1px solid transparent;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; cursor: pointer;
+      transition: all var(--transition); color: var(--text-muted);
+    }
+    .cc-bookmark:hover, .cc-bookmark.active {
+      background: rgba(255,179,71,0.12);
+      border-color: rgba(255,179,71,0.25);
+      color: var(--brand-warning);
+    }
+    .cc-chevron {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: var(--brand-primary);
+      transition: transform var(--transition); flex-shrink: 0;
+    }
+    .challenge-card.open .cc-chevron { transform: rotate(180deg); }
+
+    /* Card Body */
+    .cc-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .challenge-card.open .cc-body { max-height: 3000px; }
+
+    .cc-content {
+      padding: 0 20px 24px;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    /* Tabs */
+    .cc-tabs {
+      display: flex; gap: 4px;
+      margin: 16px 0 14px; flex-wrap: wrap;
+    }
+    .cc-tab {
+      padding: 6px 14px; border-radius: var(--radius-sm);
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      background: var(--bg-secondary); color: var(--text-muted);
+      border: 1px solid transparent; transition: all var(--transition);
+    }
+    .cc-tab.active {
+      background: rgba(255,179,71,0.12);
+      color: var(--brand-warning);
+      border-color: rgba(255,179,71,0.22);
+    }
+    .cc-pane { display: none; }
+    .cc-pane.active { display: block; }
+
+    /* Problem statement */
+    .cc-statement {
+      font-size: 0.92rem; color: var(--text-secondary);
+      line-height: 1.75; margin-bottom: 16px;
+    }
+    .cc-io-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 16px;
+    }
+    .cc-io-box {
+      padding: 14px 16px; border-radius: var(--radius-md);
+      background: var(--bg-secondary); border: 1px solid var(--border-glass);
+    }
+    .cc-io-label {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .cc-io-val {
+      font-family: var(--font-mono); font-size: 0.83rem;
+      color: var(--text-primary);
+    }
+
+    /* Code blocks */
+    .cc-code {
+      background: #0a0f1e;
+      border: 1px solid rgba(255,179,71,0.15);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      font-family: var(--font-mono);
+      font-size: 0.83rem;
+      color: #c9d8ff;
+      line-height: 1.75;
+      overflow-x: auto;
+      position: relative;
+      white-space: pre;
+      margin-bottom: 12px;
+    }
+    [data-theme="dark"] .cc-code { background: #03080f; }
+
+    .cc-copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      padding: 4px 12px;
+      background: rgba(255,179,71,0.12);
+      border: 1px solid rgba(255,179,71,0.20);
+      border-radius: var(--radius-sm);
+      color: var(--brand-warning);
+      font-size: 0.72rem; font-weight: 600;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .cc-copy-btn:hover { background: rgba(255,179,71,0.22); }
+
+    /* Complexity box */
+    .complexity-box {
+      padding: 14px 18px; border-radius: var(--radius-md);
+      background: rgba(79,142,247,0.07);
+      border: 1px solid rgba(79,142,247,0.15);
+      font-size: 0.875rem; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 14px;
+      white-space: pre-line;
+    }
+
+    /* Follow-ups */
+    .followup-list {
+      padding: 14px 16px; border-radius: var(--radius-md);
+      background: var(--bg-secondary); border: 1px solid var(--border-glass);
+    }
+    .followup-list__title {
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--text-muted); margin-bottom: 10px;
+    }
+    .followup-item {
+      display: flex; gap: 8px; align-items: flex-start;
+      font-size: 0.85rem; color: var(--brand-primary);
+      padding: 5px 0; border-bottom: 1px solid var(--border-glass);
+    }
+    .followup-item:last-child { border-bottom: none; }
+    .followup-item::before { content: '→'; color: var(--text-muted); flex-shrink: 0; }
+
+    /* Solve button */
+    .cc-solve-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; border-radius: var(--radius-md);
+      font-size: 0.82rem; font-weight: 600;
+      background: rgba(76,222,154,0.12);
+      border: 1.5px solid rgba(76,222,154,0.25);
+      color: var(--brand-success);
+      cursor: pointer; transition: all var(--transition);
+      margin-top: 14px;
+    }
+    .cc-solve-btn:hover {
+      background: rgba(76,222,154,0.22);
+      border-color: var(--brand-success);
+    }
+    .cc-solve-btn.solved {
+      background: var(--brand-success);
+      border-color: var(--brand-success);
+      color: #fff;
+    }
+
+    /* ── Difficulty Section Header ──────────────────────── */
+    .diff-section { margin-bottom: 40px; scroll-margin-top: calc(var(--nav-height) + 20px); }
+    .diff-section__header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; padding: 14px 20px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      position: sticky; top: calc(var(--nav-height) + 8px); z-index: 10;
+    }
+    .diff-section__dot {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+
+    /* ── Empty State ───────────────────────────────────── */
+    .empty-state {
+      text-align: center; padding: 60px 20px; color: var(--text-muted);
+    }
+    .empty-state__icon { font-size: 3rem; margin-bottom: 16px; }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .coding-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; max-height: none; }
+      .diff-section__header { position: static; }
+      .cc-io-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .cc-badges .badge { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon">🐍</div>
+        PyPrep<span class="accent">Pro</span>
+      </a>
+      <nav class="navbar__nav">
+        <a href="questions.html"  class="navbar__link">Interview Q&A</a>
+        <a href="mcq.html"        class="navbar__link">MCQ Arena</a>
+        <a href="output.html"     class="navbar__link">Guess Output</a>
+        <a href="coding.html"     class="navbar__link active">Coding</a>
+        <a href="mock.html"       class="navbar__link">Mock Interview</a>
+        <a href="cheatsheet.html" class="navbar__link">Cheat Sheets</a>
+        <a href="patterns.html"   class="navbar__link">Patterns</a>
+        <a href="revision.html"   class="navbar__link">Revision</a>
+      </nav>
+      <div class="navbar__actions">
+        <button class="theme-toggle" title="Toggle Theme">🌙</button>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-nav">
+  <a href="questions.html"  class="navbar__link">📋 Interview Q&A</a>
+  <a href="mcq.html"        class="navbar__link">🎯 MCQ Arena</a>
+  <a href="output.html"     class="navbar__link">💻 Guess Output</a>
+  <a href="coding.html"     class="navbar__link">⌨️ Coding Challenges</a>
+  <a href="mock.html"       class="navbar__link">🎙️ Mock Interview</a>
+  <a href="cheatsheet.html" class="navbar__link">📄 Cheat Sheets</a>
+  <a href="patterns.html"   class="navbar__link">🧠 Interview Patterns</a>
+  <a href="revision.html"   class="navbar__link">⚡ Last-Minute Revision</a>
+</div>
+
+<!-- ── Page Hero ────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <div>
+        <div class="section-header__eyebrow" style="margin-bottom:12px;">⌨️ Coding Challenges</div>
+        <h1 style="margin-bottom:8px;">Python Interview Problems</h1>
+        <p style="max-width:560px;">
+          Real interview coding problems — Easy, Medium &amp; Hard. Each problem includes
+          a solution, alternative approach, complexity analysis, and follow-up questions.
+        </p>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <div style="text-align:center;padding:14px 22px;border-radius:var(--radius-lg);background:var(--bg-card);backdrop-filter:var(--blur-glass);border:1px solid var(--border-glass);">
+          <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--brand-success);" id="hero-easy">—</div>
+          <div class="text-muted" style="font-size:0.78rem;">Easy</div>
+        </div>
+        <div style="text-align:center;padding:14px 22px;border-radius:var(--radius-lg);background:var(--bg-card);backdrop-filter:var(--blur-glass);border:1px solid var(--border-glass);">
+          <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--brand-warning);" id="hero-medium">—</div>
+          <div class="text-muted" style="font-size:0.78rem;">Medium</div>
+        </div>
+        <div style="text-align:center;padding:14px 22px;border-radius:var(--radius-lg);background:var(--bg-card);backdrop-filter:var(--blur-glass);border:1px solid var(--border-glass);">
+          <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--brand-danger);" id="hero-hard">—</div>
+          <div class="text-muted" style="font-size:0.78rem;">Hard</div>
+        </div>
+        <div style="text-align:center;padding:14px 22px;border-radius:var(--radius-lg);background:var(--bg-card);backdrop-filter:var(--blur-glass);border:1px solid var(--border-glass);">
+          <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--brand-accent);" id="hero-solved">0</div>
+          <div class="text-muted" style="font-size:0.78rem;">Solved</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Main Content ──────────────────────────────────────────── -->
+<div class="container">
+  <div class="coding-layout">
+
+    <!-- ── Sidebar ─────────────────────────────────────────── -->
+    <aside class="sidebar">
+
+      <!-- Difficulty Filter -->
+      <div class="sidebar__card">
+        <div class="sidebar__heading">🏋️ Difficulty</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <button class="filter-btn active" data-diff="all">
+            All <span class="filter-btn__count" id="cnt-all">—</span>
+          </button>
+          <button class="filter-btn" data-diff="easy">
+            <span style="color:var(--brand-success);">●</span> Easy
+            <span class="filter-btn__count" id="cnt-easy">—</span>
+          </button>
+          <button class="filter-btn" data-diff="medium">
+            <span style="color:var(--brand-warning);">●</span> Medium
+            <span class="filter-btn__count" id="cnt-medium">—</span>
+          </button>
+          <button class="filter-btn" data-diff="hard">
+            <span style="color:var(--brand-danger);">●</span> Hard
+            <span class="filter-btn__count" id="cnt-hard">—</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Topic Filter -->
+      <div class="sidebar__card">
+        <div class="sidebar__heading">📌 Topic</div>
+        <div id="topic-filter-list" style="display:flex;flex-direction:column;gap:4px;"></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="sidebar__card">
+        <div class="sidebar__heading">📈 Your Progress</div>
+        <div class="solved-progress">
+          <div class="solved-row">
+            <span style="color:var(--brand-success);">Easy Solved</span>
+            <span id="sb-easy-solved">0 / —</span>
+          </div>
+          <div class="progress-bar" style="margin-bottom:10px;">
+            <div class="progress-bar__fill" id="pb-easy" style="width:0%;background:var(--brand-success);"></div>
+          </div>
+          <div class="solved-row">
+            <span style="color:var(--brand-warning);">Medium Solved</span>
+            <span id="sb-med-solved">0 / —</span>
+          </div>
+          <div class="progress-bar" style="margin-bottom:10px;">
+            <div class="progress-bar__fill" id="pb-med" style="width:0%;background:var(--brand-warning);"></div>
+          </div>
+          <div class="solved-row">
+            <span style="color:var(--brand-danger);">Hard Solved</span>
+            <span id="sb-hard-solved">0 / —</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar__fill" id="pb-hard" style="width:0%;background:var(--brand-danger);"></div>
+          </div>
+        </div>
+        <button class="btn btn--outline btn--sm btn--full" id="reset-solved-btn" style="margin-top:14px;">Reset Progress</button>
+      </div>
+
+    </aside>
+
+    <!-- ── Main Panel ──────────────────────────────────────── -->
+    <main>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search-box">
+          <span class="search-box__icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search problems, topics, keywords…" autocomplete="off" />
+        </div>
+        <button class="btn btn--outline btn--sm" id="bookmarks-btn">🔖 Bookmarks</button>
+        <button class="btn btn--outline btn--sm" id="unsolved-btn">🔴 Unsolved Only</button>
+        <button class="btn btn--outline btn--sm" id="clear-btn" style="display:none;">✕ Clear</button>
+      </div>
+
+      <!-- Results info -->
+      <div id="results-info" style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;"></div>
+
+      <!-- Challenges Container -->
+      <div id="challenges-container">
+        <div class="empty-state">
+          <div class="empty-state__icon">⏳</div>
+          <h4>Loading challenges…</h4>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none;padding-top:0;">
+      <p>© 2025 PyPrep Pro · Built by <a href="https://github.com/rohanjpatil01" target="_blank" rel="noopener">Rohan Patil</a></p>
+      <p>
+        <a href="https://instagram.com/rohanjpatil01" target="_blank" rel="noopener" style="margin-right:14px;">@rohanjpatil01</a>
+        <a href="index.html">← Home</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════════════════════════
+   Coding Challenges Page
+   ═══════════════════════════════════════════════════════════════ */
+
+let allChallenges  = [];
+let solvedSet      = new Set();
+let activeDiff     = 'all';
+let activeTopic    = 'all';
+let searchQuery    = '';
+let bookmarksOnly  = false;
+let unsolvedOnly   = false;
+
+const SOLVED_KEY   = 'pyprep_solved';
+const DIFF_META = {
+  easy:   { label:'Easy',   color:'var(--brand-success)', dot:'#4cde9a' },
+  medium: { label:'Medium', color:'var(--brand-warning)', dot:'#ffb347' },
+  hard:   { label:'Hard',   color:'var(--brand-danger)',  dot:'#ff5c5c' }
+};
+const TOPIC_LABELS = {
+  strings:'Strings', lists:'Lists', dictionaries:'Dictionaries',
+  functions:'Functions', oop:'OOP', loops:'Loops', misc:'Miscellaneous'
+};
+
+// ── Load Solved Set ───────────────────────────────────────────
+function loadSolved() {
+  try { solvedSet = new Set(JSON.parse(localStorage.getItem(SOLVED_KEY)) || []); }
+  catch { solvedSet = new Set(); }
+}
+function saveSolved() {
+  localStorage.setItem(SOLVED_KEY, JSON.stringify([...solvedSet]));
+}
+function toggleSolved(id) {
+  solvedSet.has(id) ? solvedSet.delete(id) : solvedSet.add(id);
+  saveSolved();
+}
+
+// ── Fetch Data ────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res    = await fetch('data/coding_challenges.json');
+    const data   = await res.json();
+    allChallenges = data.challenges;
+    loadSolved();
+    initCounts();
+    buildTopicFilter();
+    renderAll();
+    updateHeroStats();
+    updateSidebarProgress();
+  } catch(e) {
+    document.getElementById('challenges-container').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icon">❌</div>
+        <h4>Could not load challenges</h4>
+        <p>Make sure data/coding_challenges.json exists and you are running on a local server.</p>
+      </div>`;
+  }
+}
+
+// ── Counts ────────────────────────────────────────────────────
+function initCounts() {
+  const counts = { easy:0, medium:0, hard:0 };
+  allChallenges.forEach(c => counts[c.difficulty]++);
+  document.getElementById('cnt-all').textContent    = allChallenges.length;
+  document.getElementById('cnt-easy').textContent   = counts.easy;
+  document.getElementById('cnt-medium').textContent = counts.medium;
+  document.getElementById('cnt-hard').textContent   = counts.hard;
+  document.getElementById('hero-easy').textContent   = counts.easy;
+  document.getElementById('hero-medium').textContent = counts.medium;
+  document.getElementById('hero-hard').textContent   = counts.hard;
+}
+
+// ── Topic Filter Sidebar ──────────────────────────────────────
+function buildTopicFilter() {
+  const topics = ['all', ...new Set(allChallenges.map(c => c.topic))];
+  const el = document.getElementById('topic-filter-list');
+  el.innerHTML = '';
+  topics.forEach(t => {
+    const count = t === 'all'
+      ? allChallenges.length
+      : allChallenges.filter(c => c.topic === t).length;
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (t === 'all' ? ' active' : '');
+    btn.dataset.topic = t;
+    btn.innerHTML = `${TOPIC_LABELS[t] || (t.charAt(0).toUpperCase()+t.slice(1))}
+      <span class="filter-btn__count">${count}</span>`;
+    el.appendChild(btn);
+  });
+
+  el.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    el.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTopic = btn.dataset.topic;
+    updateClearBtn();
+    renderAll();
+  });
+}
+
+// ── Render All ────────────────────────────────────────────────
+function renderAll() {
+  const container = document.getElementById('challenges-container');
+  container.innerHTML = '';
+
+  let filtered = allChallenges.filter(c => {
+    if (activeDiff !== 'all'   && c.difficulty !== activeDiff)   return false;
+    if (activeTopic !== 'all'  && c.topic !== activeTopic)       return false;
+    if (bookmarksOnly && !window.PyPrep.Bookmarks.isBookmarked('coding', c.id)) return false;
+    if (unsolvedOnly  && solvedSet.has(c.id))                    return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      return c.title.toLowerCase().includes(q) ||
+             c.statement.toLowerCase().includes(q) ||
+             c.topic.toLowerCase().includes(q);
+    }
+    return true;
+  });
+
+  document.getElementById('results-info').textContent =
+    (searchQuery || activeDiff !== 'all' || activeTopic !== 'all' || bookmarksOnly || unsolvedOnly)
+      ? `Showing ${filtered.length} challenge${filtered.length!==1?'s':''}`
+      : `${allChallenges.length} challenges`;
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icon">${bookmarksOnly?'🔖':'🔍'}</div>
+        <h4>${bookmarksOnly ? 'No bookmarks yet' : 'No challenges found'}</h4>
+        <p>${bookmarksOnly ? 'Click ☆ on any challenge to bookmark it.' : 'Try a different filter or keyword.'}</p>
+      </div>`;
+    return;
+  }
+
+  // Group by difficulty if showing all
+  if (activeDiff === 'all' && !searchQuery) {
+    ['easy','medium','hard'].forEach(diff => {
+      const group = filtered.filter(c => c.difficulty === diff);
+      if (!group.length) return;
+      const meta = DIFF_META[diff];
+
+      const section = document.createElement('div');
+      section.className = 'diff-section reveal';
+      section.id = `section-${diff}`;
+      section.innerHTML = `
+        <div class="diff-section__header">
+          <div class="diff-section__dot" style="background:${meta.dot};box-shadow:0 0 8px ${meta.dot}77;"></div>
+          <h3 style="color:${meta.color};font-size:1.1rem;">${meta.label}</h3>
+          <span style="font-size:0.82rem;color:var(--text-muted);margin-left:auto;">
+            ${group.filter(c=>solvedSet.has(c.id)).length} / ${group.length} solved
+          </span>
+        </div>`;
+
+      group.forEach((c, i) => section.appendChild(buildCard(c, i+1)));
+      container.appendChild(section);
+    });
+  } else {
+    filtered.forEach((c, i) => container.appendChild(buildCard(c, i+1)));
+  }
+
+  // Re-init scroll reveal
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+    el.classList.add('visible');
+  });
+}
+
+// ── Build Card ────────────────────────────────────────────────
+function buildCard(c, num) {
+  const meta       = DIFF_META[c.difficulty];
+  const isSolved   = solvedSet.has(c.id);
+  const isBookmark = window.PyPrep.Bookmarks.isBookmarked('coding', c.id);
+
+  const card = document.createElement('div');
+  card.className = `challenge-card${isSolved ? ' solved' : ''}`;
+  card.dataset.id = c.id;
+
+  card.innerHTML = `
+    <div class="cc-header">
+      <span class="cc-num">#${String(num).padStart(2,'0')}</span>
+      <span class="cc-title">${window.PyPrep.escapeHTML(c.title)}</span>
+      <div class="cc-badges">
+        <span class="cc-solved-mark" title="Solved">✅</span>
+        <span class="badge" style="background:${meta.color}22;color:${meta.color};">${meta.label}</span>
+        <span class="badge badge--primary">${TOPIC_LABELS[c.topic]||c.topic}</span>
+        <button class="cc-bookmark${isBookmark?' active':''}" title="Bookmark">
+          ${isBookmark?'★':'☆'}
+        </button>
+        <span class="cc-chevron">▼</span>
+      </div>
+    </div>
+
+    <div class="cc-body">
+      <div class="cc-content">
+
+        <div class="cc-tabs">
+          <button class="cc-tab active" data-tab="problem">📋 Problem</button>
+          <button class="cc-tab" data-tab="solution">✅ Solution</button>
+          <button class="cc-tab" data-tab="alt">🔄 Alt Solution</button>
+          <button class="cc-tab" data-tab="complexity">⚡ Complexity</button>
+          <button class="cc-tab" data-tab="followups">🎯 Follow-ups</button>
+        </div>
+
+        <!-- Problem Pane -->
+        <div class="cc-pane active" data-pane="problem">
+          <div class="cc-statement">${window.PyPrep.escapeHTML(c.statement)}</div>
+          <div class="cc-io-grid">
+            <div class="cc-io-box">
+              <div class="cc-io-label">📥 Example Input</div>
+              <div class="cc-io-val">${window.PyPrep.escapeHTML(c.input)}</div>
+            </div>
+            <div class="cc-io-box">
+              <div class="cc-io-label">📤 Expected Output</div>
+              <div class="cc-io-val">${window.PyPrep.escapeHTML(c.output)}</div>
+            </div>
+          </div>
+          <button class="cc-solve-btn${isSolved?' solved':''}" data-id="${c.id}">
+            ${isSolved ? '✅ Solved!' : '○ Mark as Solved'}
+          </button>
+        </div>
+
+        <!-- Solution Pane -->
+        <div class="cc-pane" data-pane="solution">
+          <div style="position:relative;">
+            <div class="cc-code" id="sol-${c.id}">${window.PyPrep.escapeHTML(c.solution)}</div>
+            <button class="cc-copy-btn" data-copy="${c.id}-sol">Copy</button>
+          </div>
+        </div>
+
+        <!-- Alt Solution Pane -->
+        <div class="cc-pane" data-pane="alt">
+          <div style="position:relative;">
+            <div class="cc-code" id="alt-${c.id}">${window.PyPrep.escapeHTML(c.alt_solution)}</div>
+            <button class="cc-copy-btn" data-copy="${c.id}-alt">Copy</button>
+          </div>
+        </div>
+
+        <!-- Complexity Pane -->
+        <div class="cc-pane" data-pane="complexity">
+          <div class="complexity-box">${window.PyPrep.escapeHTML(c.complexity)}</div>
+        </div>
+
+        <!-- Follow-ups Pane -->
+        <div class="cc-pane" data-pane="followups">
+          <div class="followup-list">
+            <div class="followup-list__title">🎯 Interviewers may follow up with:</div>
+            ${c.followups.map(f=>`<div class="followup-item">${window.PyPrep.escapeHTML(f)}</div>`).join('')}
+          </div>
+        </div>
+
+      </div>
+    </div>`;
+
+  // Toggle open/close
+  card.querySelector('.cc-header').addEventListener('click', e => {
+    if (e.target.closest('.cc-bookmark') || e.target.closest('.cc-solve-btn')) return;
+    card.classList.toggle('open');
+  });
+
+  // Tabs
+  card.querySelectorAll('.cc-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      card.querySelectorAll('.cc-tab').forEach(t => t.classList.remove('active'));
+      card.querySelectorAll('.cc-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      card.querySelector(`[data-pane="${tab.dataset.tab}"]`).classList.add('active');
+    });
+  });
+
+  // Bookmark
+  const bmBtn = card.querySelector('.cc-bookmark');
+  bmBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const added = window.PyPrep.Bookmarks.toggle('coding', c.id, { title: c.title });
+    bmBtn.classList.toggle('active', added);
+    bmBtn.textContent = added ? '★' : '☆';
+    window.PyPrep.Toast.show(added ? 'Challenge bookmarked!' : 'Bookmark removed.', added ? 'success' : 'info');
+  });
+
+  // Mark solved
+  const solveBtn = card.querySelector('.cc-solve-btn');
+  solveBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    toggleSolved(c.id);
+    const now = solvedSet.has(c.id);
+    solveBtn.textContent = now ? '✅ Solved!' : '○ Mark as Solved';
+    solveBtn.classList.toggle('solved', now);
+    card.classList.toggle('solved', now);
+    updateHeroStats();
+    updateSidebarProgress();
+    window.PyPrep.Toast.show(now ? '✅ Marked as solved!' : 'Marked as unsolved.', now ? 'success' : 'info');
+  });
+
+  // Copy buttons
+  card.querySelectorAll('.cc-copy-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key  = btn.dataset.copy;
+      const [id, type] = key.split('-');
+      const codeEl = card.querySelector(`[id="${type}-${c.id}"]`);
+      if (codeEl) window.PyPrep.copyToClipboard(codeEl.textContent);
+    });
+  });
+
+  return card;
+}
+
+// ── Stats ─────────────────────────────────────────────────────
+function updateHeroStats() {
+  document.getElementById('hero-solved').textContent = solvedSet.size;
+}
+
+function updateSidebarProgress() {
+  const counts = { easy:0, medium:0, hard:0 };
+  const solved = { easy:0, medium:0, hard:0 };
+  allChallenges.forEach(c => {
+    counts[c.difficulty]++;
+    if (solvedSet.has(c.id)) solved[c.difficulty]++;
+  });
+
+  ['easy','medium','hard'].forEach(d => {
+    const pct = counts[d] ? Math.round(solved[d]/counts[d]*100) : 0;
+    document.getElementById(`sb-${d==='easy'?'easy':d==='medium'?'med':'hard'}-solved`).textContent =
+      `${solved[d]} / ${counts[d]}`;
+    document.getElementById(`pb-${d==='easy'?'easy':d==='medium'?'med':'hard'}`).style.width = pct + '%';
+  });
+}
+
+// ── Events ────────────────────────────────────────────────────
+// Difficulty sidebar
+document.querySelectorAll('[data-diff]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-diff]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeDiff = btn.dataset.diff;
+    updateClearBtn();
+    renderAll();
+  });
+});
+
+// Search
+document.getElementById('search-input').addEventListener('input',
+  window.PyPrep.debounce(e => {
+    searchQuery = e.target.value.trim();
+    updateClearBtn();
+    renderAll();
+  }, 280)
+);
+
+// Bookmarks
+document.getElementById('bookmarks-btn').addEventListener('click', () => {
+  bookmarksOnly = !bookmarksOnly;
+  document.getElementById('bookmarks-btn').textContent = bookmarksOnly ? '🔖 All' : '🔖 Bookmarks';
+  updateClearBtn(); renderAll();
+});
+
+// Unsolved only
+document.getElementById('unsolved-btn').addEventListener('click', () => {
+  unsolvedOnly = !unsolvedOnly;
+  document.getElementById('unsolved-btn').textContent = unsolvedOnly ? '🔴 All' : '🔴 Unsolved Only';
+  updateClearBtn(); renderAll();
+});
+
+// Clear
+document.getElementById('clear-btn').addEventListener('click', () => {
+  searchQuery   = ''; activeDiff = 'all'; activeTopic = 'all';
+  bookmarksOnly = false; unsolvedOnly = false;
+  document.getElementById('search-input').value = '';
+  document.querySelectorAll('[data-diff]').forEach(b => b.classList.toggle('active', b.dataset.diff==='all'));
+  document.querySelectorAll('#topic-filter-list .filter-btn').forEach(b => b.classList.toggle('active', b.dataset.topic==='all'));
+  document.getElementById('bookmarks-btn').textContent = '🔖 Bookmarks';
+  document.getElementById('unsolved-btn').textContent  = '🔴 Unsolved Only';
+  updateClearBtn(); renderAll();
+});
+
+// Reset solved
+document.getElementById('reset-solved-btn').addEventListener('click', () => {
+  if (confirm('Reset all your solved progress?')) {
+    solvedSet.clear(); saveSolved();
+    updateHeroStats(); updateSidebarProgress();
+    renderAll();
+    window.PyPrep.Toast.show('Solved progress reset.', 'info');
+  }
+});
+
+function updateClearBtn() {
+  const show = searchQuery || activeDiff!=='all' || activeTopic!=='all' || bookmarksOnly || unsolvedOnly;
+  document.getElementById('clear-btn').style.display = show ? '' : 'none';
+}
+
+// ── Boot ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>

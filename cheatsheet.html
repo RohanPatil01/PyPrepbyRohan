@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Python Cheat Sheets — Quick reference for String methods, List operations, Dict methods, OOP, File Handling, Exception Handling and more." />
+  <title>Cheat Sheets — PyPrep Pro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .page-hero {
+      padding: calc(var(--nav-height) + 44px) 0 44px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-glass);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -60px;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(76,222,154,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── Layout ──────────────────────────────────────── */
+    .cs-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 40px 0 80px;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + 16px);
+      max-height: calc(100vh - var(--nav-height) - 32px);
+      overflow-y: auto;
+    }
+    .sidebar__card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .sidebar__heading {
+      font-family: var(--font-display);
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-muted); margin-bottom: 10px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border-glass);
+    }
+    .nav-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px; border-radius: var(--radius-sm);
+      font-size: 0.83rem; color: var(--text-secondary);
+      text-decoration: none; transition: all var(--transition);
+      cursor: pointer; background: none; border: none;
+      width: 100%; text-align: left; font-family: var(--font-body);
+    }
+    .nav-link:hover { background: var(--bg-tag); color: var(--brand-primary); }
+    .nav-link.active { background: rgba(76,222,154,0.12); color: var(--brand-success); font-weight: 600; }
+
+    /* ── Sheet Section ───────────────────────────────── */
+    .sheet-section {
+      margin-bottom: 52px;
+      scroll-margin-top: calc(var(--nav-height) + 20px);
+    }
+    .sheet-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px; padding: 16px 20px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      position: sticky;
+      top: calc(var(--nav-height) + 8px);
+      z-index: 10;
+    }
+    .sheet-header__icon {
+      width: 40px; height: 40px; border-radius: var(--radius-md);
+      background: rgba(76,222,154,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .sheet-header__title { font-size: 1.1rem; font-family: var(--font-display); }
+    .sheet-header__print {
+      margin-left: auto;
+      padding: 6px 14px; border-radius: var(--radius-sm);
+      background: var(--bg-tag); border: 1px solid var(--border-glass);
+      font-size: 0.78rem; font-weight: 600; color: var(--brand-primary);
+      cursor: pointer; transition: all var(--transition);
+    }
+    .sheet-header__print:hover { background: rgba(79,142,247,0.20); }
+
+    /* ── Method Table ────────────────────────────────── */
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 12px;
+    }
+    .method-card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      transition: all var(--transition);
+    }
+    .method-card:hover { border-color: rgba(76,222,154,0.25); transform: translateY(-2px); }
+    .method-card__sig {
+      font-family: var(--font-mono); font-size: 0.83rem;
+      color: var(--brand-success); font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .method-card__desc { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 8px; }
+    .method-card__ex {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--text-muted); background: var(--bg-secondary);
+      padding: 6px 10px; border-radius: var(--radius-sm);
+      border-left: 2px solid rgba(76,222,154,0.30);
+      white-space: pre-wrap; word-break: break-word;
+    }
+
+    /* ── Syntax Block ────────────────────────────────── */
+    .syntax-block {
+      background: #0a0f1e;
+      border: 1px solid rgba(76,222,154,0.18);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      font-family: var(--font-mono);
+      font-size: 0.83rem; color: #c9d8ff;
+      line-height: 1.8; margin-bottom: 14px;
+      overflow-x: auto; white-space: pre;
+      position: relative;
+    }
+    [data-theme="dark"] .syntax-block { background: #03080f; }
+    .syntax-block .kw  { color: #7c5cfc; font-weight: 600; }
+    .syntax-block .fn  { color: #4f8ef7; }
+    .syntax-block .str { color: #4cde9a; }
+    .syntax-block .num { color: #ffb347; }
+    .syntax-block .cm  { color: #4a5a7a; font-style: italic; }
+    .syntax-block .bi  { color: #00d4aa; }
+
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      padding: 4px 10px; border-radius: var(--radius-sm);
+      background: rgba(76,222,154,0.12); border: 1px solid rgba(76,222,154,0.22);
+      color: var(--brand-success); font-size: 0.7rem; font-weight: 600;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .copy-btn:hover { background: rgba(76,222,154,0.22); }
+
+    /* ── Two-column layout for some sheets ──────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* ── Key Points Box ──────────────────────────────── */
+    .key-points {
+      padding: 16px 18px; border-radius: var(--radius-md);
+      background: rgba(79,142,247,0.07);
+      border: 1px solid rgba(79,142,247,0.15);
+      margin-bottom: 16px;
+    }
+    .key-points__title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand-primary); margin-bottom: 10px; }
+    .key-point { font-size: 0.85rem; color: var(--text-secondary); padding: 4px 0; display: flex; gap: 8px; }
+    .key-point::before { content: '▸'; color: var(--brand-primary); flex-shrink: 0; }
+
+    @media (max-width: 900px) {
+      .cs-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; max-height: none; }
+      .sheet-header { position: static; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .method-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon">🐍</div>
+        PyPrep<span class="accent">Pro</span>
+      </a>
+      <nav class="navbar__nav">
+        <a href="questions.html"  class="navbar__link">Interview Q&A</a>
+        <a href="mcq.html"        class="navbar__link">MCQ Arena</a>
+        <a href="output.html"     class="navbar__link">Guess Output</a>
+        <a href="coding.html"     class="navbar__link">Coding</a>
+        <a href="mock.html"       class="navbar__link">Mock Interview</a>
+        <a href="cheatsheet.html" class="navbar__link active">Cheat Sheets</a>
+        <a href="patterns.html"   class="navbar__link">Patterns</a>
+        <a href="revision.html"   class="navbar__link">Revision</a>
+      </nav>
+      <div class="navbar__actions">
+        <button class="theme-toggle" title="Toggle Theme">🌙</button>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav">
+  <a href="questions.html"  class="navbar__link">📋 Interview Q&A</a>
+  <a href="mcq.html"        class="navbar__link">🎯 MCQ Arena</a>
+  <a href="output.html"     class="navbar__link">💻 Guess Output</a>
+  <a href="coding.html"     class="navbar__link">⌨️ Coding Challenges</a>
+  <a href="mock.html"       class="navbar__link">🎙️ Mock Interview</a>
+  <a href="cheatsheet.html" class="navbar__link">📄 Cheat Sheets</a>
+  <a href="patterns.html"   class="navbar__link">🧠 Interview Patterns</a>
+  <a href="revision.html"   class="navbar__link">⚡ Last-Minute Revision</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="section-header__eyebrow" style="margin-bottom:12px;">📄 Cheat Sheets</div>
+    <h1 style="margin-bottom:8px;">Python Quick Reference</h1>
+    <p style="max-width:560px;">All the methods, syntax and patterns you need — organised for last-minute interview revision. Bookmark this page before every interview.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="cs-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__card">
+        <div class="sidebar__heading">📚 Sheets</div>
+        <button class="nav-link active" onclick="scrollTo('strings')">📝 String Methods</button>
+        <button class="nav-link" onclick="scrollTo('lists')">📋 List Methods</button>
+        <button class="nav-link" onclick="scrollTo('dicts')">🗂️ Dictionary Methods</button>
+        <button class="nav-link" onclick="scrollTo('sets')">🔵 Set Operations</button>
+        <button class="nav-link" onclick="scrollTo('builtins')">⚙️ Built-in Functions</button>
+        <button class="nav-link" onclick="scrollTo('comprehensions')">🔄 Comprehensions</button>
+        <button class="nav-link" onclick="scrollTo('filehandling')">📁 File Handling</button>
+        <button class="nav-link" onclick="scrollTo('exceptions')">🚨 Exceptions</button>
+        <button class="nav-link" onclick="scrollTo('oop')">🏗️ OOP Summary</button>
+        <button class="nav-link" onclick="scrollTo('lambda')">λ Lambda & Functional</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+
+      <!-- ══ STRINGS ══════════════════════════════════════ -->
+      <div class="sheet-section reveal" id="strings">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">📝</div>
+          <h3 class="sheet-header__title">String Methods</h3>
+        </div>
+        <div class="key-points">
+          <div class="key-points__title">⚡ Key Points</div>
+          <div class="key-point">Strings are immutable — all methods return new strings.</div>
+          <div class="key-point">Indexing is zero-based. Negative indices count from the end.</div>
+          <div class="key-point">s[::-1] reverses a string. s[a:b:step] is the slice syntax.</div>
+        </div>
+        <div class="method-grid">
+          <div class="method-card"><div class="method-card__sig">s.upper() / s.lower()</div><div class="method-card__desc">Convert case. Returns new string.</div><div class="method-card__ex">'hello'.upper() → 'HELLO'</div></div>
+          <div class="method-card"><div class="method-card__sig">s.strip(chars)</div><div class="method-card__desc">Remove leading/trailing whitespace (or chars). lstrip/rstrip for one side.</div><div class="method-card__ex">'  hi  '.strip() → 'hi'</div></div>
+          <div class="method-card"><div class="method-card__sig">s.split(sep, maxsplit)</div><div class="method-card__desc">Split string into list. Default splits on whitespace.</div><div class="method-card__ex">'a,b,c'.split(',') → ['a','b','c']</div></div>
+          <div class="method-card"><div class="method-card__sig">sep.join(iterable)</div><div class="method-card__desc">Join iterable into string using sep. Opposite of split.</div><div class="method-card__ex">','.join(['a','b','c']) → 'a,b,c'</div></div>
+          <div class="method-card"><div class="method-card__sig">s.replace(old, new, count)</div><div class="method-card__desc">Replace all (or count) occurrences of old with new.</div><div class="method-card__ex">'aaa'.replace('a','b',2) → 'bba'</div></div>
+          <div class="method-card"><div class="method-card__sig">s.find(sub) / s.index(sub)</div><div class="method-card__desc">find returns -1 if not found. index raises ValueError.</div><div class="method-card__ex">'hello'.find('ll') → 2</div></div>
+          <div class="method-card"><div class="method-card__sig">s.startswith(prefix) / s.endswith(suffix)</div><div class="method-card__desc">Check start/end of string. Returns bool.</div><div class="method-card__ex">'hello'.startswith('he') → True</div></div>
+          <div class="method-card"><div class="method-card__sig">s.count(sub)</div><div class="method-card__desc">Count non-overlapping occurrences of substring.</div><div class="method-card__ex">'banana'.count('a') → 3</div></div>
+          <div class="method-card"><div class="method-card__sig">s.isdigit() / s.isalpha() / s.isalnum()</div><div class="method-card__desc">Check character types. All return bool.</div><div class="method-card__ex">'123'.isdigit() → True</div></div>
+          <div class="method-card"><div class="method-card__sig">s.format(*args) / f'{expr}'</div><div class="method-card__desc">String interpolation. f-strings preferred (Python 3.6+).</div><div class="method-card__ex">f'Hello {name!r}' / f'{pi:.2f}'</div></div>
+          <div class="method-card"><div class="method-card__sig">s.zfill(width)</div><div class="method-card__desc">Pad with zeros on the left to reach width.</div><div class="method-card__ex">'42'.zfill(5) → '00042'</div></div>
+          <div class="method-card"><div class="method-card__sig">s.title() / s.capitalize() / s.swapcase()</div><div class="method-card__desc">Case transformations. title() capitalises each word.</div><div class="method-card__ex">'hello world'.title() → 'Hello World'</div></div>
+        </div>
+        <div class="syntax-block" style="margin-top:16px;"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Slicing quick reference</span>
+s = <span class="str">'Python'</span>
+s[<span class="num">0</span>]      <span class="cm"># 'P'     — first char</span>
+s[<span class="num">-1</span>]     <span class="cm"># 'n'     — last char</span>
+s[<span class="num">1</span>:<span class="num">4</span>]    <span class="cm"># 'yth'   — index 1,2,3</span>
+s[::<span class="num">-1</span>]   <span class="cm"># 'nohtyP' — reversed</span>
+s[<span class="num">2</span>::<span class="num">2</span>]   <span class="cm"># 'to'    — every 2nd from index 2</span></div>
+      </div>
+
+      <!-- ══ LISTS ════════════════════════════════════════ -->
+      <div class="sheet-section reveal" id="lists">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">📋</div>
+          <h3 class="sheet-header__title">List Methods</h3>
+        </div>
+        <div class="key-points">
+          <div class="key-points__title">⚡ Key Points</div>
+          <div class="key-point">Lists are mutable — methods like append/sort modify in-place and return None.</div>
+          <div class="key-point">sorted() returns a new list; list.sort() sorts in-place.</div>
+          <div class="key-point">Assignment (b=a) creates an alias, not a copy. Use a[:] or list(a) for shallow copy.</div>
+        </div>
+        <div class="method-grid">
+          <div class="method-card"><div class="method-card__sig">lst.append(x)</div><div class="method-card__desc">Add single element to end. O(1) amortized.</div><div class="method-card__ex">[1,2].append(3) → [1,2,3]</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.extend(iterable)</div><div class="method-card__desc">Add all elements from iterable to end.</div><div class="method-card__ex">[1,2].extend([3,4]) → [1,2,3,4]</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.insert(i, x)</div><div class="method-card__desc">Insert x before index i. O(n).</div><div class="method-card__ex">[1,3].insert(1,2) → [1,2,3]</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.remove(x)</div><div class="method-card__desc">Remove first occurrence of x. Raises ValueError if absent.</div><div class="method-card__ex">[1,2,2].remove(2) → [1,2]</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.pop(i=-1)</div><div class="method-card__desc">Remove and return element at index i. Default: last.</div><div class="method-card__ex">[1,2,3].pop() → 3, list=[1,2]</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.index(x)</div><div class="method-card__desc">Return index of first occurrence of x.</div><div class="method-card__ex">[10,20,30].index(20) → 1</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.count(x)</div><div class="method-card__desc">Count occurrences of x in list.</div><div class="method-card__ex">[1,1,2].count(1) → 2</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.sort(key, reverse)</div><div class="method-card__desc">Sort in-place. Returns None. Use sorted() for new list.</div><div class="method-card__ex">lst.sort(key=lambda x: -x)</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.reverse()</div><div class="method-card__desc">Reverse in-place. Returns None. lst[::-1] for new list.</div><div class="method-card__ex">[1,2,3].reverse() → [3,2,1]</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.copy()</div><div class="method-card__desc">Shallow copy. Same as lst[:] or list(lst).</div><div class="method-card__ex">b = a.copy()  # independent list</div></div>
+          <div class="method-card"><div class="method-card__sig">lst.clear()</div><div class="method-card__desc">Remove all elements. Same as del lst[:].</div><div class="method-card__ex">[1,2,3].clear() → []</div></div>
+          <div class="method-card"><div class="method-card__sig">len(lst) / sum(lst) / min/max</div><div class="method-card__desc">Built-in functions that work on lists.</div><div class="method-card__ex">sum([1,2,3]) → 6</div></div>
+        </div>
+      </div>
+
+      <!-- ══ DICTS ════════════════════════════════════════ -->
+      <div class="sheet-section reveal" id="dicts">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">🗂️</div>
+          <h3 class="sheet-header__title">Dictionary Methods</h3>
+        </div>
+        <div class="key-points">
+          <div class="key-points__title">⚡ Key Points</div>
+          <div class="key-point">Keys must be hashable (str, int, tuple — not list/dict).</div>
+          <div class="key-point">Dicts are ordered by insertion order since Python 3.7.</div>
+          <div class="key-point">Use get() instead of [] to avoid KeyError on missing keys.</div>
+        </div>
+        <div class="method-grid">
+          <div class="method-card"><div class="method-card__sig">d.get(key, default=None)</div><div class="method-card__desc">Return value or default. Never raises KeyError.</div><div class="method-card__ex">d.get('x', 0) → 0 if 'x' missing</div></div>
+          <div class="method-card"><div class="method-card__sig">d.keys() / d.values() / d.items()</div><div class="method-card__desc">View objects (live, reflect changes). Wrap in list() if needed.</div><div class="method-card__ex">for k, v in d.items(): ...</div></div>
+          <div class="method-card"><div class="method-card__sig">d.update(other)</div><div class="method-card__desc">Merge other into d. Existing keys overwritten.</div><div class="method-card__ex">d.update({'a':1, 'b':2})</div></div>
+          <div class="method-card"><div class="method-card__sig">d.pop(key, default)</div><div class="method-card__desc">Remove and return value. Raises KeyError if no default.</div><div class="method-card__ex">d.pop('x', None) → safe removal</div></div>
+          <div class="method-card"><div class="method-card__sig">d.setdefault(key, default)</div><div class="method-card__desc">Return value if key exists; else insert and return default.</div><div class="method-card__ex">d.setdefault('x',[]).append(1)</div></div>
+          <div class="method-card"><div class="method-card__sig">d.copy()</div><div class="method-card__desc">Shallow copy of dictionary.</div><div class="method-card__ex">d2 = d.copy()</div></div>
+          <div class="method-card"><div class="method-card__sig">d1 | d2  (Python 3.9+)</div><div class="method-card__desc">Merge dicts into new dict. d2 wins on conflicts.</div><div class="method-card__ex">merged = {**d1, **d2}  # older syntax</div></div>
+          <div class="method-card"><div class="method-card__sig">d.popitem()</div><div class="method-card__desc">Remove and return last inserted (key, value) pair.</div><div class="method-card__ex">k, v = d.popitem()</div></div>
+        </div>
+        <div class="syntax-block" style="margin-top:16px;"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Common dict patterns</span>
+<span class="cm"># Frequency count</span>
+freq = {}
+<span class="kw">for</span> x <span class="kw">in</span> items:
+    freq[x] = freq.get(x, <span class="num">0</span>) + <span class="num">1</span>
+
+<span class="cm"># Invert a dict</span>
+inv = {v: k <span class="kw">for</span> k, v <span class="kw">in</span> d.items()}
+
+<span class="cm"># Group by key</span>
+<span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+groups = defaultdict(<span class="bi">list</span>)
+<span class="kw">for</span> item <span class="kw">in</span> data:
+    groups[item.key].append(item)</div>
+      </div>
+
+      <!-- ══ SETS ═════════════════════════════════════════ -->
+      <div class="sheet-section reveal" id="sets">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">🔵</div>
+          <h3 class="sheet-header__title">Set Operations</h3>
+        </div>
+        <div class="two-col">
+          <div>
+            <div class="method-grid" style="grid-template-columns:1fr;">
+              <div class="method-card"><div class="method-card__sig">s.add(x)</div><div class="method-card__desc">Add element. No effect if already present.</div></div>
+              <div class="method-card"><div class="method-card__sig">s.remove(x) / s.discard(x)</div><div class="method-card__desc">remove raises KeyError; discard doesn't.</div></div>
+              <div class="method-card"><div class="method-card__sig">s.union(t) or s | t</div><div class="method-card__desc">All elements in either set.</div><div class="method-card__ex">{1,2}|{2,3} → {1,2,3}</div></div>
+              <div class="method-card"><div class="method-card__sig">s.intersection(t) or s & t</div><div class="method-card__desc">Elements in BOTH sets.</div><div class="method-card__ex">{1,2}&{2,3} → {2}</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="method-grid" style="grid-template-columns:1fr;">
+              <div class="method-card"><div class="method-card__sig">s.difference(t) or s - t</div><div class="method-card__desc">In s but NOT in t.</div><div class="method-card__ex">{1,2,3}-{2,3} → {1}</div></div>
+              <div class="method-card"><div class="method-card__sig">s.symmetric_difference(t) or s ^ t</div><div class="method-card__desc">In either but NOT both.</div><div class="method-card__ex">{1,2}^{2,3} → {1,3}</div></div>
+              <div class="method-card"><div class="method-card__sig">s.issubset(t) / s.issuperset(t)</div><div class="method-card__desc">Check containment relationships.</div></div>
+              <div class="method-card"><div class="method-card__sig">s.isdisjoint(t)</div><div class="method-card__desc">True if no common elements.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ BUILTINS ══════════════════════════════════════ -->
+      <div class="sheet-section reveal" id="builtins">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">⚙️</div>
+          <h3 class="sheet-header__title">Important Built-in Functions</h3>
+        </div>
+        <div class="method-grid">
+          <div class="method-card"><div class="method-card__sig">len(x)</div><div class="method-card__desc">Number of items in a sequence/collection.</div></div>
+          <div class="method-card"><div class="method-card__sig">range(start, stop, step)</div><div class="method-card__desc">Lazy range object. range(5) → 0,1,2,3,4.</div></div>
+          <div class="method-card"><div class="method-card__sig">enumerate(iterable, start=0)</div><div class="method-card__desc">Yields (index, value) pairs.</div><div class="method-card__ex">for i, v in enumerate(['a','b']): ...</div></div>
+          <div class="method-card"><div class="method-card__sig">zip(*iterables)</div><div class="method-card__desc">Pair up elements. Stops at shortest.</div><div class="method-card__ex">zip([1,2],['a','b']) → (1,'a'),(2,'b')</div></div>
+          <div class="method-card"><div class="method-card__sig">map(fn, iterable)</div><div class="method-card__desc">Apply fn to each element. Returns iterator.</div><div class="method-card__ex">list(map(str, [1,2,3])) → ['1','2','3']</div></div>
+          <div class="method-card"><div class="method-card__sig">filter(fn, iterable)</div><div class="method-card__desc">Keep elements where fn returns True.</div><div class="method-card__ex">list(filter(None, [0,1,2,False])) → [1,2]</div></div>
+          <div class="method-card"><div class="method-card__sig">sorted(iterable, key, reverse)</div><div class="method-card__desc">Return new sorted list. Works on any iterable.</div><div class="method-card__ex">sorted(d, key=d.get, reverse=True)</div></div>
+          <div class="method-card"><div class="method-card__sig">any(iterable) / all(iterable)</div><div class="method-card__desc">any: True if any truthy. all: True if all truthy.</div><div class="method-card__ex">any([0,0,1]) → True / all([1,1,0]) → False</div></div>
+          <div class="method-card"><div class="method-card__sig">isinstance(obj, type)</div><div class="method-card__desc">Check type with inheritance. Preferred over type().</div><div class="method-card__ex">isinstance(True, int) → True</div></div>
+          <div class="method-card"><div class="method-card__sig">type(obj)</div><div class="method-card__desc">Return exact type. No inheritance consideration.</div><div class="method-card__ex">type([]) → &lt;class 'list'&gt;</div></div>
+          <div class="method-card"><div class="method-card__sig">id(obj)</div><div class="method-card__desc">Memory address of object. Used with 'is' operator.</div></div>
+          <div class="method-card"><div class="method-card__sig">hash(obj)</div><div class="method-card__desc">Hash value (only for hashable/immutable objects).</div></div>
+          <div class="method-card"><div class="method-card__sig">repr(obj) / str(obj)</div><div class="method-card__desc">repr: developer string. str: user-friendly string.</div></div>
+          <div class="method-card"><div class="method-card__sig">abs / round / divmod / pow</div><div class="method-card__desc">Math built-ins. divmod(a,b) → (quotient, remainder).</div><div class="method-card__ex">divmod(17, 5) → (3, 2)</div></div>
+        </div>
+      </div>
+
+      <!-- ══ COMPREHENSIONS ════════════════════════════════ -->
+      <div class="sheet-section reveal" id="comprehensions">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">🔄</div>
+          <h3 class="sheet-header__title">Comprehensions</h3>
+        </div>
+        <div class="syntax-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># List Comprehension</span>
+[expr <span class="kw">for</span> item <span class="kw">in</span> iterable <span class="kw">if</span> condition]
+squares = [x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">10</span>) <span class="kw">if</span> x % <span class="num">2</span> == <span class="num">0</span>]
+
+<span class="cm"># Dict Comprehension</span>
+{k: v <span class="kw">for</span> k, v <span class="kw">in</span> iterable <span class="kw">if</span> condition}
+inv = {v: k <span class="kw">for</span> k, v <span class="kw">in</span> d.items()}
+
+<span class="cm"># Set Comprehension</span>
+{expr <span class="kw">for</span> item <span class="kw">in</span> iterable}
+unique_lens = {<span class="bi">len</span>(w) <span class="kw">for</span> w <span class="kw">in</span> words}
+
+<span class="cm"># Generator Expression (lazy — no brackets)</span>
+total = <span class="bi">sum</span>(x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">1000000</span>))
+
+<span class="cm"># Nested Comprehension (flatten)</span>
+flat = [x <span class="kw">for</span> row <span class="kw">in</span> matrix <span class="kw">for</span> x <span class="kw">in</span> row]</div>
+      </div>
+
+      <!-- ══ FILE HANDLING ═════════════════════════════════ -->
+      <div class="sheet-section reveal" id="filehandling">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">📁</div>
+          <h3 class="sheet-header__title">File Handling</h3>
+        </div>
+        <div class="syntax-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Open modes: r=read, w=write(overwrite), a=append, x=create new, b=binary</span>
+
+<span class="cm"># Read entire file</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="str">'file.txt'</span>, <span class="str">'r'</span>, encoding=<span class="str">'utf-8'</span>) <span class="kw">as</span> f:
+    content = f.read()          <span class="cm"># whole file as string</span>
+    lines   = f.readlines()     <span class="cm"># list of lines (with \n)</span>
+    line    = f.readline()      <span class="cm"># one line at a time</span>
+
+<span class="cm"># Memory-efficient iteration</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="str">'file.txt'</span>) <span class="kw">as</span> f:
+    <span class="kw">for</span> line <span class="kw">in</span> f:               <span class="cm"># iterate line by line</span>
+        process(line.strip())
+
+<span class="cm"># Write file</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="str">'out.txt'</span>, <span class="str">'w'</span>) <span class="kw">as</span> f:
+    f.write(<span class="str">'hello\n'</span>)
+    f.writelines([<span class="str">'a\n'</span>, <span class="str">'b\n'</span>])
+
+<span class="cm"># CSV</span>
+<span class="kw">import</span> csv
+<span class="kw">with</span> <span class="bi">open</span>(<span class="str">'data.csv'</span>, newline=<span class="str">''</span>) <span class="kw">as</span> f:
+    reader = csv.DictReader(f)
+    <span class="kw">for</span> row <span class="kw">in</span> reader:
+        <span class="bi">print</span>(row[<span class="str">'column'</span>])
+
+<span class="cm"># os / pathlib</span>
+<span class="kw">import</span> os
+os.path.exists(<span class="str">'file.txt'</span>)
+os.path.join(<span class="str">'dir'</span>, <span class="str">'file.txt'</span>)
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+Path(<span class="str">'file.txt'</span>).read_text()</div>
+      </div>
+
+      <!-- ══ EXCEPTIONS ════════════════════════════════════ -->
+      <div class="sheet-section reveal" id="exceptions">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">🚨</div>
+          <h3 class="sheet-header__title">Exception Handling</h3>
+        </div>
+        <div class="syntax-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Full structure</span>
+<span class="kw">try</span>:
+    risky_code()
+<span class="kw">except</span> ValueError <span class="kw">as</span> e:       <span class="cm"># specific exception</span>
+    <span class="bi">print</span>(<span class="str">f'Value error: {e}'</span>)
+<span class="kw">except</span> (TypeError, KeyError):  <span class="cm"># multiple types</span>
+    handle()
+<span class="kw">except</span> Exception <span class="kw">as</span> e:        <span class="cm"># catch-all (use carefully)</span>
+    log(e)
+<span class="kw">else</span>:                          <span class="cm"># runs only if NO exception</span>
+    success()
+<span class="kw">finally</span>:                       <span class="cm"># ALWAYS runs</span>
+    cleanup()
+
+<span class="cm"># Raise exceptions</span>
+<span class="kw">raise</span> ValueError(<span class="str">'bad input'</span>)
+<span class="kw">raise</span>                          <span class="cm"># re-raise current exception</span>
+<span class="kw">raise</span> RuntimeError(<span class="str">'wrap'</span>) <span class="kw">from</span> original_err
+
+<span class="cm"># Custom exception</span>
+<span class="kw">class</span> <span class="fn">AppError</span>(Exception):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, msg, code=<span class="num">0</span>):
+        <span class="bi">super</span>().__init__(msg)
+        <span class="kw">self</span>.code = code
+
+<span class="cm"># Common exceptions</span>
+<span class="cm"># ValueError, TypeError, KeyError, IndexError</span>
+<span class="cm"># AttributeError, NameError, ZeroDivisionError</span>
+<span class="cm"># FileNotFoundError, ImportError, StopIteration</span></div>
+      </div>
+
+      <!-- ══ OOP ═══════════════════════════════════════════ -->
+      <div class="sheet-section reveal" id="oop">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">🏗️</div>
+          <h3 class="sheet-header__title">OOP Summary</h3>
+        </div>
+        <div class="syntax-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="kw">class</span> <span class="fn">Animal</span>:
+    species = <span class="str">'Unknown'</span>              <span class="cm"># class attribute (shared)</span>
+
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, name, age):   <span class="cm"># constructor</span>
+        <span class="kw">self</span>.name = name              <span class="cm"># instance attributes</span>
+        <span class="kw">self</span>.age  = age
+
+    <span class="kw">def</span> <span class="fn">speak</span>(<span class="kw">self</span>):                  <span class="cm"># instance method</span>
+        <span class="kw">return</span> <span class="str">f'{self.name} speaks'</span>
+
+    @<span class="fn">classmethod</span>
+    <span class="kw">def</span> <span class="fn">create</span>(<span class="fn">cls</span>, data):            <span class="cm"># factory via classmethod</span>
+        <span class="kw">return</span> <span class="fn">cls</span>(data[<span class="str">'name'</span>], data[<span class="str">'age'</span>])
+
+    @<span class="fn">staticmethod</span>
+    <span class="kw">def</span> <span class="fn">validate</span>(age):               <span class="cm"># no self/cls — utility</span>
+        <span class="kw">return</span> age > <span class="num">0</span>
+
+    @<span class="fn">property</span>
+    <span class="kw">def</span> <span class="fn">info</span>(<span class="kw">self</span>):                   <span class="cm"># property — access like attribute</span>
+        <span class="kw">return</span> <span class="str">f'{self.name}/{self.age}'</span>
+
+    <span class="kw">def</span> <span class="fn">__repr__</span>(<span class="kw">self</span>):               <span class="cm"># developer repr</span>
+        <span class="kw">return</span> <span class="str">f'Animal({self.name!r})'</span>
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="kw">self</span>):                <span class="cm"># user-friendly str</span>
+        <span class="kw">return</span> <span class="kw">self</span>.name
+
+<span class="kw">class</span> <span class="fn">Dog</span>(<span class="fn">Animal</span>):                   <span class="cm"># inheritance</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, name, age, breed):
+        <span class="bi">super</span>().__init__(name, age)   <span class="cm"># call parent __init__</span>
+        <span class="kw">self</span>.breed = breed
+
+    <span class="kw">def</span> <span class="fn">speak</span>(<span class="kw">self</span>):                  <span class="cm"># method overriding</span>
+        <span class="kw">return</span> <span class="str">'Woof!'</span></div>
+      </div>
+
+      <!-- ══ LAMBDA & FUNCTIONAL ═══════════════════════════ -->
+      <div class="sheet-section reveal" id="lambda">
+        <div class="sheet-header">
+          <div class="sheet-header__icon">λ</div>
+          <h3 class="sheet-header__title">Lambda &amp; Functional Tools</h3>
+        </div>
+        <div class="syntax-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Lambda — anonymous single-expression function</span>
+square = <span class="kw">lambda</span> x: x**<span class="num">2</span>
+add    = <span class="kw">lambda</span> x, y: x + y
+clamp  = <span class="kw">lambda</span> x, lo, hi: <span class="bi">max</span>(lo, <span class="bi">min</span>(hi, x))
+
+<span class="cm"># Common uses</span>
+<span class="bi">sorted</span>(people, key=<span class="kw">lambda</span> p: p[<span class="str">'age'</span>])
+<span class="bi">sorted</span>(words, key=<span class="kw">lambda</span> w: (<span class="bi">len</span>(w), w))   <span class="cm"># multi-key</span>
+<span class="bi">max</span>(items, key=<span class="kw">lambda</span> x: x.score)
+
+<span class="cm"># map / filter</span>
+<span class="bi">list</span>(<span class="bi">map</span>(<span class="kw">lambda</span> x: x**<span class="num">2</span>, nums))
+<span class="bi">list</span>(<span class="bi">filter</span>(<span class="kw">lambda</span> x: x > <span class="num">0</span>, nums))
+
+<span class="cm"># functools</span>
+<span class="kw">from</span> functools <span class="kw">import</span> reduce, lru_cache, partial
+
+reduce(<span class="kw">lambda</span> a, b: a + b, [<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>])   <span class="cm"># → 10</span>
+
+@<span class="fn">lru_cache</span>(maxsize=<span class="kw">None</span>)             <span class="cm"># memoisation decorator</span>
+<span class="kw">def</span> <span class="fn">fib</span>(n): <span class="kw">return</span> n <span class="kw">if</span> n &lt;= <span class="num">1</span> <span class="kw">else</span> <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>)
+
+double = partial(<span class="bi">pow</span>, exp=<span class="num">2</span>)        <span class="cm"># partial application</span></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none;padding-top:0;">
+      <p>© 2025 PyPrep Pro · Built by <a href="https://github.com/rohanjpatil01" target="_blank" rel="noopener">Rohan Patil</a></p>
+      <p><a href="https://instagram.com/rohanjpatil01" target="_blank" rel="noopener" style="margin-right:14px;">@rohanjpatil01</a><a href="index.html">← Home</a></p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+<script>
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function copyBlock(btn) {
+  const block = btn.closest('.syntax-block');
+  const text  = block.innerText.replace('Copy','').trim();
+  window.PyPrep.copyToClipboard(text);
+}
+// Highlight active nav on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      document.querySelectorAll('.nav-link').forEach(l => {
+        l.classList.toggle('active', l.getAttribute('onclick').includes(id));
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-100px 0px -60% 0px' });
+document.querySelectorAll('.sheet-section').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
