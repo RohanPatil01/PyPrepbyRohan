@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Python Interview Patterns — Understand the concepts interviewers repeatedly test. Mutable vs Immutable, is vs ==, Scope, Closures, Lambda and more." />
+  <title>Interview Patterns — PyPrep Pro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .page-hero {
+      padding: calc(var(--nav-height) + 44px) 0 44px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-glass);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -60px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,92,252,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── Layout ──────────────────────────────────────── */
+    .pt-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 40px 0 80px;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + 16px);
+      max-height: calc(100vh - var(--nav-height) - 32px);
+      overflow-y: auto;
+    }
+    .sidebar__card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .sidebar__heading {
+      font-family: var(--font-display);
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-muted); margin-bottom: 10px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border-glass);
+    }
+    .nav-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px; border-radius: var(--radius-sm);
+      font-size: 0.83rem; color: var(--text-secondary);
+      cursor: pointer; background: none; border: none;
+      width: 100%; text-align: left; font-family: var(--font-body);
+      transition: all var(--transition); text-decoration: none;
+    }
+    .nav-link:hover  { background: var(--bg-tag); color: var(--brand-secondary); }
+    .nav-link.active { background: rgba(124,92,252,0.12); color: var(--brand-secondary); font-weight: 600; }
+
+    /* ── Pattern Section ─────────────────────────────── */
+    .pattern-section {
+      margin-bottom: 56px;
+      scroll-margin-top: calc(var(--nav-height) + 20px);
+    }
+    .pattern-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 24px; padding: 16px 22px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      position: sticky;
+      top: calc(var(--nav-height) + 8px);
+      z-index: 10;
+    }
+    .pattern-header__icon {
+      width: 42px; height: 42px; border-radius: var(--radius-md);
+      background: rgba(124,92,252,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .pattern-header__title { font-size: 1.1rem; font-family: var(--font-display); flex: 1; }
+    .pattern-header__badge {
+      padding: 5px 14px; border-radius: var(--radius-pill);
+      font-size: 0.75rem; font-weight: 700;
+      background: rgba(124,92,252,0.15); color: var(--brand-secondary);
+    }
+
+    /* ── Concept card ────────────────────────────────── */
+    .concept-card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 26px 28px;
+      margin-bottom: 16px;
+      transition: all var(--transition);
+    }
+    .concept-card:hover { border-color: rgba(124,92,252,0.28); box-shadow: var(--shadow-card); }
+
+    .concept-card__title {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 10px; color: var(--text-primary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .concept-card__body { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px; }
+
+    /* Code block inside pattern */
+    .pt-code {
+      background: #0a0f1e;
+      border: 1px solid rgba(124,92,252,0.18);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem; color: #c9d8ff;
+      line-height: 1.8; margin-bottom: 14px;
+      overflow-x: auto; white-space: pre;
+      position: relative;
+    }
+    [data-theme="dark"] .pt-code { background: #03080f; }
+    .pt-code .kw  { color: #7c5cfc; font-weight: 600; }
+    .pt-code .fn  { color: #4f8ef7; }
+    .pt-code .str { color: #4cde9a; }
+    .pt-code .num { color: #ffb347; }
+    .pt-code .cm  { color: #4a5a7a; font-style: italic; }
+    .pt-code .bi  { color: #00d4aa; }
+    .pt-code .out { color: #ff9f43; }
+
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      padding: 4px 10px; border-radius: var(--radius-sm);
+      background: rgba(124,92,252,0.12); border: 1px solid rgba(124,92,252,0.22);
+      color: var(--brand-secondary); font-size: 0.7rem; font-weight: 600;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .copy-btn:hover { background: rgba(124,92,252,0.22); }
+
+    /* Interviewer tip */
+    .interviewer-tip {
+      padding: 14px 18px; border-radius: var(--radius-md);
+      background: rgba(255,179,71,0.08);
+      border: 1px solid rgba(255,179,71,0.20);
+      border-left: 3px solid var(--brand-warning);
+      font-size: 0.86rem; color: var(--text-secondary); line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .interviewer-tip__label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--brand-warning); margin-bottom: 6px;
+    }
+
+    /* Rule boxes */
+    .rule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    .rule-box {
+      padding: 14px 16px; border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass); font-size: 0.84rem;
+    }
+    .rule-box.good { background: rgba(76,222,154,0.08); border-color: rgba(76,222,154,0.25); }
+    .rule-box.bad  { background: rgba(255,92,92,0.08);  border-color: rgba(255,92,92,0.25);  }
+    .rule-box__label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .rule-box.good .rule-box__label { color: var(--brand-success); }
+    .rule-box.bad  .rule-box__label { color: var(--brand-danger);  }
+    .rule-box__text { color: var(--text-secondary); line-height: 1.6; }
+
+    /* Summary table */
+    .summary-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 14px; }
+    .summary-table th {
+      padding: 10px 14px; text-align: left;
+      background: var(--bg-secondary); color: var(--text-muted);
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .summary-table td {
+      padding: 10px 14px; color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-glass);
+      font-family: var(--font-mono); font-size: 0.82rem;
+    }
+    .summary-table tr:hover td { background: var(--bg-tag); }
+    .summary-table tr:last-child td { border-bottom: none; }
+
+    @media (max-width: 900px) {
+      .pt-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; max-height: none; }
+      .pattern-header { position: static; }
+      .rule-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon">🐍</div>
+        PyPrep<span class="accent">Pro</span>
+      </a>
+      <nav class="navbar__nav">
+        <a href="questions.html"  class="navbar__link">Interview Q&A</a>
+        <a href="mcq.html"        class="navbar__link">MCQ Arena</a>
+        <a href="output.html"     class="navbar__link">Guess Output</a>
+        <a href="coding.html"     class="navbar__link">Coding</a>
+        <a href="mock.html"       class="navbar__link">Mock Interview</a>
+        <a href="cheatsheet.html" class="navbar__link">Cheat Sheets</a>
+        <a href="patterns.html"   class="navbar__link active">Patterns</a>
+        <a href="revision.html"   class="navbar__link">Revision</a>
+      </nav>
+      <div class="navbar__actions">
+        <button class="theme-toggle" title="Toggle Theme">🌙</button>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav">
+  <a href="questions.html"  class="navbar__link">📋 Interview Q&A</a>
+  <a href="mcq.html"        class="navbar__link">🎯 MCQ Arena</a>
+  <a href="output.html"     class="navbar__link">💻 Guess Output</a>
+  <a href="coding.html"     class="navbar__link">⌨️ Coding Challenges</a>
+  <a href="mock.html"       class="navbar__link">🎙️ Mock Interview</a>
+  <a href="cheatsheet.html" class="navbar__link">📄 Cheat Sheets</a>
+  <a href="patterns.html"   class="navbar__link">🧠 Interview Patterns</a>
+  <a href="revision.html"   class="navbar__link">⚡ Last-Minute Revision</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="section-header__eyebrow" style="margin-bottom:12px;">🧠 Interview Patterns</div>
+    <h1 style="margin-bottom:8px;">Think Like an Interviewer</h1>
+    <p style="max-width:580px;">These are the concepts interviewers test again and again. Don't just memorise answers — understand the thinking behind each pattern.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="pt-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__card">
+        <div class="sidebar__heading">🧠 Patterns</div>
+        <button class="nav-link active" onclick="scrollTo('mutability')">🔒 Mutable vs Immutable</button>
+        <button class="nav-link" onclick="scrollTo('isvseq')">🔍 is vs ==</button>
+        <button class="nav-link" onclick="scrollTo('scope')">🌐 Variable Scope (LEGB)</button>
+        <button class="nav-link" onclick="scrollTo('closures')">📦 Closures</button>
+        <button class="nav-link" onclick="scrollTo('defaultargs')">⚠️ Mutable Default Args</button>
+        <button class="nav-link" onclick="scrollTo('copying')">📋 Copy vs Deep Copy</button>
+        <button class="nav-link" onclick="scrollTo('lambda')">λ Lambda Functions</button>
+        <button class="nav-link" onclick="scrollTo('comprehensions')">🔄 Comprehensions</button>
+        <button class="nav-link" onclick="scrollTo('args')">📥 Function Arguments</button>
+        <button class="nav-link" onclick="scrollTo('generators')">⚡ Generators</button>
+        <button class="nav-link" onclick="scrollTo('decorators')">🎀 Decorators</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+
+      <!-- ══ MUTABLE VS IMMUTABLE ══════════════════════════ -->
+      <div class="pattern-section reveal" id="mutability">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">🔒</div>
+          <h3 class="pattern-header__title">Mutable vs Immutable</h3>
+          <span class="pattern-header__badge">⭐ Most Tested</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">The Core Idea</div>
+          <div class="concept-card__body">Mutable objects can be changed in-place after creation. Immutable objects cannot — any operation creates a new object. This affects aliasing, function arguments, and dictionary keys.</div>
+          <div class="rule-grid">
+            <div class="rule-box good"><div class="rule-box__label">✅ Mutable</div><div class="rule-box__text">list, dict, set, bytearray<br>Changed in-place. Multiple variables can share and modify the same object.</div></div>
+            <div class="rule-box bad"><div class="rule-box__label">🔒 Immutable</div><div class="rule-box__text">int, float, str, tuple, frozenset, bool<br>Cannot be changed. Any "change" creates a new object.</div></div>
+          </div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Mutable — alias problem</span>
+a = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]
+b = a          <span class="cm"># b is NOT a copy — same object</span>
+b.append(<span class="num">4</span>)
+<span class="bi">print</span>(a)       <span class="out"># [1, 2, 3, 4]  ← a was changed!</span>
+
+<span class="cm"># Immutable — no alias problem</span>
+x = <span class="str">"hello"</span>
+y = x
+y = y + <span class="str">" world"</span>  <span class="cm"># creates NEW string</span>
+<span class="bi">print</span>(x)          <span class="out"># "hello"  ← x unchanged</span>
+
+<span class="cm"># Fix: use copy for lists</span>
+b = a.copy()   <span class="cm"># or a[:] or list(a)</span></div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            Interviewers use this to test whether you understand Python's reference model. The classic trap is passing a list to a function and modifying it — the caller's list also changes. Always think: "Is this a new object or the same one?"
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ IS VS == ═══════════════════════════════════════ -->
+      <div class="pattern-section reveal" id="isvseq">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">🔍</div>
+          <h3 class="pattern-header__title">is vs ==</h3>
+          <span class="pattern-header__badge">⭐ Most Tested</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">Identity vs Equality</div>
+          <div class="concept-card__body"><strong>==</strong> checks if two objects have the same <em>value</em>. <strong>is</strong> checks if two variables point to the exact <em>same object</em> in memory (same id()). Two objects can be equal (==) but not identical (is).</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Lists</span>
+a = [<span class="num">1</span>, <span class="num">2</span>]
+b = [<span class="num">1</span>, <span class="num">2</span>]
+<span class="bi">print</span>(a == b)   <span class="out"># True  — same values</span>
+<span class="bi">print</span>(a <span class="kw">is</span> b)   <span class="out"># False — different objects</span>
+
+<span class="cm"># Integer caching (-5 to 256)</span>
+x = <span class="num">256</span>;  y = <span class="num">256</span>
+<span class="bi">print</span>(x <span class="kw">is</span> y)   <span class="out"># True  — CPython caches small ints</span>
+x = <span class="num">257</span>;  y = <span class="num">257</span>
+<span class="bi">print</span>(x <span class="kw">is</span> y)   <span class="out"># False — outside cache range</span>
+
+<span class="cm"># None — always use 'is'</span>
+<span class="kw">if</span> x <span class="kw">is</span> <span class="kw">None</span>:   <span class="cm"># ✅ correct</span>
+    pass
+<span class="kw">if</span> x == <span class="kw">None</span>:  <span class="cm"># ⚠️ works but not idiomatic</span>
+    pass</div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            They want to see if you understand Python's memory model. Always use <code>is None</code> / <code>is not None</code> — never <code>== None</code>. Also, never rely on <code>is</code> for integer comparison beyond the -5 to 256 cache — it's an implementation detail.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SCOPE ══════════════════════════════════════════ -->
+      <div class="pattern-section reveal" id="scope">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">🌐</div>
+          <h3 class="pattern-header__title">Variable Scope — LEGB Rule</h3>
+          <span class="pattern-header__badge">Very Common</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">LEGB Lookup Order</div>
+          <div class="concept-card__body">When Python resolves a name, it searches in this order: <strong>L</strong>ocal → <strong>E</strong>nclosing → <strong>G</strong>lobal → <strong>B</strong>uilt-in. The first match wins.</div>
+          <table class="summary-table">
+            <tr><th>Scope</th><th>Where</th><th>Keyword to modify</th></tr>
+            <tr><td>Local</td><td>Inside current function</td><td>—</td></tr>
+            <tr><td>Enclosing</td><td>Outer function (nested)</td><td>nonlocal</td></tr>
+            <tr><td>Global</td><td>Module level</td><td>global</td></tr>
+            <tr><td>Built-in</td><td>Python builtins (len, print…)</td><td>—</td></tr>
+          </table>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button>x = <span class="str">'global'</span>
+
+<span class="kw">def</span> <span class="fn">outer</span>():
+    x = <span class="str">'enclosing'</span>
+    <span class="kw">def</span> <span class="fn">inner</span>():
+        x = <span class="str">'local'</span>
+        <span class="bi">print</span>(x)   <span class="out"># 'local'</span>
+    inner()
+    <span class="bi">print</span>(x)       <span class="out"># 'enclosing'</span>
+
+outer()
+<span class="bi">print</span>(x)           <span class="out"># 'global'</span>
+
+<span class="cm"># Classic gotcha — UnboundLocalError</span>
+x = <span class="num">10</span>
+<span class="kw">def</span> <span class="fn">fn</span>():
+    <span class="bi">print</span>(x)   <span class="cm"># ❌ UnboundLocalError!</span>
+    x = <span class="num">20</span>    <span class="cm"># Python sees this & treats x as local throughout</span>
+
+<span class="cm"># Fix:</span>
+<span class="kw">def</span> <span class="fn">fn</span>():
+    <span class="kw">global</span> x   <span class="cm"># declare intent to use global x</span>
+    <span class="bi">print</span>(x)
+    x = <span class="num">20</span></div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            The UnboundLocalError trap catches many developers off guard. If Python sees an assignment to a name anywhere in a function, it treats that name as local throughout the entire function — even before the assignment line.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ CLOSURES ═══════════════════════════════════════ -->
+      <div class="pattern-section reveal" id="closures">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">📦</div>
+          <h3 class="pattern-header__title">Closures</h3>
+          <span class="pattern-header__badge">Common</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">What Is a Closure?</div>
+          <div class="concept-card__body">A closure is an inner function that remembers variables from its enclosing scope even after the outer function has returned. The inner function "closes over" those variables.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="kw">def</span> <span class="fn">make_multiplier</span>(n):
+    <span class="kw">def</span> <span class="fn">multiply</span>(x):
+        <span class="kw">return</span> x * n   <span class="cm"># n is captured from enclosing scope</span>
+    <span class="kw">return</span> multiply
+
+double = make_multiplier(<span class="num">2</span>)
+triple = make_multiplier(<span class="num">3</span>)
+<span class="bi">print</span>(double(<span class="num">5</span>))   <span class="out"># 10</span>
+<span class="bi">print</span>(triple(<span class="num">5</span>))   <span class="out"># 15</span>
+
+<span class="cm"># Classic loop closure bug</span>
+fns = [<span class="kw">lambda</span> x: x + i <span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="num">3</span>)]
+<span class="bi">print</span>(fns[<span class="num">0</span>](<span class="num">10</span>))  <span class="out"># 12 — NOT 10! All lambdas share i=2</span>
+
+<span class="cm"># Fix: capture with default argument</span>
+fns = [<span class="kw">lambda</span> x, i=i: x + i <span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="num">3</span>)]
+<span class="bi">print</span>(fns[<span class="num">0</span>](<span class="num">10</span>))  <span class="out"># 10 ✅</span></div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            The loop closure bug is one of the most famous Python gotchas. All lambdas in a loop share the same variable — not its value at creation time. The fix using default args <code>i=i</code> captures the value at that moment.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ MUTABLE DEFAULT ARGS ════════════════════════════ -->
+      <div class="pattern-section reveal" id="defaultargs">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">⚠️</div>
+          <h3 class="pattern-header__title">Mutable Default Arguments</h3>
+          <span class="pattern-header__badge">⭐ Classic Gotcha</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">The Trap</div>
+          <div class="concept-card__body">Default argument values are evaluated <strong>once</strong> when the function is defined — not on each call. If the default is a mutable object (list, dict), it's shared across all calls that use it.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># ❌ Bug — shared mutable default</span>
+<span class="kw">def</span> <span class="fn">add_item</span>(item, lst=[]):
+    lst.append(item)
+    <span class="kw">return</span> lst
+
+<span class="bi">print</span>(add_item(<span class="num">1</span>))   <span class="out"># [1]</span>
+<span class="bi">print</span>(add_item(<span class="num">2</span>))   <span class="out"># [1, 2]  ← NOT [2]!</span>
+<span class="bi">print</span>(add_item(<span class="num">3</span>))   <span class="out"># [1, 2, 3]</span>
+
+<span class="cm"># ✅ Fix — use None as sentinel</span>
+<span class="kw">def</span> <span class="fn">add_item</span>(item, lst=<span class="kw">None</span>):
+    <span class="kw">if</span> lst <span class="kw">is</span> <span class="kw">None</span>:
+        lst = []
+    lst.append(item)
+    <span class="kw">return</span> lst
+
+<span class="bi">print</span>(add_item(<span class="num">1</span>))   <span class="out"># [1]  ✅</span>
+<span class="bi">print</span>(add_item(<span class="num">2</span>))   <span class="out"># [2]  ✅</span></div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            This is asked in almost every Python interview. The rule is simple: <strong>never use a mutable object as a default argument</strong>. Always use <code>None</code> and create a fresh object inside the function. Interviewers expect you to explain why this happens at the language level.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ COPY VS DEEP COPY ══════════════════════════════ -->
+      <div class="pattern-section reveal" id="copying">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">📋</div>
+          <h3 class="pattern-header__title">Copy vs Deep Copy</h3>
+          <span class="pattern-header__badge">Common</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">Three Levels of Copying</div>
+          <div class="concept-card__body">There are three ways variables can relate to an object: assignment (alias), shallow copy, and deep copy. They differ in how nested objects are handled.</div>
+          <table class="summary-table">
+            <tr><th>Method</th><th>Outer container</th><th>Nested objects</th></tr>
+            <tr><td>b = a</td><td>Same object</td><td>Same (alias)</td></tr>
+            <tr><td>b = a.copy() / a[:]</td><td>New object</td><td>Shared (same refs)</td></tr>
+            <tr><td>copy.deepcopy(a)</td><td>New object</td><td>All new objects</td></tr>
+          </table>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="kw">import</span> copy
+
+original = [[<span class="num">1</span>, <span class="num">2</span>], [<span class="num">3</span>, <span class="num">4</span>]]
+
+<span class="cm"># Shallow copy</span>
+shallow = original.copy()
+shallow[<span class="num">0</span>].append(<span class="num">99</span>)
+<span class="bi">print</span>(original)   <span class="out"># [[1, 2, 99], [3, 4]]  ← inner list shared!</span>
+
+<span class="cm"># Deep copy</span>
+original = [[<span class="num">1</span>, <span class="num">2</span>], [<span class="num">3</span>, <span class="num">4</span>]]
+deep = copy.deepcopy(original)
+deep[<span class="num">0</span>].append(<span class="num">99</span>)
+<span class="bi">print</span>(original)   <span class="out"># [[1, 2], [3, 4]]  ← fully independent ✅</span></div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            For flat lists, shallow copy is fine. The danger is with nested structures — shallow copy only duplicates the outer container. Interviewers pair this with the mutability question to test whether you understand shared references.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ LAMBDA ══════════════════════════════════════════ -->
+      <div class="pattern-section reveal" id="lambda">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">λ</div>
+          <h3 class="pattern-header__title">Lambda Functions</h3>
+          <span class="pattern-header__badge">Common</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">When to Use Lambda</div>
+          <div class="concept-card__body">Lambdas are anonymous, single-expression functions. Use them for short, throwaway functions — especially as <code>key</code> arguments to <code>sorted()</code>, <code>min()</code>, <code>max()</code>, or as arguments to <code>map()</code>/<code>filter()</code>.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Good uses of lambda</span>
+people = [{<span class="str">'name'</span>:<span class="str">'Alice'</span>,<span class="str">'age'</span>:<span class="num">30</span>}, {<span class="str">'name'</span>:<span class="str">'Bob'</span>,<span class="str">'age'</span>:<span class="num">25</span>}]
+<span class="bi">sorted</span>(people, key=<span class="kw">lambda</span> p: p[<span class="str">'age'</span>])
+
+<span class="cm"># Multi-key sort</span>
+<span class="bi">sorted</span>(words, key=<span class="kw">lambda</span> w: (<span class="bi">len</span>(w), w.lower()))
+
+<span class="cm"># Conditional expression in lambda</span>
+classify = <span class="kw">lambda</span> x: <span class="str">'even'</span> <span class="kw">if</span> x % <span class="num">2</span> == <span class="num">0</span> <span class="kw">else</span> <span class="str">'odd'</span>
+
+<span class="cm"># Lambda vs def — when def is better</span>
+<span class="cm"># ❌ avoid: named lambdas</span>
+square = <span class="kw">lambda</span> x: x**<span class="num">2</span>   <span class="cm"># use def instead</span>
+<span class="cm"># ✅ use def for reusable, named functions</span>
+<span class="kw">def</span> <span class="fn">square</span>(x): <span class="kw">return</span> x**<span class="num">2</span></div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            Interviewers often ask: "What's the difference between lambda and def?" Key answer: lambda is limited to one expression, has no statements, and is anonymous. PEP 8 discourages assigning lambdas to names — use <code>def</code> instead.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ COMPREHENSIONS ════════════════════════════════ -->
+      <div class="pattern-section reveal" id="comprehensions">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">🔄</div>
+          <h3 class="pattern-header__title">List &amp; Dict Comprehensions</h3>
+          <span class="pattern-header__badge">Very Common</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">Comprehension vs Generator vs Loop</div>
+          <div class="concept-card__body">Comprehensions are concise and fast for building collections. Use a generator expression (parentheses) when you only need to iterate once — saves memory. Use a regular loop when logic is complex.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button"><span class="cm"># List — creates full list in memory</span>
+squares = [x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">10</span>)]
+
+<span class="cm"># Generator — lazy, one value at a time</span>
+gen = (x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">10</span>))
+total = <span class="bi">sum</span>(x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">1000000</span>))  <span class="cm"># memory efficient</span>
+
+<span class="cm"># Dict comprehension — common interview task</span>
+word_len = {w: <span class="bi">len</span>(w) <span class="kw">for</span> w <span class="kw">in</span> words}
+inv_dict  = {v: k <span class="kw">for</span> k, v <span class="kw">in</span> d.items()}
+filtered  = {k: v <span class="kw">for</span> k, v <span class="kw">in</span> d.items() <span class="kw">if</span> v > <span class="num">0</span>}
+
+<span class="cm"># Nested comprehension — flatten matrix</span>
+flat = [x <span class="kw">for</span> row <span class="kw">in</span> matrix <span class="kw">for</span> x <span class="kw">in</span> row]</div>
+        </div>
+      </div>
+
+      <!-- ══ FUNCTION ARGUMENTS ═════════════════════════════ -->
+      <div class="pattern-section reveal" id="args">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">📥</div>
+          <h3 class="pattern-header__title">Function Arguments</h3>
+          <span class="pattern-header__badge">Common</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">All Argument Types</div>
+          <div class="concept-card__body">Python has five types of function parameters. Order in definition must be: positional → *args → keyword-only → **kwargs.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="kw">def</span> <span class="fn">fn</span>(pos1, pos2, /, regular, *, kw_only, **kwargs):
+    pass
+
+<span class="cm"># / separates positional-only (Python 3.8+)</span>
+<span class="cm"># * separates keyword-only after it</span>
+
+<span class="cm"># *args and **kwargs</span>
+<span class="kw">def</span> <span class="fn">demo</span>(*args, **kwargs):
+    <span class="bi">print</span>(args)    <span class="out"># tuple of positional args</span>
+    <span class="bi">print</span>(kwargs)  <span class="out"># dict of keyword args</span>
+
+demo(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, name=<span class="str">'Rohan'</span>, age=<span class="num">25</span>)
+<span class="out"># (1, 2, 3)</span>
+<span class="out"># {'name': 'Rohan', 'age': 25}</span>
+
+<span class="cm"># Unpacking on call</span>
+nums = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]
+<span class="fn">demo</span>(*nums)            <span class="cm"># unpack list as positional</span>
+<span class="fn">demo</span>(**{<span class="str">'a'</span>:<span class="num">1</span>})        <span class="cm"># unpack dict as keyword</span></div>
+        </div>
+      </div>
+
+      <!-- ══ GENERATORS ════════════════════════════════════ -->
+      <div class="pattern-section reveal" id="generators">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">⚡</div>
+          <h3 class="pattern-header__title">Generators</h3>
+          <span class="pattern-header__badge">Medium Priority</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">Why Generators Matter</div>
+          <div class="concept-card__body">Generators produce values lazily — one at a time on demand. They use far less memory than building a full list. A function with <code>yield</code> becomes a generator function.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Generator function</span>
+<span class="kw">def</span> <span class="fn">countdown</span>(n):
+    <span class="kw">while</span> n > <span class="num">0</span>:
+        <span class="kw">yield</span> n
+        n -= <span class="num">1</span>
+
+<span class="kw">for</span> x <span class="kw">in</span> countdown(<span class="num">3</span>): <span class="bi">print</span>(x)   <span class="out"># 3, 2, 1</span>
+
+<span class="cm"># Generators are exhausted after one pass</span>
+g = countdown(<span class="num">3</span>)
+<span class="bi">list</span>(g)   <span class="out"># [3, 2, 1]</span>
+<span class="bi">list</span>(g)   <span class="out"># []  ← exhausted!</span>
+
+<span class="cm"># next() and StopIteration</span>
+g = countdown(<span class="num">2</span>)
+<span class="bi">next</span>(g)   <span class="out"># 2</span>
+<span class="bi">next</span>(g)   <span class="out"># 1</span>
+<span class="bi">next</span>(g)   <span class="out"># StopIteration raised</span></div>
+        </div>
+      </div>
+
+      <!-- ══ DECORATORS ════════════════════════════════════ -->
+      <div class="pattern-section reveal" id="decorators">
+        <div class="pattern-header">
+          <div class="pattern-header__icon">🎀</div>
+          <h3 class="pattern-header__title">Decorators</h3>
+          <span class="pattern-header__badge">Medium Priority</span>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-card__title">What Is a Decorator?</div>
+          <div class="concept-card__body">A decorator is a function that takes another function, wraps it with extra behaviour, and returns the wrapper. The <code>@</code> syntax is syntactic sugar for <code>fn = decorator(fn)</code>.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button"><span class="kw">import</span> functools
+
+<span class="kw">def</span> <span class="fn">timer</span>(func):
+    @functools.wraps(func)    <span class="cm"># preserves __name__, __doc__</span>
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*args, **kwargs):
+        <span class="kw">import</span> time
+        start  = time.time()
+        result = func(*args, **kwargs)
+        end    = time.time()
+        <span class="bi">print</span>(<span class="str">f'{func.__name__} took {end-start:.4f}s'</span>)
+        <span class="kw">return</span> result
+    <span class="kw">return</span> wrapper
+
+@<span class="fn">timer</span>
+<span class="kw">def</span> <span class="fn">slow_fn</span>():
+    <span class="kw">import</span> time; time.sleep(<span class="num">0.1</span>)
+
+slow_fn()   <span class="out"># slow_fn took 0.1001s</span>
+
+<span class="cm"># @ is just syntactic sugar for:</span>
+<span class="cm"># slow_fn = timer(slow_fn)</span></div>
+          <div class="interviewer-tip">
+            <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
+            Decorators show mastery of first-class functions and closures. Always use <code>@functools.wraps(func)</code> in your wrapper — without it, the decorated function loses its <code>__name__</code> and <code>__doc__</code> metadata.
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none;padding-top:0;">
+      <p>© 2025 PyPrep Pro · Built by <a href="https://github.com/rohanjpatil01" target="_blank" rel="noopener">Rohan Patil</a></p>
+      <p><a href="https://instagram.com/rohanjpatil01" target="_blank" rel="noopener" style="margin-right:14px;">@rohanjpatil01</a><a href="index.html">← Home</a></p>
+    </div>
+  </div>
+</footer>
+<button class="scroll-top" aria-label="Scroll to top">↑</button>
+<script src="js/main.js"></script>
+<script>
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function copyBlock(btn) {
+  const block = btn.closest('.pt-code');
+  window.PyPrep.copyToClipboard(block.innerText.replace('Copy','').trim());
+}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      document.querySelectorAll('.nav-link').forEach(l => {
+        l.classList.toggle('active', l.getAttribute('onclick')?.includes(id));
+      });
+    }
+  });
+}, { threshold: 0.25, rootMargin: '-100px 0px -60% 0px' });
+document.querySelectorAll('.pattern-section').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

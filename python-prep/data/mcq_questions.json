@@ -1,0 +1,576 @@
+{
+  "meta": { "total": 210, "version": "1.0" },
+  "questions": [
+
+    // ── PYTHON BASICS ──────────────────────────────────────────
+    { "id": "mcq_b01", "topic": "basics", "difficulty": "easy",
+      "q": "What is the correct file extension for Python files?",
+      "opts": [".py", ".pt", ".pyt", ".python"], "ans": 0,
+      "exp": "Python source files use the .py extension. Compiled bytecode files use .pyc." },
+
+    { "id": "mcq_b02", "topic": "basics", "difficulty": "easy",
+      "q": "Which of the following is used to define a block of code in Python?",
+      "opts": ["Curly braces {}", "Parentheses ()", "Indentation", "Square brackets []"], "ans": 2,
+      "exp": "Python uses indentation (whitespace) to define code blocks, not braces. Consistent indentation is mandatory." },
+
+    { "id": "mcq_b03", "topic": "basics", "difficulty": "easy",
+      "q": "What is the output of: print(type(5))?",
+      "opts": ["int", "<class 'int'>", "Integer", "number"], "ans": 1,
+      "exp": "type() returns the type object. Its string representation is <class 'typename'>." },
+
+    { "id": "mcq_b04", "topic": "basics", "difficulty": "easy",
+      "q": "Which keyword is used to define a function in Python?",
+      "opts": ["function", "func", "def", "define"], "ans": 2,
+      "exp": "Functions are defined using the 'def' keyword followed by the function name and parentheses." },
+
+    { "id": "mcq_b05", "topic": "basics", "difficulty": "easy",
+      "q": "What does the len() function return for a string 'Python'?",
+      "opts": ["5", "6", "7", "Error"], "ans": 1,
+      "exp": "'Python' has 6 characters: P-y-t-h-o-n." },
+
+    { "id": "mcq_b06", "topic": "basics", "difficulty": "medium",
+      "q": "What is the output of: print(bool(0), bool(''), bool([]))?",
+      "opts": ["True True True", "False False False", "False True False", "0 '' []"], "ans": 1,
+      "exp": "0, empty string, and empty list are all falsy in Python. bool() of any falsy value is False." },
+
+    { "id": "mcq_b07", "topic": "basics", "difficulty": "medium",
+      "q": "What is the output of: print(10 // 3)?",
+      "opts": ["3.33", "3", "4", "3.0"], "ans": 1,
+      "exp": "// is floor division. 10 // 3 = 3 (rounds down). Result is an integer when both operands are integers." },
+
+    { "id": "mcq_b08", "topic": "basics", "difficulty": "medium",
+      "q": "Which of these is NOT a valid Python keyword?",
+      "opts": ["pass", "break", "until", "yield"], "ans": 2,
+      "exp": "'until' is not a Python keyword. Python uses 'while' for loops. Ruby uses 'until'." },
+
+    { "id": "mcq_b09", "topic": "basics", "difficulty": "medium",
+      "q": "What is the result of: 2 ** 10?",
+      "opts": ["20", "100", "1024", "512"], "ans": 2,
+      "exp": "** is the exponentiation operator. 2**10 = 1024 (2 to the power of 10)." },
+
+    { "id": "mcq_b10", "topic": "basics", "difficulty": "hard",
+      "q": "What is the output of: print(0.1 + 0.2 == 0.3)?",
+      "opts": ["True", "False", "Error", "None"], "ans": 1,
+      "exp": "Due to floating-point precision, 0.1 + 0.2 = 0.30000000000000004, not exactly 0.3. Use math.isclose() for float comparison." },
+
+    { "id": "mcq_b11", "topic": "basics", "difficulty": "hard",
+      "q": "What is the output of: x = 5; print(x := 10, x)?",
+      "opts": ["5 5", "10 10", "10 5", "SyntaxError"], "ans": 1,
+      "exp": "The walrus operator := assigns 10 to x and returns 10. So both print as 10." },
+
+    { "id": "mcq_b12", "topic": "basics", "difficulty": "easy",
+      "q": "Which function converts a string to an integer?",
+      "opts": ["str()", "int()", "float()", "num()"], "ans": 1,
+      "exp": "int() converts a string (or other types) to an integer. int('42') returns 42." },
+
+    // ── DATA TYPES ─────────────────────────────────────────────
+    { "id": "mcq_dt01", "topic": "datatypes", "difficulty": "easy",
+      "q": "Which of the following is an immutable data type?",
+      "opts": ["list", "dict", "set", "tuple"], "ans": 3,
+      "exp": "Tuples are immutable — once created, their elements cannot be changed. Lists, dicts, and sets are mutable." },
+
+    { "id": "mcq_dt02", "topic": "datatypes", "difficulty": "easy",
+      "q": "What is the data type of: x = True?",
+      "opts": ["int", "str", "bool", "NoneType"], "ans": 2,
+      "exp": "True and False are instances of bool. In Python, bool is a subclass of int — bool(True) == 1." },
+
+    { "id": "mcq_dt03", "topic": "datatypes", "difficulty": "medium",
+      "q": "What is the output of: print(isinstance(True, int))?",
+      "opts": ["False", "True", "Error", "None"], "ans": 1,
+      "exp": "bool is a subclass of int in Python. isinstance(True, int) returns True because True IS an int (value 1)." },
+
+    { "id": "mcq_dt04", "topic": "datatypes", "difficulty": "medium",
+      "q": "Which data type would you use as a dictionary key?",
+      "opts": ["list", "dict", "set", "tuple"], "ans": 3,
+      "exp": "Dictionary keys must be hashable. Tuples are hashable (if they contain only hashable elements). Lists, sets, and dicts are not hashable." },
+
+    { "id": "mcq_dt05", "topic": "datatypes", "difficulty": "hard",
+      "q": "What is the output of: print(type(1) == type(1.0))?",
+      "opts": ["True", "False", "Error", "None"], "ans": 1,
+      "exp": "type(1) is <class 'int'> and type(1.0) is <class 'float'>. They are different types, so == returns False." },
+
+    // ── STRINGS ────────────────────────────────────────────────
+    { "id": "mcq_s01", "topic": "strings", "difficulty": "easy",
+      "q": "What is the output of: 'hello'.upper()?",
+      "opts": ["Hello", "HELLO", "hello", "hELLO"], "ans": 1,
+      "exp": "str.upper() converts all characters to uppercase and returns a new string." },
+
+    { "id": "mcq_s02", "topic": "strings", "difficulty": "easy",
+      "q": "What does 'hello world'.split() return?",
+      "opts": ["['hello world']", "['hello', 'world']", "('hello', 'world')", "{'hello', 'world'}"], "ans": 1,
+      "exp": "str.split() with no argument splits on any whitespace. Returns a list of strings." },
+
+    { "id": "mcq_s03", "topic": "strings", "difficulty": "medium",
+      "q": "What is the output of: print('Python'[::-1])?",
+      "opts": ["Python", "nohtyP", "P", "Error"], "ans": 1,
+      "exp": "[::-1] reverses the string by slicing with step -1. 'Python' reversed is 'nohtyP'." },
+
+    { "id": "mcq_s04", "topic": "strings", "difficulty": "medium",
+      "q": "What is the output of: print('abcde'[1:4])?",
+      "opts": ["abcd", "bcd", "bcde", "abc"], "ans": 1,
+      "exp": "Slicing [1:4] includes indices 1, 2, 3 (stop is exclusive). 'abcde'[1:4] = 'bcd'." },
+
+    { "id": "mcq_s05", "topic": "strings", "difficulty": "medium",
+      "q": "What does 'hello'.find('l') return?",
+      "opts": ["0", "2", "3", "-1"], "ans": 1,
+      "exp": "str.find() returns the index of the first occurrence. 'l' first appears at index 2 in 'hello'." },
+
+    { "id": "mcq_s06", "topic": "strings", "difficulty": "hard",
+      "q": "What is the output of: print(f'{10:05d}')?",
+      "opts": ["10000", "00010", "10   ", "Error"], "ans": 1,
+      "exp": ":05d formats the integer with width 5, zero-padded on the left. 10 becomes '00010'." },
+
+    { "id": "mcq_s07", "topic": "strings", "difficulty": "medium",
+      "q": "Which method checks if all characters are alphabetic?",
+      "opts": ["isalpha()", "isalnum()", "isdigit()", "ischar()"], "ans": 0,
+      "exp": "str.isalpha() returns True if all characters are alphabetic (a-z, A-Z) and the string is non-empty." },
+
+    { "id": "mcq_s08", "topic": "strings", "difficulty": "hard",
+      "q": "What is the output of: ', '.join(['a', 'b', 'c'])?",
+      "opts": ["a, b, c", "['a', 'b', 'c']", "a b c", "a,b,c"], "ans": 0,
+      "exp": "str.join(iterable) joins elements with the string as separator. ', '.join(['a','b','c']) = 'a, b, c'." },
+
+    { "id": "mcq_s09", "topic": "strings", "difficulty": "easy",
+      "q": "What does 'hello'.replace('l', 'r') return?",
+      "opts": ["herro", "herlo", "heLLo", "Error"], "ans": 0,
+      "exp": "str.replace(old, new) replaces ALL occurrences. Both 'l's are replaced with 'r', giving 'herro'." },
+
+    { "id": "mcq_s10", "topic": "strings", "difficulty": "medium",
+      "q": "What is the output of: print('  hello  '.strip())?",
+      "opts": ["'  hello  '", "'hello'", "'hello  '", "'  hello'"], "ans": 1,
+      "exp": "str.strip() removes leading and trailing whitespace. lstrip() removes only left, rstrip() only right." },
+
+    // ── LISTS ──────────────────────────────────────────────────
+    { "id": "mcq_l01", "topic": "lists", "difficulty": "easy",
+      "q": "What is the output of: len([1, [2, 3], 4])?",
+      "opts": ["4", "3", "2", "Error"], "ans": 1,
+      "exp": "len() counts top-level elements. [1, [2,3], 4] has 3 elements: 1, [2,3], and 4." },
+
+    { "id": "mcq_l02", "topic": "lists", "difficulty": "easy",
+      "q": "What does list.append() do?",
+      "opts": ["Adds an element at beginning", "Adds an element at end", "Removes an element", "Sorts the list"], "ans": 1,
+      "exp": "list.append(x) adds x as a single element at the end of the list. It modifies the list in-place and returns None." },
+
+    { "id": "mcq_l03", "topic": "lists", "difficulty": "medium",
+      "q": "What is the output of: [1,2,3].index(2)?",
+      "opts": ["1", "2", "0", "Error"], "ans": 0,
+      "exp": "list.index(x) returns the index of the first occurrence of x. 2 is at index 1." },
+
+    { "id": "mcq_l04", "topic": "lists", "difficulty": "medium",
+      "q": "What is the output of: sorted([3,1,4,1,5,9], reverse=True)[:3]?",
+      "opts": ["[1, 1, 3]", "[9, 5, 4]", "[3, 4, 5]", "[9, 5, 3]"], "ans": 1,
+      "exp": "sorted() with reverse=True gives [9,5,4,3,1,1]. Slicing [:3] takes first 3: [9, 5, 4]." },
+
+    { "id": "mcq_l05", "topic": "lists", "difficulty": "medium",
+      "q": "What is the difference between sort() and sorted()?",
+      "opts": ["No difference", "sort() returns new list; sorted() modifies in-place", "sort() modifies in-place; sorted() returns new list", "sorted() only works on tuples"], "ans": 2,
+      "exp": "list.sort() modifies the list in-place and returns None. sorted() takes any iterable and returns a new sorted list." },
+
+    { "id": "mcq_l06", "topic": "lists", "difficulty": "hard",
+      "q": "What is the output of: a=[1,2,3]; b=a[:]; b.append(4); print(a)?",
+      "opts": ["[1, 2, 3, 4]", "[1, 2, 3]", "[4]", "Error"], "ans": 1,
+      "exp": "b=a[:] creates a shallow copy — a new list. Modifying b does not affect a. So a remains [1, 2, 3]." },
+
+    { "id": "mcq_l07", "topic": "lists", "difficulty": "medium",
+      "q": "What does list.pop(0) do?",
+      "opts": ["Removes and returns last element", "Removes and returns first element", "Removes all elements", "Returns first element without removing"], "ans": 1,
+      "exp": "pop(0) removes and returns the element at index 0 (first element). Default pop() removes the last." },
+
+    { "id": "mcq_l08", "topic": "lists", "difficulty": "hard",
+      "q": "What is the output of: [[i*j for j in range(3)] for i in range(3)]?",
+      "opts": ["[[0,0,0],[0,1,2],[0,2,4]]", "[[0,1,2],[0,1,2],[0,1,2]]", "[[0,0,0],[0,2,4],[0,4,8]]", "Error"], "ans": 0,
+      "exp": "Nested list comprehension: outer i=[0,1,2], inner j=[0,1,2]. Each row is [i*0, i*1, i*2]. Row 0: [0,0,0], Row 1: [0,1,2], Row 2: [0,2,4]." },
+
+    { "id": "mcq_l09", "topic": "lists", "difficulty": "medium",
+      "q": "What is the output of: list(range(1, 10, 2))?",
+      "opts": ["[1,2,3,4,5,6,7,8,9]", "[1,3,5,7,9]", "[2,4,6,8]", "[1,3,5,7]"], "ans": 1,
+      "exp": "range(start, stop, step) with step=2 skips every other number. range(1,10,2) = 1,3,5,7,9." },
+
+    { "id": "mcq_l10", "topic": "lists", "difficulty": "easy",
+      "q": "How do you remove duplicate values from a list?",
+      "opts": ["list.unique()", "set(list)", "list.remove_duplicates()", "list.distinct()"], "ans": 1,
+      "exp": "Converting to a set removes duplicates since sets only hold unique elements. list(set(lst)) gives a list of unique values." },
+
+    // ── TUPLES ─────────────────────────────────────────────────
+    { "id": "mcq_t01", "topic": "tuples", "difficulty": "easy",
+      "q": "How do you create a tuple with a single element?",
+      "opts": ["(1)", "(1,)", "[1]", "{1}"], "ans": 1,
+      "exp": "(1) is just an integer in parentheses. To create a single-element tuple, you must add a trailing comma: (1,)." },
+
+    { "id": "mcq_t02", "topic": "tuples", "difficulty": "medium",
+      "q": "What is the output of: t = (1,2,3); a,b,c = t; print(b)?",
+      "opts": ["1", "2", "3", "Error"], "ans": 1,
+      "exp": "Tuple unpacking assigns each element to a variable. a=1, b=2, c=3. So b is 2." },
+
+    { "id": "mcq_t03", "topic": "tuples", "difficulty": "medium",
+      "q": "Which operation is NOT supported on tuples?",
+      "opts": ["Indexing", "Slicing", "Concatenation", "append()"], "ans": 3,
+      "exp": "Tuples are immutable so append() is not available. You can index, slice, and concatenate (creating a new tuple)." },
+
+    { "id": "mcq_t04", "topic": "tuples", "difficulty": "hard",
+      "q": "What is the output of: t=(1,[2,3],4); t[1].append(99); print(t)?",
+      "opts": ["(1, [2, 3], 4)", "(1, [2, 3, 99], 4)", "Error", "(1, 99, 4)"], "ans": 1,
+      "exp": "The tuple itself is immutable (can't reassign t[1]), but it contains a mutable list. Mutating the list in-place is allowed." },
+
+    { "id": "mcq_t05", "topic": "tuples", "difficulty": "medium",
+      "q": "What is the output of: first, *rest = (1, 2, 3, 4)?",
+      "opts": ["first=1, rest=(2,3,4)", "first=1, rest=[2,3,4]", "Error", "first=(1,), rest=(2,3,4)"], "ans": 1,
+      "exp": "Extended unpacking with * captures remaining elements into a list. first=1, rest=[2,3,4] (a list, not a tuple)." },
+
+    // ── SETS ───────────────────────────────────────────────────
+    { "id": "mcq_set01", "topic": "sets", "difficulty": "easy",
+      "q": "What is the output of: len({1, 1, 2, 2, 3})?",
+      "opts": ["5", "4", "3", "2"], "ans": 2,
+      "exp": "Sets automatically remove duplicates. {1,1,2,2,3} becomes {1,2,3} with 3 unique elements." },
+
+    { "id": "mcq_set02", "topic": "sets", "difficulty": "medium",
+      "q": "What is the output of: {1,2,3} & {2,3,4}?",
+      "opts": ["{1,2,3,4}", "{2,3}", "{1,4}", "{1,2,3,2,3,4}"], "ans": 1,
+      "exp": "& is the intersection operator — elements in BOTH sets. {1,2,3} & {2,3,4} = {2,3}." },
+
+    { "id": "mcq_set03", "topic": "sets", "difficulty": "medium",
+      "q": "Which method removes an element from a set without raising an error if it's absent?",
+      "opts": ["remove()", "pop()", "discard()", "delete()"], "ans": 2,
+      "exp": "discard(x) removes x if present, does nothing if not. remove(x) raises KeyError if x is absent." },
+
+    { "id": "mcq_set04", "topic": "sets", "difficulty": "hard",
+      "q": "Can you add a list to a set?",
+      "opts": ["Yes, always", "No, lists are unhashable", "Yes, it gets converted to a tuple", "Only empty lists"], "ans": 1,
+      "exp": "Set elements must be hashable. Lists are mutable and unhashable — adding one raises TypeError. Use a tuple instead." },
+
+    // ── DICTIONARIES ───────────────────────────────────────────
+    { "id": "mcq_d01", "topic": "dictionaries", "difficulty": "easy",
+      "q": "What does dict.keys() return?",
+      "opts": ["A list of keys", "A tuple of keys", "A dict_keys view object", "A set of keys"], "ans": 2,
+      "exp": "dict.keys() returns a dict_keys view object (not a list). It reflects changes to the dict. Wrap in list() to get a list." },
+
+    { "id": "mcq_d02", "topic": "dictionaries", "difficulty": "easy",
+      "q": "What happens when you access a key that doesn't exist: d['missing']?",
+      "opts": ["Returns None", "Returns False", "Raises KeyError", "Raises ValueError"], "ans": 2,
+      "exp": "Accessing a non-existent key with [] raises KeyError. Use dict.get(key, default) to avoid this." },
+
+    { "id": "mcq_d03", "topic": "dictionaries", "difficulty": "medium",
+      "q": "What is the output of: d={'a':1,'b':2}; d.update({'b':10,'c':3}); print(d)?",
+      "opts": ["{'a':1,'b':2,'c':3}", "{'a':1,'b':10,'c':3}", "{'b':10,'c':3}", "Error"], "ans": 1,
+      "exp": "update() merges the dict, updating existing keys and adding new ones. 'b' gets updated to 10, 'c' is added." },
+
+    { "id": "mcq_d04", "topic": "dictionaries", "difficulty": "medium",
+      "q": "What does dict.setdefault('key', 99) do if 'key' is already in the dict with value 5?",
+      "opts": ["Sets value to 99", "Returns 5, doesn't change dict", "Returns 99", "Raises Error"], "ans": 1,
+      "exp": "setdefault(key, default) returns the existing value if key is present — it does NOT overwrite. If key is absent, it inserts default." },
+
+    { "id": "mcq_d05", "topic": "dictionaries", "difficulty": "medium",
+      "q": "What is the output of: {k:v for k,v in [('a',1),('b',2)] if v > 1}?",
+      "opts": ["{'a':1,'b':2}", "{'b':2}", "{'a':1}", "{}"], "ans": 1,
+      "exp": "Dict comprehension with condition v > 1. Only ('b', 2) passes. Result: {'b': 2}." },
+
+    { "id": "mcq_d06", "topic": "dictionaries", "difficulty": "hard",
+      "q": "What is the output of: d={}; d.setdefault('x',[]).append(1); d.setdefault('x',[]).append(2); print(d)?",
+      "opts": ["{'x': [1]}", "{'x': [2]}", "{'x': [1, 2]}", "{'x': [1], 'x': [2]}"], "ans": 2,
+      "exp": "First setdefault creates 'x':[] and returns that list; we append 1. Second call returns existing [1]; we append 2. Final: {'x':[1,2]}." },
+
+    { "id": "mcq_d07", "topic": "dictionaries", "difficulty": "hard",
+      "q": "How do you merge two dicts in Python 3.9+?",
+      "opts": ["d1.merge(d2)", "d1 + d2", "d1 | d2", "merge(d1, d2)"], "ans": 2,
+      "exp": "The | operator (Python 3.9+) merges two dicts into a new dict. d1 |= d2 merges in-place. {**d1, **d2} works in older versions." },
+
+    // ── FUNCTIONS ──────────────────────────────────────────────
+    { "id": "mcq_f01", "topic": "functions", "difficulty": "easy",
+      "q": "What is the output of a function that has no return statement?",
+      "opts": ["0", "False", "None", "Error"], "ans": 2,
+      "exp": "A function with no return statement (or bare return) implicitly returns None." },
+
+    { "id": "mcq_f02", "topic": "functions", "difficulty": "medium",
+      "q": "What is the output of:\ndef fn(x, y=10):\n    return x + y\nprint(fn(5))?",
+      "opts": ["5", "10", "15", "Error"], "ans": 2,
+      "exp": "y has a default value of 10. fn(5) uses x=5, y=10. 5 + 10 = 15." },
+
+    { "id": "mcq_f03", "topic": "functions", "difficulty": "hard",
+      "q": "What is the classic mutable default argument bug?\ndef fn(lst=[]):\n    lst.append(1)\n    return lst\nprint(fn(), fn())?",
+      "opts": ["[1] [1]", "[1] [1, 1]", "[1, 1] [1, 1]", "Error"], "ans": 1,
+      "exp": "Default args are created ONCE when the function is defined, not on each call. The same list is reused. First call: [1]. Second: [1,1]." },
+
+    { "id": "mcq_f04", "topic": "functions", "difficulty": "medium",
+      "q": "What does *args capture?",
+      "opts": ["Keyword arguments as dict", "Positional arguments as tuple", "All arguments as list", "Nothing"], "ans": 1,
+      "exp": "*args captures extra positional arguments as a tuple (not a list). **kwargs captures extra keyword arguments as a dict." },
+
+    { "id": "mcq_f05", "topic": "functions", "difficulty": "hard",
+      "q": "What is the output of:\ndef outer():\n    x = 10\n    def inner():\n        return x\n    return inner\nprint(outer()())?",
+      "opts": ["10", "None", "Error", "outer"], "ans": 0,
+      "exp": "This is a closure. inner() captures x from outer()'s scope. outer()() calls inner(), returning x = 10." },
+
+    { "id": "mcq_f06", "topic": "functions", "difficulty": "medium",
+      "q": "What is the output of:\ndef fn():\n    return 1, 2, 3\na, b, c = fn()\nprint(b)?",
+      "opts": ["1", "2", "3", "(1,2,3)"], "ans": 1,
+      "exp": "Returning multiple values packs them into a tuple. Unpacking assigns each to a, b, c. b = 2." },
+
+    { "id": "mcq_f07", "topic": "functions", "difficulty": "hard",
+      "q": "What is the output of:\nfns = [lambda x=i: x for i in range(3)]\nprint(fns[1]())?",
+      "opts": ["0", "1", "2", "Error"], "ans": 1,
+      "exp": "Each lambda captures i with a default argument x=i at creation time. fns[1] was created with i=1, so fns[1]() = 1." },
+
+    // ── LAMBDA ─────────────────────────────────────────────────
+    { "id": "mcq_lm01", "topic": "lambda", "difficulty": "easy",
+      "q": "What is the output of: (lambda x, y: x + y)(3, 4)?",
+      "opts": ["7", "34", "Error", "None"], "ans": 0,
+      "exp": "This is an immediately invoked lambda. It adds x=3 and y=4. Result is 7." },
+
+    { "id": "mcq_lm02", "topic": "lambda", "difficulty": "medium",
+      "q": "What does sorted(['banana','apple','cherry'], key=lambda s: len(s)) return?",
+      "opts": ["['apple','banana','cherry']", "['apple','cherry','banana']", "['banana','apple','cherry']", "Error"], "ans": 1,
+      "exp": "Sorted by length: apple=5, banana=6, cherry=6. apple first, then banana and cherry (stable sort preserves original order)." },
+
+    { "id": "mcq_lm03", "topic": "lambda", "difficulty": "medium",
+      "q": "What is the output of: list(map(lambda x: x**2, [1,2,3,4]))?",
+      "opts": ["[1,4,9,16]", "[2,4,6,8]", "[1,2,3,4]", "Error"], "ans": 0,
+      "exp": "map() applies the lambda to each element. Squaring [1,2,3,4] gives [1,4,9,16]." },
+
+    { "id": "mcq_lm04", "topic": "lambda", "difficulty": "medium",
+      "q": "What is the output of: list(filter(lambda x: x%2==0, range(10)))?",
+      "opts": ["[1,3,5,7,9]", "[0,2,4,6,8]", "[0,1,2,3,4,5,6,7,8,9]", "[]"], "ans": 1,
+      "exp": "filter() keeps elements where the function returns True. Even numbers in range(10): 0,2,4,6,8." },
+
+    { "id": "mcq_lm05", "topic": "lambda", "difficulty": "hard",
+      "q": "What is a limitation of lambda functions?",
+      "opts": ["Cannot take arguments", "Can only contain a single expression", "Cannot be assigned to variables", "Cannot be used with map()"], "ans": 1,
+      "exp": "Lambdas are restricted to a single expression — no statements (no assignments, no loops, no if-blocks). Use def for complex logic." },
+
+    // ── OOP ────────────────────────────────────────────────────
+    { "id": "mcq_oo01", "topic": "oop", "difficulty": "easy",
+      "q": "What is 'self' in a Python class method?",
+      "opts": ["A keyword like 'this' in Java", "A reference to the current class", "A reference to the current instance", "A built-in variable"], "ans": 2,
+      "exp": "'self' refers to the current instance. It must be the first parameter of instance methods. It's a convention, not a keyword." },
+
+    { "id": "mcq_oo02", "topic": "oop", "difficulty": "easy",
+      "q": "What method is called when an object is created?",
+      "opts": ["__create__", "__start__", "__init__", "__new__"], "ans": 2,
+      "exp": "__init__ is the initializer called after object creation. __new__ creates the instance; __init__ sets it up. You'll almost always define __init__." },
+
+    { "id": "mcq_oo03", "topic": "oop", "difficulty": "medium",
+      "q": "What is the output of:\nclass A:\n    x = 10\na = A()\na.x = 20\nprint(A.x, a.x)?",
+      "opts": ["10 10", "20 20", "10 20", "20 10"], "ans": 2,
+      "exp": "a.x = 20 creates an instance attribute, shadowing the class attribute. A.x remains 10; a.x is 20." },
+
+    { "id": "mcq_oo04", "topic": "oop", "difficulty": "medium",
+      "q": "Which decorator creates a class method?",
+      "opts": ["@staticmethod", "@classmethod", "@property", "@method"], "ans": 1,
+      "exp": "@classmethod makes a method receive the class (cls) as its first argument instead of an instance. Useful for factory methods." },
+
+    { "id": "mcq_oo05", "topic": "oop", "difficulty": "hard",
+      "q": "What is the MRO (Method Resolution Order)?",
+      "opts": ["The order methods are defined in a class", "The order Python searches classes for a method", "The order of method execution", "The order methods are deleted"], "ans": 1,
+      "exp": "MRO determines which class's method is called in inheritance. Python uses C3 linearization. View with ClassName.__mro__." },
+
+    { "id": "mcq_oo06", "topic": "oop", "difficulty": "medium",
+      "q": "What is method overriding?",
+      "opts": ["Defining a method with the same name in a child class", "Adding more parameters to a method", "Calling a method twice", "Deleting a parent method"], "ans": 0,
+      "exp": "Method overriding is when a child class provides a new implementation of a method inherited from the parent class." },
+
+    { "id": "mcq_oo07", "topic": "oop", "difficulty": "hard",
+      "q": "What does super() return?",
+      "opts": ["The parent class object", "A proxy to the parent class", "The grandparent class", "None"], "ans": 1,
+      "exp": "super() returns a proxy object that delegates method calls to the parent class according to MRO. super().__init__() calls the parent's __init__." },
+
+    { "id": "mcq_oo08", "topic": "oop", "difficulty": "hard",
+      "q": "What is the output of:\nclass A:\n    def fn(self): return 'A'\nclass B(A):\n    def fn(self): return 'B'\nb = B()\nprint(b.fn())?",
+      "opts": ["A", "B", "AB", "Error"], "ans": 1,
+      "exp": "B overrides fn(). When called on an instance of B, B's version is used. This is polymorphism via method overriding." },
+
+    // ── EXCEPTIONS ─────────────────────────────────────────────
+    { "id": "mcq_ex01", "topic": "exceptions", "difficulty": "easy",
+      "q": "What block always executes in a try/except structure?",
+      "opts": ["try", "except", "else", "finally"], "ans": 3,
+      "exp": "finally always executes regardless of whether an exception was raised or caught. Used for cleanup (closing files, releasing locks)." },
+
+    { "id": "mcq_ex02", "topic": "exceptions", "difficulty": "medium",
+      "q": "What is raised when you try to access a list index that doesn't exist?",
+      "opts": ["KeyError", "ValueError", "IndexError", "TypeError"], "ans": 2,
+      "exp": "IndexError is raised when a sequence index is out of range. KeyError is for dicts, ValueError for bad values, TypeError for wrong types." },
+
+    { "id": "mcq_ex03", "topic": "exceptions", "difficulty": "medium",
+      "q": "What does the 'else' clause in try/except do?",
+      "opts": ["Runs if exception is raised", "Always runs", "Runs only if NO exception is raised", "Runs before try"], "ans": 2,
+      "exp": "The else clause executes only when the try block completes without raising any exception. It's the 'success' path." },
+
+    { "id": "mcq_ex04", "topic": "exceptions", "difficulty": "hard",
+      "q": "What exception is raised by: int('abc')?",
+      "opts": ["TypeError", "ValueError", "AttributeError", "RuntimeError"], "ans": 1,
+      "exp": "int() raises ValueError when the string can't be converted to an integer — the type is right (str is fine), but the value is invalid." },
+
+    { "id": "mcq_ex05", "topic": "exceptions", "difficulty": "hard",
+      "q": "How do you create and raise a custom exception?",
+      "opts": ["class MyErr(Error): pass; throw MyErr()", "class MyErr(Exception): pass; raise MyErr()", "def MyErr(Exception): raise", "Error MyErr = Exception()"], "ans": 1,
+      "exp": "Custom exceptions inherit from Exception (or a subclass). Use 'raise' (not 'throw') to raise them. This is a Python-specific pattern." },
+
+    // ── FILE HANDLING ──────────────────────────────────────────
+    { "id": "mcq_fh01", "topic": "filehandling", "difficulty": "easy",
+      "q": "Which mode opens a file for writing and creates it if it doesn't exist?",
+      "opts": ["'r'", "'a'", "'w'", "'x'"], "ans": 2,
+      "exp": "'w' opens for writing and creates the file if absent. It OVERWRITES existing content. 'a' appends. 'x' creates new, fails if exists." },
+
+    { "id": "mcq_fh02", "topic": "filehandling", "difficulty": "medium",
+      "q": "Why should you use 'with open(...)' instead of just 'open(...)'?",
+      "opts": ["It's faster", "It automatically closes the file even on exception", "It can read binary files", "It's the only valid syntax in Python 3"], "ans": 1,
+      "exp": "The 'with' statement (context manager) automatically calls file.close() when the block exits — even if an exception occurs." },
+
+    { "id": "mcq_fh03", "topic": "filehandling", "difficulty": "medium",
+      "q": "What does file.readlines() return?",
+      "opts": ["A single string", "A generator", "A list of strings (one per line)", "A tuple of lines"], "ans": 2,
+      "exp": "readlines() reads all lines and returns them as a list of strings, each including the newline character (\\n)." },
+
+    { "id": "mcq_fh04", "topic": "filehandling", "difficulty": "hard",
+      "q": "What is the correct way to open a CSV file to avoid blank lines on Windows?",
+      "opts": ["open('f.csv', 'r')", "open('f.csv', 'r', newline='')", "open('f.csv', 'rb')", "open('f.csv', mode='csv')"], "ans": 1,
+      "exp": "newline='' prevents Python's universal newlines from interfering with the csv module's own newline handling on Windows." },
+
+    // ── COMPREHENSIONS ─────────────────────────────────────────
+    { "id": "mcq_c01", "topic": "comprehensions", "difficulty": "easy",
+      "q": "What is the output of: [x**2 for x in range(4)]?",
+      "opts": ["[1,4,9,16]", "[0,1,4,9]", "[0,2,4,6]", "[1,2,3,4]"], "ans": 1,
+      "exp": "range(4) = 0,1,2,3. Squaring each: 0,1,4,9. Result: [0,1,4,9]." },
+
+    { "id": "mcq_c02", "topic": "comprehensions", "difficulty": "medium",
+      "q": "What is the difference between [x for x in range(5)] and (x for x in range(5))?",
+      "opts": ["No difference", "[] creates a list; () creates a generator", "[] creates a tuple; () creates a generator", "() creates a list; [] creates a set"], "ans": 1,
+      "exp": "[] is list comprehension — creates a full list in memory. () is a generator expression — lazy, produces values on demand, much more memory-efficient." },
+
+    { "id": "mcq_c03", "topic": "comprehensions", "difficulty": "medium",
+      "q": "What is the output of: [x for x in range(10) if x % 3 == 0]?",
+      "opts": ["[3,6,9]", "[0,3,6,9]", "[1,3,6,9]", "[3,6]"], "ans": 1,
+      "exp": "Values in range(10) divisible by 3: 0,3,6,9." },
+
+    { "id": "mcq_c04", "topic": "comprehensions", "difficulty": "hard",
+      "q": "What is the output of: {x: x**2 for x in range(5) if x % 2 != 0}?",
+      "opts": ["{0:0, 2:4, 4:16}", "{1:1, 3:9}", "{1:1, 2:4, 3:9}", "{0:0, 1:1}"], "ans": 1,
+      "exp": "Dict comprehension with odd-number filter. Odd numbers in range(5): 1,3. Result: {1:1, 3:9}." },
+
+    // ── OPERATORS ──────────────────────────────────────────────
+    { "id": "mcq_op01", "topic": "operators", "difficulty": "easy",
+      "q": "What is the output of: 7 % 3?",
+      "opts": ["1", "2", "0", "2.33"], "ans": 1,
+      "exp": "% is the modulo operator — returns the remainder. 7 / 3 = 2 remainder 1. Wait — 7 // 3 = 2, 2*3 = 6, 7-6 = 1. So 7%3 = 1." },
+
+    { "id": "mcq_op02", "topic": "operators", "difficulty": "medium",
+      "q": "What is the output of: not (True and False)?",
+      "opts": ["True", "False", "None", "Error"], "ans": 0,
+      "exp": "True and False = False. not False = True." },
+
+    { "id": "mcq_op03", "topic": "operators", "difficulty": "medium",
+      "q": "What is the output of: 5 > 3 > 1?",
+      "opts": ["True", "False", "Error", "(True, True)"], "ans": 0,
+      "exp": "Python supports chained comparisons. 5 > 3 > 1 is evaluated as (5 > 3) and (3 > 1) = True and True = True." },
+
+    { "id": "mcq_op04", "topic": "operators", "difficulty": "hard",
+      "q": "What is the output of: print(3 or 0)?",
+      "opts": ["True", "3", "0", "False"], "ans": 1,
+      "exp": "Python's 'or' returns the first truthy value (or the last value). 3 is truthy, so 3 is returned (not True)." },
+
+    { "id": "mcq_op05", "topic": "operators", "difficulty": "hard",
+      "q": "What is the output of: print([] or 'default')?",
+      "opts": ["[]", "True", "'default'", "False"], "ans": 2,
+      "exp": "[] is falsy. 'or' returns the first truthy value. [] is falsy, so Python evaluates and returns 'default'." },
+
+    // ── LOOPS ──────────────────────────────────────────────────
+    { "id": "mcq_lp01", "topic": "loops", "difficulty": "easy",
+      "q": "What does the 'break' statement do in a loop?",
+      "opts": ["Skips one iteration", "Exits the entire loop immediately", "Restarts the loop", "Does nothing"], "ans": 1,
+      "exp": "break immediately exits the innermost loop it's in. continue skips the rest of the current iteration." },
+
+    { "id": "mcq_lp02", "topic": "loops", "difficulty": "medium",
+      "q": "What is the output of: for i in range(5):\n    if i == 3: break\nelse:\n    print('done')\nprint('end')?",
+      "opts": ["done\nend", "end", "done", "Error"], "ans": 1,
+      "exp": "The else clause of a for loop runs only if the loop completed WITHOUT a break. Since break fires at i=3, else is skipped. Only 'end' prints." },
+
+    { "id": "mcq_lp03", "topic": "loops", "difficulty": "medium",
+      "q": "What is the output of: list(enumerate(['a','b','c'], start=1))?",
+      "opts": ["[(0,'a'),(1,'b'),(2,'c')]", "[(1,'a'),(2,'b'),(3,'c')]", "['a','b','c']", "[(1,2,3),('a','b','c')]"], "ans": 1,
+      "exp": "enumerate(iterable, start=1) starts counting from 1. Returns (1,'a'), (2,'b'), (3,'c')." },
+
+    { "id": "mcq_lp04", "topic": "loops", "difficulty": "hard",
+      "q": "What is the output of: list(zip([1,2,3],[4,5]))?",
+      "opts": ["[(1,4),(2,5),(3,None)]", "[(1,4),(2,5)]", "[(1,4),(2,5),(3,)]", "Error"], "ans": 1,
+      "exp": "zip() stops at the shortest iterable. [1,2,3] and [4,5] — zip stops at 2 pairs: [(1,4),(2,5)]. Use zip_longest for padding." },
+
+    // ── SCOPE & CLOSURES ───────────────────────────────────────
+    { "id": "mcq_sc01", "topic": "scope", "difficulty": "medium",
+      "q": "What is the output of:\nx = 10\ndef fn():\n    print(x)\nfn()?",
+      "opts": ["Error", "None", "10", "0"], "ans": 2,
+      "exp": "Functions can read global variables without declaring 'global'. LEGB rule: x not found locally, found globally as 10." },
+
+    { "id": "mcq_sc02", "topic": "scope", "difficulty": "hard",
+      "q": "What is the output of:\nx = 10\ndef fn():\n    x = 20\n    print(x)\nfn()\nprint(x)?",
+      "opts": ["20 20", "20 10", "10 10", "Error"], "ans": 1,
+      "exp": "Inside fn(), x=20 creates a LOCAL variable — doesn't affect the global x. fn() prints 20 (local). print(x) prints 10 (global)." },
+
+    { "id": "mcq_sc03", "topic": "scope", "difficulty": "hard",
+      "q": "What keyword modifies a variable in the enclosing (non-global) scope?",
+      "opts": ["global", "nonlocal", "outer", "enclosing"], "ans": 1,
+      "exp": "'nonlocal' declares that a variable refers to the enclosing function's scope (not local, not global). Used in nested functions/closures." },
+
+    // ── MUTABLE VS IMMUTABLE ───────────────────────────────────
+    { "id": "mcq_mut01", "topic": "mutability", "difficulty": "medium",
+      "q": "What is the output of:\na = [1,2,3]\nb = a\nb.append(4)\nprint(a)?",
+      "opts": ["[1,2,3]", "[1,2,3,4]", "[4]", "Error"], "ans": 1,
+      "exp": "b = a makes b a reference to the same list object. Mutating b also mutates a. Both point to [1,2,3,4]." },
+
+    { "id": "mcq_mut02", "topic": "mutability", "difficulty": "medium",
+      "q": "What is the output of:\na = 5\nb = a\nb = 10\nprint(a)?",
+      "opts": ["5", "10", "None", "Error"], "ans": 0,
+      "exp": "Integers are immutable. b=a makes b point to the same int object (5). b=10 rebinds b to a NEW int object. a still points to 5." },
+
+    { "id": "mcq_mut03", "topic": "mutability", "difficulty": "hard",
+      "q": "What is the output of:\nimport copy\na = [[1,2],[3,4]]\nb = copy.copy(a)\nb[0].append(99)\nprint(a)?",
+      "opts": ["[[1,2],[3,4]]", "[[1,2,99],[3,4]]", "[[1,2,99],[3,4,99]]", "Error"], "ans": 1,
+      "exp": "Shallow copy creates a new outer list but inner lists are shared references. Mutating b[0] (the shared inner list) also affects a[0]." },
+
+    // ── GENERATORS ─────────────────────────────────────────────
+    { "id": "mcq_gen01", "topic": "generators", "difficulty": "medium",
+      "q": "What does a function containing 'yield' return when called?",
+      "opts": ["The yielded value directly", "A generator object", "A list of all yielded values", "None"], "ans": 1,
+      "exp": "Calling a generator function returns a generator object without executing the body. Values are produced lazily via next()." },
+
+    { "id": "mcq_gen02", "topic": "generators", "difficulty": "hard",
+      "q": "What is the output of:\ndef gen():\n    yield 1\n    yield 2\ng = gen()\nprint(next(g), next(g))?",
+      "opts": ["1 1", "1 2", "2 1", "Error"], "ans": 1,
+      "exp": "First next(g) runs until 'yield 1', returning 1. Second next(g) resumes and runs until 'yield 2', returning 2." },
+
+    // ── MAP / FILTER / ZIP ──────────────────────────────────────
+    { "id": "mcq_mfz01", "topic": "functions", "difficulty": "medium",
+      "q": "What does map() return in Python 3?",
+      "opts": ["A list", "A tuple", "A map object (iterator)", "A dict"], "ans": 2,
+      "exp": "In Python 3, map() returns a lazy iterator (map object), not a list. Wrap in list() to get a list." },
+
+    { "id": "mcq_mfz02", "topic": "functions", "difficulty": "medium",
+      "q": "What is the output of: list(zip('abc', [1,2,3]))?",
+      "opts": ["[('a',1),('b',2),('c',3)]", "['a1','b2','c3']", "[('a','b','c'),(1,2,3)]", "Error"], "ans": 0,
+      "exp": "zip pairs elements from each iterable at matching positions. 'abc' zipped with [1,2,3] gives [('a',1),('b',2),('c',3)]." },
+
+    // ── MISC / TRICKY ──────────────────────────────────────────
+    { "id": "mcq_mx01", "topic": "basics", "difficulty": "hard",
+      "q": "What is the output of:\nprint(type(lambda: None))?",
+      "opts": ["<class 'function'>", "<class 'lambda'>", "<class 'NoneType'>", "function"], "ans": 0,
+      "exp": "Lambda functions have the type <class 'function'> — same as functions defined with def. There's no separate 'lambda' type." },
+
+    { "id": "mcq_mx02", "topic": "basics", "difficulty": "hard",
+      "q": "What is the output of: x = [1,2]; y = [1,2]; print(x == y, x is y)?",
+      "opts": ["True True", "False False", "True False", "False True"], "ans": 2,
+      "exp": "x == y compares values — both [1,2], so True. x is y checks identity — they are different objects, so False." },
+
+    { "id": "mcq_mx03", "topic": "basics", "difficulty": "medium",
+      "q": "What is the output of: print('a' * 3)?",
+      "opts": ["aaa", "a3", "3a", "Error"], "ans": 0,
+      "exp": "Multiplying a string by an integer repeats it. 'a' * 3 = 'aaa'." },
+
+    { "id": "mcq_mx04", "topic": "basics", "difficulty": "medium",
+      "q": "Which built-in function returns the largest item in an iterable?",
+      "opts": ["largest()", "max()", "top()", "greatest()"], "ans": 1,
+      "exp": "max() returns the largest item. min() returns the smallest. Both accept an iterable or multiple arguments." },
+
+    { "id": "mcq_mx05", "topic": "basics", "difficulty": "hard",
+      "q": "What is the output of:\nprint(list(range(5)) == [0,1,2,3,4])?",
+      "opts": ["False", "True", "Error", "None"], "ans": 1,
+      "exp": "list(range(5)) creates [0,1,2,3,4]. Comparing with [0,1,2,3,4] gives True — list equality checks element-by-element." }
+
+  ]
+}

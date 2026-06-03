@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Python Interview Questions — Topic-wise Q&A with detailed answers, follow-ups, and bookmarks. Covers Basics, OOP, Functions, File Handling & more." />
+  <title>Interview Questions — PyPrep Pro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* ── Page Layout ─────────────────────────────────── */
+    .page-hero {
+      padding: calc(var(--nav-height) + 48px) 0 48px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-glass);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(79,142,247,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-hero__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .page-hero__title { margin-bottom: 8px; }
+    .page-hero__sub   { font-size: 1rem; max-width: 520px; }
+
+    /* ── Main Layout ─────────────────────────────────── */
+    .questions-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 40px 0 80px;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + 16px);
+      max-height: calc(100vh - var(--nav-height) - 32px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .sidebar__card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .sidebar__heading {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .sidebar__topics { display: flex; flex-direction: column; gap: 4px; }
+    .sidebar__topic-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      transition: all var(--transition);
+      font-family: var(--font-body);
+    }
+    .sidebar__topic-btn:hover { background: var(--bg-tag); color: var(--brand-primary); }
+    .sidebar__topic-btn.active {
+      background: rgba(79,142,247,0.14);
+      color: var(--brand-primary);
+      font-weight: 600;
+    }
+    .sidebar__topic-icon { font-size: 1rem; flex-shrink: 0; }
+    .sidebar__topic-count {
+      margin-left: auto;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--bg-secondary);
+      padding: 2px 7px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ── Search + Filters ────────────────────────────── */
+    .questions-toolbar {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .questions-toolbar .search-box { flex: 1; min-width: 240px; }
+
+    /* ── Topic Section Header ────────────────────────── */
+    .topic-section {
+      margin-bottom: 48px;
+      scroll-margin-top: calc(var(--nav-height) + 20px);
+    }
+    .topic-section__header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding: 18px 22px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      position: sticky;
+      top: calc(var(--nav-height) + 8px);
+      z-index: 10;
+    }
+    .topic-section__icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      background: rgba(79,142,247,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .topic-section__title { font-size: 1.2rem; flex: 1; }
+    .topic-section__count {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: var(--bg-tag);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ── Question Card ───────────────────────────────── */
+    .q-card {
+      background: var(--bg-card);
+      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .q-card:hover { border-color: rgba(79,142,247,0.25); box-shadow: var(--shadow-card); }
+    .q-card.open   { border-color: rgba(79,142,247,0.30); box-shadow: var(--shadow-hover); }
+
+    .q-card__header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .q-card__num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--bg-secondary);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .q-card__question {
+      flex: 1;
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--text-primary);
+    }
+    .q-card__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .q-card__bookmark {
+      width: 30px; height: 30px;
+      border-radius: var(--radius-sm);
+      background: none;
+      border: 1px solid transparent;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      color: var(--text-muted);
+    }
+    .q-card__bookmark:hover, .q-card__bookmark.bookmarked {
+      background: rgba(255,179,71,0.12);
+      border-color: rgba(255,179,71,0.25);
+      color: var(--brand-warning);
+    }
+    .q-card__chevron {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      color: var(--brand-primary);
+      transition: transform var(--transition);
+    }
+    .q-card.open .q-card__chevron { transform: rotate(180deg); }
+
+    /* ── Answer Body ─────────────────────────────────── */
+    .q-card__body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .q-card.open .q-card__body { max-height: 900px; }
+
+    .q-card__content {
+      padding: 0 20px 22px 20px;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .q-card__tabs {
+      display: flex;
+      gap: 4px;
+      margin: 16px 0 14px;
+    }
+    .q-tab {
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all var(--transition);
+    }
+    .q-tab.active {
+      background: var(--bg-tag);
+      color: var(--brand-primary);
+      border-color: rgba(79,142,247,0.20);
+    }
+
+    .q-card__answer { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; }
+    .q-card__answer--hidden { display: none; }
+
+    /* Follow-ups */
+    .q-followups {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+    }
+    .q-followups__label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .q-followups__list { display: flex; flex-direction: column; gap: 6px; }
+    .q-followup-item {
+      font-size: 0.84rem;
+      color: var(--brand-primary);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .q-followup-item::before {
+      content: '→';
+      flex-shrink: 0;
+      color: var(--text-muted);
+    }
+
+    /* ── Empty State ─────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .empty-state__icon { font-size: 3rem; margin-bottom: 16px; }
+    .empty-state h4 { margin-bottom: 8px; color: var(--text-secondary); }
+
+    /* ── Progress Sidebar Card ───────────────────────── */
+    .sidebar__progress { margin-top: 16px; }
+
+    /* ── Top 50 Quick Jump ───────────────────────────── */
+    .top50-banner {
+      padding: 16px 20px;
+      border-radius: var(--radius-lg);
+      background: var(--grad-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .top50-banner p { color: rgba(255,255,255,0.85); font-size: 0.875rem; }
+    .top50-banner h4 { color: #fff; }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      .questions-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; max-height: none; }
+      .sidebar__topics { flex-direction: row; flex-wrap: wrap; }
+      .sidebar__topic-btn { width: auto; }
+      .sidebar__topic-count { display: none; }
+      .topic-section__header { position: static; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon">🐍</div>
+        PyPrep<span class="accent">Pro</span>
+      </a>
+      <nav class="navbar__nav">
+        <a href="questions.html"  class="navbar__link active">Interview Q&A</a>
+        <a href="mcq.html"        class="navbar__link">MCQ Arena</a>
+        <a href="output.html"     class="navbar__link">Guess Output</a>
+        <a href="coding.html"     class="navbar__link">Coding</a>
+        <a href="mock.html"       class="navbar__link">Mock Interview</a>
+        <a href="cheatsheet.html" class="navbar__link">Cheat Sheets</a>
+        <a href="patterns.html"   class="navbar__link">Patterns</a>
+        <a href="revision.html"   class="navbar__link">Revision</a>
+      </nav>
+      <div class="navbar__actions">
+        <button class="theme-toggle" title="Toggle Theme">🌙</button>
+        <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-nav">
+  <a href="questions.html"  class="navbar__link">📋 Interview Q&A</a>
+  <a href="mcq.html"        class="navbar__link">🎯 MCQ Arena</a>
+  <a href="output.html"     class="navbar__link">💻 Guess Output</a>
+  <a href="coding.html"     class="navbar__link">⌨️ Coding Challenges</a>
+  <a href="mock.html"       class="navbar__link">🎙️ Mock Interview</a>
+  <a href="cheatsheet.html" class="navbar__link">📄 Cheat Sheets</a>
+  <a href="patterns.html"   class="navbar__link">🧠 Interview Patterns</a>
+  <a href="revision.html"   class="navbar__link">⚡ Last-Minute Revision</a>
+</div>
+
+<!-- ── Page Hero ────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <div>
+        <div class="section-header__eyebrow" style="margin-bottom:12px;">📋 Interview Questions</div>
+        <h1 class="page-hero__title">Python Interview Q&amp;A</h1>
+        <p class="page-hero__sub">
+          Topic-wise questions with short answers, detailed explanations, and follow-up questions.
+          Built for Freshers, Data Analysts &amp; Data Scientists.
+        </p>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+        <div style="text-align:center;padding:16px 24px;border-radius:var(--radius-lg);background:var(--bg-card);backdrop-filter:var(--blur-glass);border:1px solid var(--border-glass);">
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;" id="total-q-count">—</div>
+          <div class="text-muted" style="font-size:0.8rem;">Questions</div>
+        </div>
+        <div style="text-align:center;padding:16px 24px;border-radius:var(--radius-lg);background:var(--bg-card);backdrop-filter:var(--blur-glass);border:1px solid var(--border-glass);">
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;" id="total-topic-count">—</div>
+          <div class="text-muted" style="font-size:0.8rem;">Topics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Main Content ──────────────────────────────────────────── -->
+<div class="container">
+  <div class="questions-layout">
+
+    <!-- ── Sidebar ─────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="sidebar__card">
+        <div class="sidebar__heading">📚 Topics</div>
+        <div class="sidebar__topics" id="sidebar-topics">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <div class="sidebar__card sidebar__progress" id="sidebar-progress-card" style="margin-top:16px;">
+        <div class="sidebar__heading">📈 Your Progress</div>
+        <div style="margin-bottom:10px;">
+          <div class="flex-between" style="margin-bottom:6px;font-size:0.82rem;">
+            <span class="text-muted">Bookmarked</span>
+            <span id="sb-bookmarks" style="font-weight:600;">0</span>
+          </div>
+          <div class="flex-between" style="font-size:0.82rem;">
+            <span class="text-muted">Tests Taken</span>
+            <span id="sb-tests" style="font-weight:600;">0</span>
+          </div>
+        </div>
+        <a href="mock.html" class="btn btn--primary btn--sm btn--full" style="margin-top:8px;">
+          Take Mock Interview →
+        </a>
+      </div>
+
+      <!-- Bookmarks shortcut -->
+      <div class="sidebar__card" style="margin-top:16px;" id="bookmarks-shortcut" style="display:none;">
+        <div class="sidebar__heading">🔖 Bookmarked Questions</div>
+        <div id="bookmarks-list-sidebar" class="flex-col gap-1">
+          <p class="text-muted" style="font-size:0.82rem;">No bookmarks yet. Click ☆ to bookmark questions.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Questions Panel ─────────────────────────────────── -->
+    <main>
+
+      <!-- Top 50 Banner -->
+      <div class="top50-banner" id="top100">
+        <div>
+          <h4 style="margin-bottom:4px;">🏆 Top 100 Most Repeated Questions</h4>
+          <p>These questions appear most frequently across Python interviews at product &amp; analytics companies.</p>
+        </div>
+        <button class="btn btn--glass btn--sm" id="top100-filter-btn" style="color:#fff;border-color:rgba(255,255,255,0.3);">
+          Show Top 100
+        </button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="questions-toolbar">
+        <div class="search-box">
+          <span class="search-box__icon">🔍</span>
+          <input type="text" id="q-search" placeholder="Search questions, topics, keywords…" autocomplete="off" />
+        </div>
+        <button class="btn btn--outline btn--sm" id="expand-all-btn">Expand All</button>
+        <button class="btn btn--outline btn--sm" id="bookmarks-only-btn">🔖 Bookmarks</button>
+        <button class="btn btn--outline btn--sm" id="clear-filter-btn" style="display:none;">✕ Clear Filter</button>
+      </div>
+
+      <!-- Results info -->
+      <div id="results-info" style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;"></div>
+
+      <!-- Questions Container -->
+      <div id="questions-container">
+        <div class="empty-state">
+          <div class="empty-state__icon">⏳</div>
+          <h4>Loading questions…</h4>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none;padding-top:0;">
+      <p>© 2025 PyPrep Pro · Built by <a href="https://github.com/rohanjpatil01" target="_blank" rel="noopener">Rohan Patil</a></p>
+      <p>
+        <a href="https://instagram.com/rohanjpatil01" target="_blank" rel="noopener" style="margin-right:14px;">@rohanjpatil01</a>
+        <a href="index.html">← Back to Home</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" aria-label="Scroll to top">↑</button>
+
+<!-- ── Scripts ────────────────────────────────────────────── -->
+<script src="js/main.js"></script>
+<script>
+/* ─────────────────────────────────────────────────────────────
+   Interview Questions Page Logic
+   ───────────────────────────────────────────────────────────── */
+'use strict';
+
+let allData        = null;
+let activeTopicId  = 'all';
+let searchQuery    = '';
+let bookmarksOnly  = false;
+let expandAll      = false;
+let questionCounter = 0;
+
+// ── Fetch Data ────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res  = await fetch('data/interview_questions.json');
+    allData    = await res.json();
+    init();
+  } catch(e) {
+    document.getElementById('questions-container').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icon">❌</div>
+        <h4>Could not load questions</h4>
+        <p>Make sure data/interview_questions.json exists.</p>
+      </div>`;
+  }
+}
+
+// ── Init ──────────────────────────────────────────────────────
+function init() {
+  document.getElementById('total-q-count').textContent = allData.meta.total;
+  document.getElementById('total-topic-count').textContent = allData.meta.topics;
+
+  buildSidebar();
+  renderAll();
+  bindEvents();
+  updateProgressSidebar();
+}
+
+// ── Sidebar ───────────────────────────────────────────────────
+function buildSidebar() {
+  const container = document.getElementById('sidebar-topics');
+  // All button
+  container.innerHTML = `
+    <button class="sidebar__topic-btn active" data-topic="all">
+      <span class="sidebar__topic-icon">📚</span>
+      All Topics
+      <span class="sidebar__topic-count">${allData.meta.total}</span>
+    </button>`;
+
+  allData.topics.forEach(topic => {
+    const btn = document.createElement('button');
+    btn.className = 'sidebar__topic-btn';
+    btn.dataset.topic = topic.id;
+    btn.innerHTML = `
+      <span class="sidebar__topic-icon">${topic.icon}</span>
+      ${topic.label}
+      <span class="sidebar__topic-count">${topic.questions.length}</span>`;
+    container.appendChild(btn);
+  });
+}
+
+// ── Render ────────────────────────────────────────────────────
+function renderAll() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questionCounter = 0;
+
+  let topics = allData.topics;
+  if (activeTopicId !== 'all') {
+    topics = topics.filter(t => t.id === activeTopicId);
+  }
+
+  // Filter questions
+  const q    = searchQuery.toLowerCase();
+  let rendered = 0;
+
+  topics.forEach(topic => {
+    let questions = topic.questions;
+
+    // Search filter
+    if (q) {
+      questions = questions.filter(item =>
+        item.q.toLowerCase().includes(q) ||
+        item.short.toLowerCase().includes(q) ||
+        item.detailed.toLowerCase().includes(q)
+      );
+    }
+
+    // Bookmarks filter
+    if (bookmarksOnly) {
+      questions = questions.filter(item =>
+        window.PyPrep.Bookmarks.isBookmarked('questions', item.id)
+      );
+    }
+
+    if (!questions.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'topic-section reveal';
+    section.id = `topic-${topic.id}`;
+
+    section.innerHTML = `
+      <div class="topic-section__header">
+        <div class="topic-section__icon">${topic.icon}</div>
+        <h3 class="topic-section__title">${topic.label}</h3>
+        <span class="topic-section__count">${questions.length} question${questions.length !== 1 ? 's' : ''}</span>
+      </div>`;
+
+    questions.forEach(item => {
+      questionCounter++;
+      const isBookmarked = window.PyPrep.Bookmarks.isBookmarked('questions', item.id);
+      const card = buildQuestionCard(item, questionCounter, isBookmarked, topic.id);
+      section.appendChild(card);
+    });
+
+    container.appendChild(section);
+    rendered += questions.length;
+  });
+
+  // Empty state
+  if (!rendered) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icon">${bookmarksOnly ? '🔖' : '🔍'}</div>
+        <h4>${bookmarksOnly ? 'No bookmarks yet' : 'No questions found'}</h4>
+        <p>${bookmarksOnly ? 'Click the ☆ on any question to bookmark it.' : `No results for "${searchQuery}". Try a different keyword.`}</p>
+      </div>`;
+  }
+
+  // Results info
+  document.getElementById('results-info').textContent =
+    q || bookmarksOnly || activeTopicId !== 'all'
+      ? `Showing ${rendered} question${rendered !== 1 ? 's' : ''}`
+      : `${allData.meta.total} questions across ${allData.meta.topics} topics`;
+
+  // Re-init reveal
+  window.PyPrep && ScrollReveal && ScrollReveal.init();
+}
+
+// ── Build Question Card ───────────────────────────────────────
+function buildQuestionCard(item, num, isBookmarked, topicId) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.dataset.id = item.id;
+  if (expandAll) card.classList.add('open');
+
+  card.innerHTML = `
+    <div class="q-card__header" role="button" aria-expanded="false" tabindex="0">
+      <span class="q-card__num">#${String(num).padStart(2,'0')}</span>
+      <span class="q-card__question">${window.PyPrep.escapeHTML(item.q)}</span>
+      <div class="q-card__actions">
+        <button class="q-card__bookmark${isBookmarked ? ' bookmarked' : ''}" 
+          title="${isBookmarked ? 'Remove bookmark' : 'Bookmark this question'}"
+          aria-label="Bookmark">${isBookmarked ? '★' : '☆'}</button>
+        <span class="q-card__chevron">▼</span>
+      </div>
+    </div>
+    <div class="q-card__body">
+      <div class="q-card__content">
+        <div class="q-card__tabs">
+          <button class="q-tab active" data-tab="short">Quick Answer</button>
+          <button class="q-tab" data-tab="detailed">Detailed</button>
+          <button class="q-tab" data-tab="followups">Follow-ups</button>
+        </div>
+        <div class="q-card__answer" data-pane="short">${window.PyPrep.escapeHTML(item.short)}</div>
+        <div class="q-card__answer q-card__answer--hidden" data-pane="detailed">${window.PyPrep.escapeHTML(item.detailed)}</div>
+        <div class="q-card__answer q-card__answer--hidden" data-pane="followups">
+          <div class="q-followups">
+            <div class="q-followups__label">🎯 Interviewer may also ask:</div>
+            <div class="q-followups__list">
+              ${item.followups.map(f => `<div class="q-followup-item">${window.PyPrep.escapeHTML(f)}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  // Toggle open/close
+  const header = card.querySelector('.q-card__header');
+  header.addEventListener('click', (e) => {
+    if (e.target.closest('.q-card__bookmark')) return;
+    card.classList.toggle('open');
+    header.setAttribute('aria-expanded', card.classList.contains('open'));
+  });
+  header.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); header.click(); } });
+
+  // Tabs
+  card.querySelectorAll('.q-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      card.querySelectorAll('.q-tab').forEach(t => t.classList.remove('active'));
+      card.querySelectorAll('.q-card__answer').forEach(p => p.classList.add('q-card__answer--hidden'));
+      tab.classList.add('active');
+      card.querySelector(`[data-pane="${tab.dataset.tab}"]`).classList.remove('q-card__answer--hidden');
+    });
+  });
+
+  // Bookmark
+  const bookmarkBtn = card.querySelector('.q-card__bookmark');
+  bookmarkBtn.addEventListener('click', () => {
+    const added = window.PyPrep.Bookmarks.toggle('questions', item.id, { q: item.q, topicId });
+    bookmarkBtn.classList.toggle('bookmarked', added);
+    bookmarkBtn.textContent = added ? '★' : '☆';
+    bookmarkBtn.title = added ? 'Remove bookmark' : 'Bookmark this question';
+    window.PyPrep.Toast.show(added ? 'Question bookmarked!' : 'Bookmark removed.', added ? 'success' : 'info');
+    updateProgressSidebar();
+  });
+
+  return card;
+}
+
+// ── Events ────────────────────────────────────────────────────
+function bindEvents() {
+  // Sidebar topic filter
+  document.getElementById('sidebar-topics').addEventListener('click', e => {
+    const btn = e.target.closest('.sidebar__topic-btn');
+    if (!btn) return;
+    document.querySelectorAll('.sidebar__topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTopicId = btn.dataset.topic;
+    bookmarksOnly = false;
+    document.getElementById('bookmarks-only-btn').classList.remove('active');
+    updateClearBtn();
+    renderAll();
+    // Scroll to top of content
+    document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Search
+  const searchInput = document.getElementById('q-search');
+  searchInput.addEventListener('input', window.PyPrep.debounce(() => {
+    searchQuery = searchInput.value.trim();
+    updateClearBtn();
+    renderAll();
+  }, 280));
+
+  // Expand all
+  document.getElementById('expand-all-btn').addEventListener('click', () => {
+    expandAll = !expandAll;
+    document.getElementById('expand-all-btn').textContent = expandAll ? 'Collapse All' : 'Expand All';
+    document.querySelectorAll('.q-card').forEach(c => c.classList.toggle('open', expandAll));
+  });
+
+  // Bookmarks only
+  document.getElementById('bookmarks-only-btn').addEventListener('click', () => {
+    bookmarksOnly = !bookmarksOnly;
+    document.getElementById('bookmarks-only-btn').textContent = bookmarksOnly ? '🔖 All Questions' : '🔖 Bookmarks';
+    updateClearBtn();
+    renderAll();
+  });
+
+  // Clear filter
+  document.getElementById('clear-filter-btn').addEventListener('click', () => {
+    searchQuery    = '';
+    activeTopicId  = 'all';
+    bookmarksOnly  = false;
+    document.getElementById('q-search').value = '';
+    document.querySelectorAll('.sidebar__topic-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-topic="all"]').classList.add('active');
+    document.getElementById('bookmarks-only-btn').textContent = '🔖 Bookmarks';
+    updateClearBtn();
+    renderAll();
+  });
+
+  // Top 100 filter
+  document.getElementById('top100-filter-btn').addEventListener('click', () => {
+    window.PyPrep.Toast.show('Showing all questions — the most repeated ones are marked with 🏆', 'info');
+  });
+}
+
+function updateClearBtn() {
+  const show = searchQuery || activeTopicId !== 'all' || bookmarksOnly;
+  document.getElementById('clear-filter-btn').style.display = show ? '' : 'none';
+}
+
+function updateProgressSidebar() {
+  document.getElementById('sb-bookmarks').textContent = window.PyPrep.Bookmarks.count();
+  document.getElementById('sb-tests').textContent = window.PyPrep.Progress.get().testsAttempted;
+}
+
+// ── Init on DOM ready ─────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Check for ?topic= query param
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('topic')) activeTopicId = params.get('topic');
+
+  loadData();
+});
+
+// Make ScrollReveal accessible
+const ScrollReveal = { init: () => {
+  const els = document.querySelectorAll('.reveal:not(.visible)');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.08 });
+  els.forEach(el => obs.observe(el));
+}};
+</script>
+
+</body>
+</html>
