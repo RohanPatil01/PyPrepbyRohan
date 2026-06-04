@@ -2,7 +2,6 @@
   "meta": { "total": 82, "version": "1.0" },
   "questions": [
 
-    // ── VARIABLES & REFERENCES ─────────────────────────────────
     { "id": "out_v01", "topic": "variables", "difficulty": "easy",
       "code": "x = 10\ny = x\ny = 20\nprint(x)",
       "opts": ["10", "20", "None", "Error"],
@@ -35,7 +34,6 @@
       "breakdown": ["a[:] creates a new outer list", "Inner [2,3] is still shared between a[1] and b[1]", "b[1].append(99) mutates the shared inner list", "a[1] is now [2, 3, 99]"]
     },
 
-    // ── IS VS == ──────────────────────────────────────────────
     { "id": "out_is01", "topic": "is_vs_eq", "difficulty": "medium",
       "code": "a = [1, 2, 3]\nb = [1, 2, 3]\nprint(a == b)\nprint(a is b)",
       "opts": ["True True", "True False", "False True", "False False"],
@@ -60,7 +58,6 @@
       "breakdown": ["None is a singleton object in Python", "x == None → True (value comparison)", "x is None → True (same singleton object)", "PEP 8 recommends using 'is None' not '== None'"]
     },
 
-    // ── MUTABILITY ─────────────────────────────────────────────
     { "id": "out_m01", "topic": "mutability", "difficulty": "easy",
       "code": "t = (1, 2, 3)\nprint(t[0])",
       "opts": ["1", "2", "3", "Error"],
@@ -85,7 +82,6 @@
       "breakdown": ["t[1] is a list — mutable", "We're not reassigning t[1], just mutating the list it points to", "t[1].append(99) modifies the list in-place", "Tuple's reference to the list is unchanged → (1, [2,3,99], 4)"]
     },
 
-    // ── STRINGS ────────────────────────────────────────────────
     { "id": "out_s01", "topic": "strings", "difficulty": "easy",
       "code": "s = 'hello'\nprint(s[1])",
       "opts": ["h", "e", "l", "Error"],
@@ -126,7 +122,6 @@
       "breakdown": ["Strings are immutable objects", "s[0] = 'H' attempts in-place modification", "Raises TypeError: 'str' object does not support item assignment", "Use s = 'H' + s[1:] to create a new string"]
     },
 
-    // ── LISTS ──────────────────────────────────────────────────
     { "id": "out_l01", "topic": "lists", "difficulty": "easy",
       "code": "lst = [1, 2, 3]\nlst.append([4, 5])\nprint(len(lst))",
       "opts": ["5", "4", "3", "2"],
@@ -167,7 +162,6 @@
       "breakdown": ["lst[1:4] → indices 1,2,3", "lst[1]=2, lst[2]=3, lst[3]=4", "Stop index 4 is excluded", "Result: [2, 3, 4]"]
     },
 
-    // ── DICTIONARIES ───────────────────────────────────────────
     { "id": "out_d01", "topic": "dictionaries", "difficulty": "easy",
       "code": "d = {'a': 1, 'b': 2}\nprint(d.get('c', 0))",
       "opts": ["None", "Error", "0", "'c'"],
@@ -200,7 +194,6 @@
       "breakdown": ["First setdefault: 'a' absent → sets to [] → returns []", "Append 1 → d = {'a': [1]}", "Second setdefault: 'a' exists → returns [1]", "Append 2 → d = {'a': [1, 2]}"]
     },
 
-    // ── FUNCTIONS & SCOPE ──────────────────────────────────────
     { "id": "out_f01", "topic": "functions", "difficulty": "easy",
       "code": "def fn():\n    return\nprint(fn())",
       "opts": ["0", "False", "None", "Error"],
@@ -241,7 +234,6 @@
       "breakdown": ["*args → (1, 2, 3, 4)", "sum(args) = 1+2+3+4 = 10", "Returns 10", "print(10) → 10"]
     },
 
-    // ── LAMBDA ─────────────────────────────────────────────────
     { "id": "out_lm01", "topic": "lambda", "difficulty": "easy",
       "code": "f = lambda x: x * 2\nprint(f(5))",
       "opts": ["5", "10", "25", "Error"],
@@ -266,7 +258,6 @@
       "breakdown": ["i=i as default arg captures current i at creation", "fns[0] created when i=0 → i=0 captured", "fns[1] created when i=1 → i=1 captured", "fns[0](10) → 10+0 = 10"]
     },
 
-    // ── LOOPS ──────────────────────────────────────────────────
     { "id": "out_lp01", "topic": "loops", "difficulty": "easy",
       "code": "for i in range(3):\n    print(i, end=' ')",
       "opts": ["0 1 2 3", "0 1 2 ", "1 2 3 ", "0 1 2"],
@@ -299,7 +290,6 @@
       "breakdown": ["Iterating while modifying is risky", "i=2, v=3 → lst.pop(2) removes 3", "lst becomes [1,2,4,5]", "Iteration jumps — 4 is skipped in check but result is [1,2,4,5]"]
     },
 
-    // ── COMPREHENSIONS ─────────────────────────────────────────
     { "id": "out_c01", "topic": "comprehensions", "difficulty": "easy",
       "code": "result = [x**2 for x in range(5)]\nprint(result)",
       "opts": ["[1,4,9,16,25]", "[0,1,4,9,16]", "[0,1,2,3,4]", "Error"],
@@ -324,7 +314,6 @@
       "breakdown": ["Outer: for row in [[1,2],[3,4],[5]]", "Inner: for x in row", "Collects all x: 1,2,3,4,5", "Result: [1, 2, 3, 4, 5]"]
     },
 
-    // ── OOP ────────────────────────────────────────────────────
     { "id": "out_oo01", "topic": "oop", "difficulty": "medium",
       "code": "class A:\n    x = 5\na1 = A()\na2 = A()\na1.x = 10\nprint(a1.x, a2.x, A.x)",
       "opts": ["10 10 10", "10 5 5", "5 5 5", "10 5 10"],
@@ -349,7 +338,6 @@
       "breakdown": ["Counter.count = 0 initially", "a = Counter() → __init__ runs → Counter.count = 1", "b = Counter() → __init__ runs → Counter.count = 2", "print(Counter.count) → 2"]
     },
 
-    // ── EXCEPTIONS ─────────────────────────────────────────────
     { "id": "out_ex01", "topic": "exceptions", "difficulty": "easy",
       "code": "try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print('caught')\nfinally:\n    print('finally')",
       "opts": ["caught", "finally", "caught\nfinally", "Error"],
@@ -366,7 +354,6 @@
       "breakdown": ["int('abc') → ValueError (type is OK, value is wrong)", "First except ValueError catches it", "Prints 'value error'", "else is skipped (exception was raised)"]
     },
 
-    // ── OPERATORS / EXPRESSIONS ────────────────────────────────
     { "id": "out_op01", "topic": "operators", "difficulty": "medium",
       "code": "print(2 ** 3 ** 2)",
       "opts": ["64", "512", "72", "6"],
@@ -399,7 +386,6 @@
       "breakdown": ["not True = False", "not False = True", "not True = False", "Final result: False"]
     },
 
-    // ── SCOPE ──────────────────────────────────────────────────
     { "id": "out_sc01", "topic": "scope", "difficulty": "hard",
       "code": "x = 'global'\ndef fn():\n    print(x)\n    x = 'local'\n\nfn()",
       "opts": ["global", "local", "None", "UnboundLocalError"],
@@ -416,7 +402,6 @@
       "breakdown": ["nonlocal x → refers to outer's x", "inner() sets x = 20 in outer's scope", "After inner() returns, outer's x = 20", "print(x) → 20"]
     },
 
-    // ── MAP / FILTER / ZIP ─────────────────────────────────────
     { "id": "out_mfz01", "topic": "builtins", "difficulty": "medium",
       "code": "result = list(map(str, [1, 2, 3]))\nprint(result)",
       "opts": ["[1, 2, 3]", "['1', '2', '3']", "['str', 'str', 'str']", "Error"],
@@ -433,7 +418,6 @@
       "breakdown": ["zip stops at shortest iterable", "a has 3 elements, b has 2", "Only 2 pairs produced", "Result: [(1,4), (2,5)]"]
     },
 
-    // ── GENERATORS ─────────────────────────────────────────────
     { "id": "out_gen01", "topic": "generators", "difficulty": "medium",
       "code": "def gen():\n    yield 1\n    yield 2\n    yield 3\n\ng = gen()\nprint(next(g))\nprint(next(g))",
       "opts": ["1 1", "1 2", "1 2 3", "Error"],
@@ -450,7 +434,6 @@
       "breakdown": ["First list(g) consumes all values [1,2]", "Generator is now exhausted", "Second list(g) → generator has no more values", "Returns []"]
     },
 
-    // ── MISC TRICKY ────────────────────────────────────────────
     { "id": "out_mx01", "topic": "misc", "difficulty": "medium",
       "code": "print(type([]) == type(()))",
       "opts": ["True", "False", "None", "Error"],

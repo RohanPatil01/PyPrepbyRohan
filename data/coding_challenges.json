@@ -2,9 +2,6 @@
   "meta": { "total": 63, "version": "1.0" },
   "challenges": [
 
-    // ══════════════════════════════════════════════════════
-    // EASY
-    // ══════════════════════════════════════════════════════
 
     {
       "id": "cc_e01", "difficulty": "easy", "topic": "strings",
@@ -150,9 +147,6 @@
       "followups": ["What is the time complexity of the naive recursive Fibonacci?", "How does memoization/dynamic programming improve it?", "What is the golden ratio and its relation to Fibonacci?"]
     },
 
-    // ══════════════════════════════════════════════════════
-    // MEDIUM
-    // ══════════════════════════════════════════════════════
 
     {
       "id": "cc_m01", "difficulty": "medium", "topic": "strings",
@@ -310,9 +304,6 @@
       "followups": ["How do you convert an integer to a Roman numeral?", "What is the subtractive notation rule in Roman numerals?", "How would you validate a Roman numeral string?"]
     },
 
-    // ══════════════════════════════════════════════════════
-    // HARD
-    // ══════════════════════════════════════════════════════
 
     {
       "id": "cc_h01", "difficulty": "hard", "topic": "lists",

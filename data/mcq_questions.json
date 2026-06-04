@@ -2,7 +2,6 @@
   "meta": { "total": 210, "version": "1.0" },
   "questions": [
 
-    // ── PYTHON BASICS ──────────────────────────────────────────
     { "id": "mcq_b01", "topic": "basics", "difficulty": "easy",
       "q": "What is the correct file extension for Python files?",
       "opts": [".py", ".pt", ".pyt", ".python"], "ans": 0,
@@ -63,7 +62,6 @@
       "opts": ["str()", "int()", "float()", "num()"], "ans": 1,
       "exp": "int() converts a string (or other types) to an integer. int('42') returns 42." },
 
-    // ── DATA TYPES ─────────────────────────────────────────────
     { "id": "mcq_dt01", "topic": "datatypes", "difficulty": "easy",
       "q": "Which of the following is an immutable data type?",
       "opts": ["list", "dict", "set", "tuple"], "ans": 3,
@@ -89,7 +87,6 @@
       "opts": ["True", "False", "Error", "None"], "ans": 1,
       "exp": "type(1) is <class 'int'> and type(1.0) is <class 'float'>. They are different types, so == returns False." },
 
-    // ── STRINGS ────────────────────────────────────────────────
     { "id": "mcq_s01", "topic": "strings", "difficulty": "easy",
       "q": "What is the output of: 'hello'.upper()?",
       "opts": ["Hello", "HELLO", "hello", "hELLO"], "ans": 1,
@@ -140,7 +137,6 @@
       "opts": ["'  hello  '", "'hello'", "'hello  '", "'  hello'"], "ans": 1,
       "exp": "str.strip() removes leading and trailing whitespace. lstrip() removes only left, rstrip() only right." },
 
-    // ── LISTS ──────────────────────────────────────────────────
     { "id": "mcq_l01", "topic": "lists", "difficulty": "easy",
       "q": "What is the output of: len([1, [2, 3], 4])?",
       "opts": ["4", "3", "2", "Error"], "ans": 1,
@@ -191,7 +187,6 @@
       "opts": ["list.unique()", "set(list)", "list.remove_duplicates()", "list.distinct()"], "ans": 1,
       "exp": "Converting to a set removes duplicates since sets only hold unique elements. list(set(lst)) gives a list of unique values." },
 
-    // ── TUPLES ─────────────────────────────────────────────────
     { "id": "mcq_t01", "topic": "tuples", "difficulty": "easy",
       "q": "How do you create a tuple with a single element?",
       "opts": ["(1)", "(1,)", "[1]", "{1}"], "ans": 1,
@@ -217,7 +212,6 @@
       "opts": ["first=1, rest=(2,3,4)", "first=1, rest=[2,3,4]", "Error", "first=(1,), rest=(2,3,4)"], "ans": 1,
       "exp": "Extended unpacking with * captures remaining elements into a list. first=1, rest=[2,3,4] (a list, not a tuple)." },
 
-    // ── SETS ───────────────────────────────────────────────────
     { "id": "mcq_set01", "topic": "sets", "difficulty": "easy",
       "q": "What is the output of: len({1, 1, 2, 2, 3})?",
       "opts": ["5", "4", "3", "2"], "ans": 2,
@@ -238,7 +232,6 @@
       "opts": ["Yes, always", "No, lists are unhashable", "Yes, it gets converted to a tuple", "Only empty lists"], "ans": 1,
       "exp": "Set elements must be hashable. Lists are mutable and unhashable — adding one raises TypeError. Use a tuple instead." },
 
-    // ── DICTIONARIES ───────────────────────────────────────────
     { "id": "mcq_d01", "topic": "dictionaries", "difficulty": "easy",
       "q": "What does dict.keys() return?",
       "opts": ["A list of keys", "A tuple of keys", "A dict_keys view object", "A set of keys"], "ans": 2,
@@ -274,7 +267,6 @@
       "opts": ["d1.merge(d2)", "d1 + d2", "d1 | d2", "merge(d1, d2)"], "ans": 2,
       "exp": "The | operator (Python 3.9+) merges two dicts into a new dict. d1 |= d2 merges in-place. {**d1, **d2} works in older versions." },
 
-    // ── FUNCTIONS ──────────────────────────────────────────────
     { "id": "mcq_f01", "topic": "functions", "difficulty": "easy",
       "q": "What is the output of a function that has no return statement?",
       "opts": ["0", "False", "None", "Error"], "ans": 2,
@@ -310,7 +302,6 @@
       "opts": ["0", "1", "2", "Error"], "ans": 1,
       "exp": "Each lambda captures i with a default argument x=i at creation time. fns[1] was created with i=1, so fns[1]() = 1." },
 
-    // ── LAMBDA ─────────────────────────────────────────────────
     { "id": "mcq_lm01", "topic": "lambda", "difficulty": "easy",
       "q": "What is the output of: (lambda x, y: x + y)(3, 4)?",
       "opts": ["7", "34", "Error", "None"], "ans": 0,
@@ -336,7 +327,6 @@
       "opts": ["Cannot take arguments", "Can only contain a single expression", "Cannot be assigned to variables", "Cannot be used with map()"], "ans": 1,
       "exp": "Lambdas are restricted to a single expression — no statements (no assignments, no loops, no if-blocks). Use def for complex logic." },
 
-    // ── OOP ────────────────────────────────────────────────────
     { "id": "mcq_oo01", "topic": "oop", "difficulty": "easy",
       "q": "What is 'self' in a Python class method?",
       "opts": ["A keyword like 'this' in Java", "A reference to the current class", "A reference to the current instance", "A built-in variable"], "ans": 2,
@@ -377,7 +367,6 @@
       "opts": ["A", "B", "AB", "Error"], "ans": 1,
       "exp": "B overrides fn(). When called on an instance of B, B's version is used. This is polymorphism via method overriding." },
 
-    // ── EXCEPTIONS ─────────────────────────────────────────────
     { "id": "mcq_ex01", "topic": "exceptions", "difficulty": "easy",
       "q": "What block always executes in a try/except structure?",
       "opts": ["try", "except", "else", "finally"], "ans": 3,
@@ -403,7 +392,6 @@
       "opts": ["class MyErr(Error): pass; throw MyErr()", "class MyErr(Exception): pass; raise MyErr()", "def MyErr(Exception): raise", "Error MyErr = Exception()"], "ans": 1,
       "exp": "Custom exceptions inherit from Exception (or a subclass). Use 'raise' (not 'throw') to raise them. This is a Python-specific pattern." },
 
-    // ── FILE HANDLING ──────────────────────────────────────────
     { "id": "mcq_fh01", "topic": "filehandling", "difficulty": "easy",
       "q": "Which mode opens a file for writing and creates it if it doesn't exist?",
       "opts": ["'r'", "'a'", "'w'", "'x'"], "ans": 2,
@@ -424,7 +412,6 @@
       "opts": ["open('f.csv', 'r')", "open('f.csv', 'r', newline='')", "open('f.csv', 'rb')", "open('f.csv', mode='csv')"], "ans": 1,
       "exp": "newline='' prevents Python's universal newlines from interfering with the csv module's own newline handling on Windows." },
 
-    // ── COMPREHENSIONS ─────────────────────────────────────────
     { "id": "mcq_c01", "topic": "comprehensions", "difficulty": "easy",
       "q": "What is the output of: [x**2 for x in range(4)]?",
       "opts": ["[1,4,9,16]", "[0,1,4,9]", "[0,2,4,6]", "[1,2,3,4]"], "ans": 1,
@@ -445,7 +432,6 @@
       "opts": ["{0:0, 2:4, 4:16}", "{1:1, 3:9}", "{1:1, 2:4, 3:9}", "{0:0, 1:1}"], "ans": 1,
       "exp": "Dict comprehension with odd-number filter. Odd numbers in range(5): 1,3. Result: {1:1, 3:9}." },
 
-    // ── OPERATORS ──────────────────────────────────────────────
     { "id": "mcq_op01", "topic": "operators", "difficulty": "easy",
       "q": "What is the output of: 7 % 3?",
       "opts": ["1", "2", "0", "2.33"], "ans": 1,
@@ -471,7 +457,6 @@
       "opts": ["[]", "True", "'default'", "False"], "ans": 2,
       "exp": "[] is falsy. 'or' returns the first truthy value. [] is falsy, so Python evaluates and returns 'default'." },
 
-    // ── LOOPS ──────────────────────────────────────────────────
     { "id": "mcq_lp01", "topic": "loops", "difficulty": "easy",
       "q": "What does the 'break' statement do in a loop?",
       "opts": ["Skips one iteration", "Exits the entire loop immediately", "Restarts the loop", "Does nothing"], "ans": 1,
@@ -492,7 +477,6 @@
       "opts": ["[(1,4),(2,5),(3,None)]", "[(1,4),(2,5)]", "[(1,4),(2,5),(3,)]", "Error"], "ans": 1,
       "exp": "zip() stops at the shortest iterable. [1,2,3] and [4,5] — zip stops at 2 pairs: [(1,4),(2,5)]. Use zip_longest for padding." },
 
-    // ── SCOPE & CLOSURES ───────────────────────────────────────
     { "id": "mcq_sc01", "topic": "scope", "difficulty": "medium",
       "q": "What is the output of:\nx = 10\ndef fn():\n    print(x)\nfn()?",
       "opts": ["Error", "None", "10", "0"], "ans": 2,
@@ -508,7 +492,6 @@
       "opts": ["global", "nonlocal", "outer", "enclosing"], "ans": 1,
       "exp": "'nonlocal' declares that a variable refers to the enclosing function's scope (not local, not global). Used in nested functions/closures." },
 
-    // ── MUTABLE VS IMMUTABLE ───────────────────────────────────
     { "id": "mcq_mut01", "topic": "mutability", "difficulty": "medium",
       "q": "What is the output of:\na = [1,2,3]\nb = a\nb.append(4)\nprint(a)?",
       "opts": ["[1,2,3]", "[1,2,3,4]", "[4]", "Error"], "ans": 1,
@@ -524,7 +507,6 @@
       "opts": ["[[1,2],[3,4]]", "[[1,2,99],[3,4]]", "[[1,2,99],[3,4,99]]", "Error"], "ans": 1,
       "exp": "Shallow copy creates a new outer list but inner lists are shared references. Mutating b[0] (the shared inner list) also affects a[0]." },
 
-    // ── GENERATORS ─────────────────────────────────────────────
     { "id": "mcq_gen01", "topic": "generators", "difficulty": "medium",
       "q": "What does a function containing 'yield' return when called?",
       "opts": ["The yielded value directly", "A generator object", "A list of all yielded values", "None"], "ans": 1,
@@ -535,7 +517,6 @@
       "opts": ["1 1", "1 2", "2 1", "Error"], "ans": 1,
       "exp": "First next(g) runs until 'yield 1', returning 1. Second next(g) resumes and runs until 'yield 2', returning 2." },
 
-    // ── MAP / FILTER / ZIP ──────────────────────────────────────
     { "id": "mcq_mfz01", "topic": "functions", "difficulty": "medium",
       "q": "What does map() return in Python 3?",
       "opts": ["A list", "A tuple", "A map object (iterator)", "A dict"], "ans": 2,
@@ -546,7 +527,6 @@
       "opts": ["[('a',1),('b',2),('c',3)]", "['a1','b2','c3']", "[('a','b','c'),(1,2,3)]", "Error"], "ans": 0,
       "exp": "zip pairs elements from each iterable at matching positions. 'abc' zipped with [1,2,3] gives [('a',1),('b',2),('c',3)]." },
 
-    // ── MISC / TRICKY ──────────────────────────────────────────
     { "id": "mcq_mx01", "topic": "basics", "difficulty": "hard",
       "q": "What is the output of:\nprint(type(lambda: None))?",
       "opts": ["<class 'function'>", "<class 'lambda'>", "<class 'NoneType'>", "function"], "ans": 0,
