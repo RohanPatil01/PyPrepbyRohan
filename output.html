@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Guess the Output — Python code snippet challenges. Predict what Python prints. Covers mutability, scope, closures, is vs ==, and more." />
-  <title>Guess the Output — PyPrep Pro</title>
+  <meta name="description" content="Guess the Output - Python code snippet challenges. Predict what Python prints. Covers mutability, scope, closures, is vs ==, and more." />
+  <title>Guess the Output - PyPrepbyRohan</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
@@ -103,8 +103,10 @@
       margin-bottom: 22px;
       overflow-x: auto;
       position: relative;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
-    [data-theme="dark"] .code-display { background: #03080f; }
+    [data-theme="light"] .code-display { background: #03080f; }
     .code-display__tag {
       position: absolute; top: 10px; right: 12px;
       font-size: 0.7rem; color: rgba(124,92,252,0.7);
@@ -136,6 +138,7 @@
     .option-btn:disabled { cursor: default; }
     .option-btn.correct { background:rgba(76,222,154,0.15); border-color:var(--brand-success); color:var(--brand-success); }
     .option-btn.wrong   { background:rgba(255,92,92,0.15);  border-color:var(--brand-danger);  color:var(--brand-danger); }
+    .option-btn.selected { background:rgba(79,142,247,0.12); border-color:var(--brand-primary); color:var(--brand-primary); transform:translateX(4px); }
     .option-letter {
       width: 28px; height: 28px; border-radius: var(--radius-sm);
       background: var(--bg-card); border: 1px solid var(--border-glass);
@@ -245,7 +248,7 @@
       font-size:0.78rem; color:#c9d8ff; margin-bottom:10px;
       border:1px solid rgba(124,92,252,0.15); overflow-x:auto;
     }
-    [data-theme="dark"] .review-code { background:#03080f; }
+    [data-theme="light"] .review-code { background:#03080f; }
     .review-item__ans { font-size:0.84rem; color:var(--text-muted); }
     .review-item__ans span.correct { color:var(--brand-success); font-weight:600; }
     .review-item__ans span.wrong   { color:var(--brand-danger);  font-weight:600; }
@@ -267,7 +270,7 @@
     <div class="navbar__inner">
       <a href="index.html" class="navbar__logo">
         <div class="navbar__logo-icon">🐍</div>
-        PyPrep<span class="accent">Pro</span>
+        <span class="navbar__logo-text"><span class="logo-main">PyPrep</span><span class="logo-by">byRohan</span></span>
       </a>
       <nav class="navbar__nav">
         <a href="questions.html"  class="navbar__link">Interview Q&A</a>
@@ -280,6 +283,8 @@
         <a href="revision.html"   class="navbar__link">Revision</a>
       </nav>
       <div class="navbar__actions">
+        <button class="global-search-btn" title="Search (Ctrl+K)">🔍 <span>Search</span> <kbd>Ctrl K</kbd></button>
+        <span class="xp-badge">🌱 Beginner</span>
         <button class="theme-toggle" title="Toggle Theme">🌙</button>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
@@ -303,11 +308,11 @@
   <div class="container">
     <div class="section-header__eyebrow" style="margin-bottom:12px;">💻 Guess the Output</div>
     <h1 style="margin-bottom:8px;">What Does Python Print?</h1>
-    <p style="max-width:600px;">Read the code snippet and predict the output. The best way to truly understand Python's behavior — mutability, scope, closures, and more.</p>
+    <p style="max-width:600px;">Read the code snippet and predict the output. The best way to truly understand Python's behavior: mutability, scope, closures, and more.</p>
   </div>
 </div>
 
-<div class="container" style="padding-top:40px;padding-bottom:80px;">
+<div class="container" style="padding-top:calc(var(--nav-height) + 32px);padding-bottom:80px;">
 
   <!-- ─────────────── CONFIG SCREEN ──────────────────────── -->
   <div id="config-screen" class="active">
@@ -395,8 +400,8 @@
       <div class="config-section">
         <span class="config-label">💡 Show Breakdown After Each Answer</span>
         <div class="chip-group">
-          <div class="chip selected" id="fb-on">Yes — Show instantly</div>
-          <div class="chip" id="fb-off">No — At end only</div>
+          <div class="chip" id="fb-on">Yes - Show instantly</div>
+          <div class="chip selected" id="fb-off">No - Submit first</div>
         </div>
       </div>
 
@@ -418,7 +423,7 @@
       <div class="timer-display" id="timer-display"><span>⏱️</span><span id="timer-text">10:00</span></div>
       <div style="text-align:right;">
         <div style="font-family:var(--font-display);font-size:1rem;font-weight:800;color:var(--brand-success);" id="live-score">✅ 0 / 0</div>
-        <div style="font-size:0.78rem;color:var(--text-muted);" id="live-acc">Accuracy: —</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);" id="live-acc">Select an answer</div>
       </div>
       <button class="btn btn--outline btn--sm" id="quit-btn">✕ End</button>
     </div>
@@ -437,7 +442,7 @@
 
       <div class="code-display" id="code-display">
         <span class="code-display__tag">Python 3</span>
-        <pre id="code-pre" style="margin:0;white-space:pre-wrap;word-break:break-word;"></pre>
+        <div id="code-pre" style="margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);"></div>
       </div>
 
       <div class="options-grid" id="options-container"></div>
@@ -475,7 +480,7 @@
       <div class="result-stat"><div class="result-stat__val" id="rs-correct" style="color:var(--brand-success);">0</div><div class="result-stat__key">Correct</div></div>
       <div class="result-stat"><div class="result-stat__val" id="rs-wrong"   style="color:var(--brand-danger);">0</div><div class="result-stat__key">Wrong</div></div>
       <div class="result-stat"><div class="result-stat__val" id="rs-skipped" style="color:var(--text-muted);">0</div><div class="result-stat__key">Skipped</div></div>
-      <div class="result-stat"><div class="result-stat__val" id="rs-time"    style="color:var(--brand-secondary);">—</div><div class="result-stat__key">Time Taken</div></div>
+      <div class="result-stat"><div class="result-stat__val" id="rs-time"    style="color:var(--brand-secondary);">-</div><div class="result-stat__key">Time Taken</div></div>
     </div>
 
     <!-- Topic breakdown -->
@@ -487,6 +492,7 @@
     <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;">
       <button class="btn btn--primary btn--lg" id="retry-btn">🔄 Try Again</button>
       <button class="btn btn--outline btn--lg" id="new-btn">⚙️ New Session</button>
+      <button class="btn btn--glass btn--lg" id="share-btn">📤 Share Result</button>
       <a href="index.html" class="btn btn--glass btn--lg">🏠 Home</a>
     </div>
 
@@ -506,17 +512,66 @@
 </div>
 
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer" aria-label="Footer">
   <div class="container">
-    <div class="footer__bottom" style="border-top:none;padding-top:0;">
-      <p>© 2025 PyPrep Pro · Built by <a href="https://github.com/rohanjpatil01" target="_blank" rel="noopener">Rohan Patil</a></p>
-      <p><a href="https://instagram.com/rohanjpatil01" target="_blank" rel="noopener" style="margin-right:14px;">@rohanjpatil01</a><a href="index.html">← Home</a></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;padding:48px 0 32px;border-bottom:1px solid var(--border-glass);flex-wrap:wrap;">
+
+      <!-- Brand col -->
+      <div>
+        <a href="index.html" class="navbar__logo" style="text-decoration:none;margin-bottom:16px;display:inline-flex;">
+          <div class="navbar__logo-icon">🐍</div>
+          <span class="navbar__logo-text"><span class="logo-main">PyPrep</span><span class="logo-by">byRohan</span></span>
+        </a>
+        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-top:12px;max-width:220px;">Python interview prep platform. Practice MCQs, output questions, coding challenges and full mock interviews.</p>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" title="GitHub" class="footer-social footer-social--github">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/rohanpatil01/" target="_blank" rel="noopener" title="LinkedIn" class="footer-social footer-social--linkedin">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/rohanjpatil01" target="_blank" rel="noopener" title="Instagram" class="footer-social footer-social--instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Practice col -->
+      <div>
+        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:14px;">Practice</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="questions.html" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">📋 Interview Q&amp;A</a>
+          <a href="mcq.html"       style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🎯 MCQ Arena</a>
+          <a href="output.html"    style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">💻 Guess the Output</a>
+          <a href="coding.html"    style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⌨️ Coding Challenges</a>
+          <a href="mock.html"      style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🎙️ Mock Interview</a>
+        </div>
+      </div>
+
+      <!-- Resources col -->
+      <div>
+        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:14px;">Resources</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="cheatsheet.html" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">📄 Cheat Sheets</a>
+          <a href="patterns.html"   style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🧠 Interview Patterns</a>
+          <a href="revision.html"   style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⚡ Last-Minute Revision</a>
+          <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⭐ Star on GitHub</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom" style="padding-top:20px;border-top:none;">
+      <p style="font-size:0.82rem;color:var(--text-muted);">© 2026 <strong style="color:var(--text-secondary);">PyPrepbyRohan</strong> · Built with ❤️ by <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" style="color:var(--brand-primary);font-weight:600;">Rohan Patil</a></p>
+      <p style="font-size:0.78rem;color:var(--text-muted);">No data collected · Fully local · Always free · 🐍 v1.0</p>
     </div>
   </div>
 </footer>
 
 <button class="scroll-top" aria-label="Scroll to top">↑</button>
 <script src="js/main.js"></script>
+<script src="js/features.js"></script>
 <script>
 'use strict';
 
@@ -529,7 +584,7 @@ let currentIdx  = 0;
 let answers     = [];
 let timer       = null;
 let startTime   = null;
-let instantFB   = true;
+let instantFB   = false;
 let selTopic    = 'all';
 let selDiff     = 'all';
 let selCount    = 10;
@@ -551,15 +606,10 @@ const DIFF_STYLE = {
 };
 
 // ── Load ──────────────────────────────────────────────────────
-async function loadData() {
-  try {
-    const res = await fetch('data/output_questions.json');
-    const d   = await res.json();
-    allQ = d.questions;
-    updateInfo();
-  } catch(e) {
-    window.PyPrep.Toast.show('Could not load output_questions.json', 'error');
-  }
+function loadData() {
+  const d = {"meta":{"total":104,"version":"1.0"},"questions":[{"id":"out_v01","topic":"variables","difficulty":"easy","code":"x = 10\ny = x\ny = 20\nprint(x)","opts":["10","20","None","Error"],"ans":0,"exp":"Integers are immutable. y = x makes y point to 10. y = 20 rebinds y to a new object. x still points to 10.","breakdown":["y = x → both y and x point to int object 10","y = 20 → y now points to new int object 20","x is unchanged → still 10","print(x) → 10"]},{"id":"out_v02","topic":"variables","difficulty":"medium","code":"a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)","opts":["[1, 2, 3]","[1, 2, 3, 4]","[4]","Error"],"ans":1,"exp":"b = a does NOT copy the list. Both a and b reference the same list object. Appending to b also changes what a sees.","breakdown":["a = [1,2,3] → list object created in memory","b = a → b is an alias, points to same list","b.append(4) → mutates the shared list","print(a) → [1, 2, 3, 4]"]},{"id":"out_v03","topic":"variables","difficulty":"medium","code":"x = [1, 2, 3]\ny = x[:]\ny.append(4)\nprint(x)","opts":["[1, 2, 3]","[1, 2, 3, 4]","Error","None"],"ans":0,"exp":"y = x[:] creates a shallow copy: a new list. Mutating y does not affect x.","breakdown":["x[:] creates a new list object with same elements","y and x are now separate objects","y.append(4) only modifies y","x remains [1, 2, 3]"]},{"id":"out_v04","topic":"variables","difficulty":"hard","code":"a = [1, [2, 3]]\nb = a[:]\nb[1].append(99)\nprint(a)","opts":["[1, [2, 3]]","[1, [2, 3, 99]]","[1, [99]]","Error"],"ans":1,"exp":"Shallow copy duplicates the outer list but inner objects are shared. b[1] and a[1] point to the same inner list [2,3].","breakdown":["a[:] creates a new outer list","Inner [2,3] is still shared between a[1] and b[1]","b[1].append(99) mutates the shared inner list","a[1] is now [2, 3, 99]"]},{"id":"out_is01","topic":"is_vs_eq","difficulty":"medium","code":"a = [1, 2, 3]\nb = [1, 2, 3]\nprint(a == b)\nprint(a is b)","opts":["True True","True False","False True","False False"],"ans":1,"exp":"== checks value equality (both have same elements → True). 'is' checks identity (different objects in memory → False).","breakdown":["a and b are separate list objects with equal values","a == b → True (same values)","a is b → False (different objects)","Two separate list literals always create two objects"]},{"id":"out_is02","topic":"is_vs_eq","difficulty":"hard","code":"a = 256\nb = 256\nprint(a is b)\n\nx = 257\ny = 257\nprint(x is y)","opts":["True True","True False","False True","False False"],"ans":1,"exp":"Python caches small integers from -5 to 256. 256 reuses the cached object → True. 257 is outside the cache → two new objects → False.","breakdown":["CPython caches integers from -5 to 256","a and b both point to the cached 256 object","a is b → True","x and y are above 256, new objects created → x is y → False"]},{"id":"out_is03","topic":"is_vs_eq","difficulty":"medium","code":"x = None\nprint(x == None)\nprint(x is None)","opts":["True True","False False","True False","False True"],"ans":0,"exp":"None is a singleton: there is only ONE None object. Both == and 'is' return True. Best practice is to use 'is None'.","breakdown":["None is a singleton object in Python","x == None → True (value comparison)","x is None → True (same singleton object)","PEP 8 recommends using 'is None' not '== None'"]},{"id":"out_m01","topic":"mutability","difficulty":"easy","code":"t = (1, 2, 3)\nprint(t[0])","opts":["1","2","3","Error"],"ans":0,"exp":"Tuples support indexing. t[0] accesses the first element which is 1.","breakdown":["Tuples are immutable but indexable","t[0] → 1 (first element)","Zero-based indexing","No error for valid index"]},{"id":"out_m02","topic":"mutability","difficulty":"medium","code":"t = (1, 2, 3)\nt[0] = 10\nprint(t)","opts":["(10, 2, 3)","(1, 2, 3)","None","TypeError"],"ans":3,"exp":"Tuples are immutable. Attempting to assign to an index raises TypeError: 'tuple' object does not support item assignment.","breakdown":["Tuples cannot be modified after creation","t[0] = 10 attempts to modify in-place","Python raises TypeError","Use a list if you need mutability"]},{"id":"out_m03","topic":"mutability","difficulty":"hard","code":"t = (1, [2, 3], 4)\nt[1].append(99)\nprint(t)","opts":["(1, [2, 3], 4)","(1, [2, 3, 99], 4)","TypeError","(1, 99, 4)"],"ans":1,"exp":"The tuple itself is immutable (can't reassign t[1]), but it contains a mutable list. Mutating the list in-place is allowed.","breakdown":["t[1] is a list: mutable","We're not reassigning t[1], just mutating the list it points to","t[1].append(99) modifies the list in-place","Tuple's reference to the list is unchanged → (1, [2,3,99], 4)"]},{"id":"out_s01","topic":"strings","difficulty":"easy","code":"s = 'hello'\nprint(s[1])","opts":["h","e","l","Error"],"ans":1,"exp":"Strings are zero-indexed. s[0]='h', s[1]='e', s[2]='l'...","breakdown":["String indexing is zero-based","s[0]='h', s[1]='e'","s[1] → 'e'"]},{"id":"out_s02","topic":"strings","difficulty":"medium","code":"s = 'Python'\nprint(s[-1])","opts":["P","n","o","Error"],"ans":1,"exp":"Negative indexing counts from the end. s[-1] is the last character 'n'.","breakdown":["Negative indices count from end","s[-1] → last char 'n'","s[-2] → 'o', s[-3] → 'h'"]},{"id":"out_s03","topic":"strings","difficulty":"medium","code":"s = 'abcdef'\nprint(s[::2])","opts":["ace","bdf","abcdef","abc"],"ans":0,"exp":"s[::2] slices with step=2, starting at 0. Picks indices 0,2,4 → 'a','c','e' → 'ace'.","breakdown":["s[::2] = start default, stop default, step 2","Picks every 2nd character","Indices 0,2,4 → 'a','c','e'","Result: 'ace'"]},{"id":"out_s04","topic":"strings","difficulty":"medium","code":"print('hello' * 2 + '!')","opts":["hello!hello!","hellohello!","hello2!","Error"],"ans":1,"exp":"'hello' * 2 = 'hellohello'. Concatenating '!' gives 'hellohello!'.","breakdown":["String * int repeats the string","'hello' * 2 = 'hellohello'","+ '!' concatenates","Result: 'hellohello!'"]},{"id":"out_s05","topic":"strings","difficulty":"hard","code":"s = 'hello'\ns[0] = 'H'\nprint(s)","opts":["Hello","hello","H","TypeError"],"ans":3,"exp":"Strings are immutable. You cannot change a character in place. This raises TypeError.","breakdown":["Strings are immutable objects","s[0] = 'H' attempts in-place modification","Raises TypeError: 'str' object does not support item assignment","Use s = 'H' + s[1:] to create a new string"]},{"id":"out_l01","topic":"lists","difficulty":"easy","code":"lst = [1, 2, 3]\nlst.append([4, 5])\nprint(len(lst))","opts":["5","4","3","2"],"ans":1,"exp":"append() adds the entire [4,5] as ONE element. The list becomes [1,2,3,[4,5]] - 4 elements.","breakdown":["append() adds one element","[4,5] is added as a single nested list","lst = [1, 2, 3, [4, 5]]","len(lst) = 4"]},{"id":"out_l02","topic":"lists","difficulty":"medium","code":"lst = [1, 2, 3]\nlst.extend([4, 5])\nprint(len(lst))","opts":["3","4","5","2"],"ans":2,"exp":"extend() adds each element individually. [4,5] adds 2 elements. lst becomes [1,2,3,4,5] → len = 5.","breakdown":["extend() iterates the argument","Adds 4 and 5 as separate elements","lst = [1, 2, 3, 4, 5]","len(lst) = 5"]},{"id":"out_l03","topic":"lists","difficulty":"medium","code":"lst = [3, 1, 4, 1, 5]\nprint(sorted(lst))\nprint(lst)","opts":["[1,1,3,4,5] [1,1,3,4,5]","[1,1,3,4,5] [3,1,4,1,5]","[3,1,4,1,5] [1,1,3,4,5]","Error"],"ans":1,"exp":"sorted() returns a NEW sorted list, leaving the original unchanged. lst.sort() would modify in-place.","breakdown":["sorted(lst) creates a new sorted list","Original lst is NOT modified","sorted(lst) → [1,1,3,4,5]","lst → still [3,1,4,1,5]"]},{"id":"out_l04","topic":"lists","difficulty":"hard","code":"a = [1, 2, 3]\nb = a\na = [4, 5, 6]\nprint(b)","opts":["[4, 5, 6]","[1, 2, 3]","[1, 2, 3, 4, 5, 6]","Error"],"ans":1,"exp":"b = a makes b reference [1,2,3]. a = [4,5,6] REBINDS a to a new list. b still references the original [1,2,3].","breakdown":["b = a → b points to [1,2,3]","a = [4,5,6] → a now points to a new list","b is unaffected: still [1,2,3]","Reassignment ≠ mutation"]},{"id":"out_l05","topic":"lists","difficulty":"medium","code":"lst = [1, 2, 3, 4, 5]\nprint(lst[1:4])","opts":["[1, 2, 3, 4]","[2, 3, 4]","[2, 3, 4, 5]","[1, 2, 3]"],"ans":1,"exp":"Slicing [1:4] includes indices 1, 2, 3 (stop=4 is exclusive). Elements at those indices: 2, 3, 4.","breakdown":["lst[1:4] → indices 1,2,3","lst[1]=2, lst[2]=3, lst[3]=4","Stop index 4 is excluded","Result: [2, 3, 4]"]},{"id":"out_d01","topic":"dictionaries","difficulty":"easy","code":"d = {'a': 1, 'b': 2}\nprint(d.get('c', 0))","opts":["None","Error","0","'c'"],"ans":2,"exp":"dict.get(key, default) returns the default value when the key doesn't exist. 'c' is not in d, so 0 is returned.","breakdown":["d.get('c', 0) → safe key access","'c' not in d","default=0 is returned","No KeyError raised"]},{"id":"out_d02","topic":"dictionaries","difficulty":"medium","code":"d = {'a': 1, 'b': 2, 'a': 3}\nprint(d)","opts":["{'a': 1, 'b': 2, 'a': 3}","{'a': 1, 'b': 2}","{'a': 3, 'b': 2}","Error"],"ans":2,"exp":"Duplicate keys are not allowed. The later value overwrites the earlier one. 'a': 3 overwrites 'a': 1.","breakdown":["Dict literal with duplicate key 'a'","Last value for 'a' wins → 3","Result: {'a': 3, 'b': 2}","No error raised: silent overwrite"]},{"id":"out_d03","topic":"dictionaries","difficulty":"medium","code":"d = {'x': 10}\nd['y'] = 20\ndel d['x']\nprint(d)","opts":["{'x': 10, 'y': 20}","{'y': 20}","{'x': 10}","{}"],"ans":1,"exp":"Adding 'y':20, then deleting 'x' leaves only {'y': 20}.","breakdown":["Start: {'x': 10}","d['y'] = 20 → {'x':10, 'y':20}","del d['x'] → {'y': 20}","print(d) → {'y': 20}"]},{"id":"out_d04","topic":"dictionaries","difficulty":"hard","code":"d = {}\nd.setdefault('a', []).append(1)\nd.setdefault('a', []).append(2)\nprint(d)","opts":["{'a': [1]}","{'a': [2]}","{'a': [1, 2]}","{'a': [1], 'a': [2]}"],"ans":2,"exp":"setdefault returns the existing value if key exists. First call creates 'a':[] and appends 1. Second call returns [1] and appends 2. Result: {'a':[1,2]}.","breakdown":["First setdefault: 'a' absent → sets to [] → returns []","Append 1 → d = {'a': [1]}","Second setdefault: 'a' exists → returns [1]","Append 2 → d = {'a': [1, 2]}"]},{"id":"out_f01","topic":"functions","difficulty":"easy","code":"def fn():\n    return\nprint(fn())","opts":["0","False","None","Error"],"ans":2,"exp":"A bare return (or no return) returns None. print(None) outputs None.","breakdown":["bare return → returns None","fn() evaluates to None","print(None) → prints 'None'"]},{"id":"out_f02","topic":"functions","difficulty":"medium","code":"x = 10\ndef fn():\n    x = 20\n    print(x)\nfn()\nprint(x)","opts":["20 20","10 10","20 10","10 20"],"ans":2,"exp":"Inside fn(), x=20 creates a LOCAL variable. The global x=10 is unaffected. fn() prints 20, outer print(x) prints 10.","breakdown":["fn() creates local x=20","print(x) inside fn → 20","Global x=10 unchanged","print(x) outside → 10"]},{"id":"out_f03","topic":"functions","difficulty":"hard","code":"def fn(lst=[]):\n    lst.append(1)\n    return lst\nprint(fn())\nprint(fn())","opts":["[1] [1]","[1] [1, 1]","[1, 1] [1, 1]","Error"],"ans":1,"exp":"Mutable default arguments persist between calls. The same list is reused. First call appends 1 → [1]. Second call appends again → [1,1].","breakdown":["Default list [] is created ONCE at function definition","First fn() → appends 1 → [1]","Same list retained","Second fn() → appends 1 again → [1, 1]"]},{"id":"out_f04","topic":"functions","difficulty":"hard","code":"def outer():\n    x = 'hello'\n    def inner():\n        return x\n    return inner\n\nfn = outer()\nprint(fn())","opts":["None","Error","hello","outer"],"ans":2,"exp":"This is a closure. inner() captures x from outer's scope. Even after outer() returns, fn() (which is inner) remembers x='hello'.","breakdown":["outer() runs, sets x='hello', returns inner function","fn = outer() → fn is the inner function","fn() calls inner(), which accesses captured x","Returns 'hello'"]},{"id":"out_f05","topic":"functions","difficulty":"medium","code":"def fn(*args):\n    return sum(args)\nprint(fn(1, 2, 3, 4))","opts":["[1,2,3,4]","10","(1,2,3,4)","Error"],"ans":1,"exp":"*args collects all positional arguments into a tuple (1,2,3,4). sum((1,2,3,4)) = 10.","breakdown":["*args → (1, 2, 3, 4)","sum(args) = 1+2+3+4 = 10","Returns 10","print(10) → 10"]},{"id":"out_lm01","topic":"lambda","difficulty":"easy","code":"f = lambda x: x * 2\nprint(f(5))","opts":["5","10","25","Error"],"ans":1,"exp":"The lambda multiplies x by 2. f(5) = 5 * 2 = 10.","breakdown":["lambda x: x * 2 → anonymous function","f(5) → 5 * 2 = 10","print(10) → 10"]},{"id":"out_lm02","topic":"lambda","difficulty":"medium","code":"fns = [lambda x: x+i for i in range(3)]\nprint(fns[0](10))","opts":["10","11","12","Error"],"ans":2,"exp":"Classic closure gotcha. All lambdas share the SAME variable i. By the time any is called, i=2 (end of loop). fns[0](10) = 10+2 = 12.","breakdown":["lambda captures i by reference, not by value","After loop completes, i=2","All three lambdas now use i=2","fns[0](10) → 10+2 = 12"]},{"id":"out_lm03","topic":"lambda","difficulty":"hard","code":"fns = [lambda x, i=i: x+i for i in range(3)]\nprint(fns[0](10))","opts":["10","11","12","Error"],"ans":0,"exp":"Using default argument i=i captures the current value of i at creation time. fns[0] was created with i=0. fns[0](10) = 10+0 = 10.","breakdown":["i=i as default arg captures current i at creation","fns[0] created when i=0 → i=0 captured","fns[1] created when i=1 → i=1 captured","fns[0](10) → 10+0 = 10"]},{"id":"out_lp01","topic":"loops","difficulty":"easy","code":"for i in range(3):\n    print(i, end=' ')","opts":["0 1 2 3","0 1 2 ","1 2 3 ","0 1 2"],"ans":1,"exp":"range(3) produces 0,1,2. end=' ' replaces the newline with a space. Output: '0 1 2 ' (trailing space).","breakdown":["range(3) → 0, 1, 2","end=' ' prevents newline","Each iteration prints i followed by space","Output: '0 1 2 '"]},{"id":"out_lp02","topic":"loops","difficulty":"medium","code":"for i in range(5):\n    if i == 3:\n        break\nelse:\n    print('done')\nprint('end')","opts":["done\nend","end","done","Error"],"ans":1,"exp":"The else clause runs only if the loop completed WITHOUT break. Since break fires at i=3, else is skipped. Only 'end' is printed.","breakdown":["Loop runs i=0,1,2,3","i==3 → break fires","Loop exits via break","else is skipped → only 'end' prints"]},{"id":"out_lp03","topic":"loops","difficulty":"medium","code":"total = 0\nfor i in range(1, 6):\n    if i % 2 == 0:\n        continue\n    total += i\nprint(total)","opts":["15","9","6","10"],"ans":1,"exp":"continue skips even numbers. Only odd numbers (1,3,5) are added. 1+3+5 = 9.","breakdown":["i=1: odd → total+=1 → 1","i=2: even → continue","i=3: odd → total+=3 → 4","i=4: even → continue","i=5: odd → total+=5 → 9"]},{"id":"out_lp04","topic":"loops","difficulty":"hard","code":"lst = [1, 2, 3, 4, 5]\nfor i, v in enumerate(lst):\n    if v == 3:\n        lst.pop(i)\nprint(lst)","opts":["[1, 2, 4, 5]","[1, 2, 3, 4, 5]","[2, 4, 5]","[1, 2, 4]"],"ans":0,"exp":"When v==3 (i=2), lst.pop(2) removes 3. The list shifts. Modifying a list while iterating can cause issues but here the result is [1,2,4,5].","breakdown":["Iterating while modifying is risky","i=2, v=3 → lst.pop(2) removes 3","lst becomes [1,2,4,5]","Iteration jumps - 4 is skipped in check but result is [1,2,4,5]"]},{"id":"out_c01","topic":"comprehensions","difficulty":"easy","code":"result = [x**2 for x in range(5)]\nprint(result)","opts":["[1,4,9,16,25]","[0,1,4,9,16]","[0,1,2,3,4]","Error"],"ans":1,"exp":"range(5) = 0,1,2,3,4. Squaring each: 0,1,4,9,16.","breakdown":["range(5) → 0,1,2,3,4","0²=0, 1²=1, 2²=4, 3²=9, 4²=16","Result: [0, 1, 4, 9, 16]"]},{"id":"out_c02","topic":"comprehensions","difficulty":"medium","code":"d = {x: x**2 for x in range(4)}\nprint(d[3])","opts":["3","6","9","Error"],"ans":2,"exp":"Dict comprehension creates {0:0, 1:1, 2:4, 3:9}. d[3] = 9.","breakdown":["{x: x**2 for x in range(4)}","→ {0:0, 1:1, 2:4, 3:9}","d[3] = 3² = 9","print(9)"]},{"id":"out_c03","topic":"comprehensions","difficulty":"medium","code":"flat = [x for row in [[1,2],[3,4],[5]] for x in row]\nprint(flat)","opts":["[[1,2],[3,4],[5]]","[1,2,3,4,5]","[1,3,5]","Error"],"ans":1,"exp":"Nested list comprehension flattens. Outer loop iterates rows, inner loop iterates each element in the row.","breakdown":["Outer: for row in [[1,2],[3,4],[5]]","Inner: for x in row","Collects all x: 1,2,3,4,5","Result: [1, 2, 3, 4, 5]"]},{"id":"out_oo01","topic":"oop","difficulty":"medium","code":"class A:\n    x = 5\na1 = A()\na2 = A()\na1.x = 10\nprint(a1.x, a2.x, A.x)","opts":["10 10 10","10 5 5","5 5 5","10 5 10"],"ans":1,"exp":"a1.x = 10 creates an INSTANCE attribute on a1, shadowing the class attribute. a2 and A still use the class attribute x=5.","breakdown":["A.x = 5 is a class attribute shared by all instances","a1.x = 10 creates a NEW instance attribute on a1","a1.x → 10 (instance attr)","a2.x → 5 (class attr), A.x → 5 (class attr)"]},{"id":"out_oo02","topic":"oop","difficulty":"hard","code":"class A:\n    def fn(self):\n        return 'A'\nclass B(A):\n    def fn(self):\n        return 'B'\nclass C(A):\n    pass\nc = C()\nprint(c.fn())","opts":["A","B","C","Error"],"ans":0,"exp":"C doesn't define fn(), so MRO searches up. C inherits from A (not B), so A.fn() is found and called → 'A'.","breakdown":["C inherits from A, not B","C has no fn() of its own","MRO: C → A → object","A.fn() is found → returns 'A'"]},{"id":"out_oo03","topic":"oop","difficulty":"medium","code":"class Counter:\n    count = 0\n    def __init__(self):\n        Counter.count += 1\n\na = Counter()\nb = Counter()\nprint(Counter.count)","opts":["0","1","2","Error"],"ans":2,"exp":"count is a class attribute. Each __init__ call increments Counter.count. Two instances created → count = 2.","breakdown":["Counter.count = 0 initially","a = Counter() → __init__ runs → Counter.count = 1","b = Counter() → __init__ runs → Counter.count = 2","print(Counter.count) → 2"]},{"id":"out_ex01","topic":"exceptions","difficulty":"easy","code":"try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print('caught')\nfinally:\n    print('finally')","opts":["caught","finally","caught\nfinally","Error"],"ans":2,"exp":"ZeroDivisionError is caught → 'caught' prints. finally ALWAYS runs → 'finally' prints.","breakdown":["1/0 raises ZeroDivisionError","except block catches it → prints 'caught'","finally always runs → prints 'finally'","Output: caught then finally"]},{"id":"out_ex02","topic":"exceptions","difficulty":"medium","code":"try:\n    x = int('abc')\nexcept ValueError:\n    print('value error')\nexcept TypeError:\n    print('type error')\nelse:\n    print('success')","opts":["value error","type error","success","Error"],"ans":0,"exp":"int('abc') raises ValueError (invalid literal). The first except clause catches it. else runs only on success: not called here.","breakdown":["int('abc') → ValueError (type is OK, value is wrong)","First except ValueError catches it","Prints 'value error'","else is skipped (exception was raised)"]},{"id":"out_op01","topic":"operators","difficulty":"medium","code":"print(2 ** 3 ** 2)","opts":["64","512","72","6"],"ans":1,"exp":"Exponentiation is RIGHT-associative. 3**2=9 is evaluated first, then 2**9=512.","breakdown":["** is right-associative","Evaluate right-to-left: 3**2 = 9 first","Then 2**9 = 512","NOT (2**3)**2 = 64"]},{"id":"out_op02","topic":"operators","difficulty":"medium","code":"print(True + True + False)","opts":["True","2","1","Error"],"ans":1,"exp":"bool is a subclass of int. True=1, False=0. 1 + 1 + 0 = 2.","breakdown":["bool is subclass of int","True = 1, False = 0","1 + 1 + 0 = 2","Arithmetic on booleans returns int"]},{"id":"out_op03","topic":"operators","difficulty":"hard","code":"x = 5\nprint(x > 3 > 1)","opts":["True True","True","False","Error"],"ans":1,"exp":"Python supports chained comparisons. x > 3 > 1 means (x > 3) and (3 > 1) = True and True = True.","breakdown":["Python chains comparisons","x>3 → 5>3 → True","3>1 → True","True and True → True"]},{"id":"out_op04","topic":"operators","difficulty":"hard","code":"print(not not not True)","opts":["True","False","None","Error"],"ans":1,"exp":"not True = False. not False = True. not True = False. Three 'not' operations on True → False.","breakdown":["not True = False","not False = True","not True = False","Final result: False"]},{"id":"out_sc01","topic":"scope","difficulty":"hard","code":"x = 'global'\ndef fn():\n    print(x)\n    x = 'local'\n\nfn()","opts":["global","local","None","UnboundLocalError"],"ans":3,"exp":"Python sees x = 'local' inside fn() and treats x as local throughout the function. Accessing x before assignment raises UnboundLocalError.","breakdown":["Python analyzes function body at compile time","x = 'local' makes x a local variable","print(x) happens BEFORE x is assigned → UnboundLocalError","Use 'global x' to refer to the global x"]},{"id":"out_sc02","topic":"scope","difficulty":"hard","code":"def outer():\n    x = 10\n    def inner():\n        nonlocal x\n        x = 20\n    inner()\n    print(x)\nouter()","opts":["10","20","None","Error"],"ans":1,"exp":"nonlocal x refers to outer's x. inner() modifies it to 20. After inner() returns, outer's x is 20.","breakdown":["nonlocal x → refers to outer's x","inner() sets x = 20 in outer's scope","After inner() returns, outer's x = 20","print(x) → 20"]},{"id":"out_mfz01","topic":"builtins","difficulty":"medium","code":"result = list(map(str, [1, 2, 3]))\nprint(result)","opts":["[1, 2, 3]","['1', '2', '3']","['str', 'str', 'str']","Error"],"ans":1,"exp":"map(str, [1,2,3]) applies str() to each element. 1→'1', 2→'2', 3→'3'. list() converts the map object.","breakdown":["map(str, [1,2,3]) applies str to each","1→'1', 2→'2', 3→'3'","list() materializes the iterator","Result: ['1', '2', '3']"]},{"id":"out_mfz02","topic":"builtins","difficulty":"medium","code":"a = [1, 2, 3]\nb = [4, 5]\nprint(list(zip(a, b)))","opts":["[(1,4),(2,5),(3,None)]","[(1,4),(2,5)]","[(1,4,3),(2,5)]","Error"],"ans":1,"exp":"zip() stops at the shortest iterable. b has 2 elements, so only 2 pairs are produced.","breakdown":["zip stops at shortest iterable","a has 3 elements, b has 2","Only 2 pairs produced","Result: [(1,4), (2,5)]"]},{"id":"out_gen01","topic":"generators","difficulty":"medium","code":"def gen():\n    yield 1\n    yield 2\n    yield 3\n\ng = gen()\nprint(next(g))\nprint(next(g))","opts":["1 1","1 2","1 2 3","Error"],"ans":1,"exp":"next(g) resumes the generator from where it left off. First next → yields 1. Second next → yields 2.","breakdown":["gen() returns a generator object","First next(g) → runs to 'yield 1' → returns 1","Second next(g) → resumes, runs to 'yield 2' → returns 2","Each call advances the generator"]},{"id":"out_gen02","topic":"generators","difficulty":"hard","code":"def gen():\n    yield 1\n    yield 2\n\ng = gen()\nlist(g)\nprint(list(g))","opts":["[1, 2]","[1, 2, 1, 2]","[]","Error"],"ans":2,"exp":"Generators can only be iterated ONCE. list(g) exhausts it. The second list(g) starts iteration on an exhausted generator → empty list.","breakdown":["First list(g) consumes all values [1,2]","Generator is now exhausted","Second list(g) → generator has no more values","Returns []"]},{"id":"out_mx01","topic":"misc","difficulty":"medium","code":"print(type([]) == type(()))","opts":["True","False","None","Error"],"ans":1,"exp":"type([]) is <class 'list'> and type(()) is <class 'tuple'>. They are different types, so == is False.","breakdown":["type([]) → <class 'list'>","type(()) → <class 'tuple'>","list ≠ tuple","Result: False"]},{"id":"out_mx02","topic":"misc","difficulty":"hard","code":"x = [1, 2, 3]\ny = x\nx += [4]\nprint(y)","opts":["[1, 2, 3]","[1, 2, 3, 4]","[4]","Error"],"ans":1,"exp":"For lists, += calls __iadd__ which extends the list IN-PLACE. y and x point to the same list. y sees [1,2,3,4]. (Note: += on strings/tuples creates a new object.)","breakdown":["y = x → both reference same list","x += [4] calls list.__iadd__([4])","__iadd__ extends in-place → same object","y is the same object → [1,2,3,4]"]},{"id":"out_mx03","topic":"misc","difficulty":"hard","code":"print(0.1 + 0.2 == 0.3)","opts":["True","False","None","Error"],"ans":1,"exp":"Floating point arithmetic is imprecise. 0.1+0.2 = 0.30000000000000004, not exactly 0.3. Use math.isclose() for float comparisons.","breakdown":["Floats are stored in binary","0.1 and 0.2 have no exact binary representation","0.1+0.2 = 0.30000000000000004","== 0.3 → False"]},{"id":"out_mx04","topic":"misc","difficulty":"medium","code":"a = 'hello'\nb = 'hello'\nprint(a is b)","opts":["True","False","None","Error"],"ans":0,"exp":"Python interns (caches) short string literals. Both a and b reference the same interned string object → is returns True. (Not guaranteed in all cases.)","breakdown":["Python interns simple string literals","'hello' is a simple string → interned","a and b point to same object","a is b → True (in CPython)"]},{"id":"out_mut01","topic":"mutability","difficulty":"medium","code":"def add_item(item, lst=[]):\n    lst.append(item)\n    return lst\n\nprint(add_item(1))\nprint(add_item(2))","opts":["[1]\\n[2]","[1]\\n[1, 2]","[1, 2]\\n[1, 2]","Error"],"ans":1,"exp":"Default argument lst=[] is created ONCE at function definition. Both calls share the same list, so it accumulates across calls.","breakdown":["add_item(1) → lst defaults to [], appends 1 → [1], returns [1]","add_item(2) → lst is the SAME list object from before (already [1])","lst.append(2) → [1, 2]","Second print shows [1, 2], not [2]"]},{"id":"out_mut02","topic":"mutability","difficulty":"hard","code":"def fn(x, lst=None):\n    if lst is None:\n        lst = []\n    lst.append(x)\n    return lst\n\nprint(fn(1))\nprint(fn(2))","opts":["[1]\\n[2]","[1]\\n[1, 2]","[1, 2]\\n[1, 2]","Error"],"ans":0,"exp":"Using None as a sentinel fixes the mutable default argument bug. Each call gets its own fresh list.","breakdown":["fn(1) → lst is None, so lst = [] (new list), append 1 → [1]","fn(2) → lst is None again (default never mutated), lst = [] (new list), append 2 → [2]","Each call gets an independent list"]},{"id":"out_mut03","topic":"mutability","difficulty":"medium","code":"a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)","opts":["[1, 2, 3]","[1, 2, 3, 4]","Error","None"],"ans":1,"exp":"b = a does not copy the list. b and a point to the same list object, so mutating b also affects a.","breakdown":["b = a → b and a reference the SAME list object","b.append(4) → modifies the shared list in-place","print(a) → [1, 2, 3, 4], because a sees the same mutation"]},{"id":"out_mut04","topic":"mutability","difficulty":"hard","code":"a = [[1, 2], [3, 4]]\nb = a.copy()\nb[0].append(99)\nprint(a)","opts":["[[1, 2], [3, 4]]","[[1, 2, 99], [3, 4]]","[[1, 2], [3, 4], 99]","Error"],"ans":1,"exp":"a.copy() is a SHALLOW copy. The outer list is new, but inner lists are still shared references.","breakdown":["b = a.copy() → new outer list, but b[0] and a[0] point to the SAME inner list","b[0].append(99) → mutates the shared inner list","print(a) → [[1, 2, 99], [3, 4]] because a[0] is the same object as b[0]"]},{"id":"out_scope01","topic":"scope","difficulty":"hard","code":"funcs = []\nfor i in range(3):\n    funcs.append(lambda: i)\n\nprint([f() for f in funcs])","opts":["[0, 1, 2]","[2, 2, 2]","[0, 0, 0]","Error"],"ans":1,"exp":"All lambdas share the SAME variable i, not its value at creation time. By the time the lambdas are called, the loop has finished and i is 2.","breakdown":["Loop creates 3 lambdas, all referencing the same closure variable i","After the loop ends, i = 2 (its final value)","Calling any lambda now looks up the CURRENT value of i, which is 2 for all of them","Result: [2, 2, 2]"]},{"id":"out_scope02","topic":"scope","difficulty":"medium","code":"x = 10\ndef fn():\n    print(x)\n    x = 20\nfn()","opts":["10","20","UnboundLocalError","NameError"],"ans":2,"exp":"Since x is assigned anywhere inside fn(), Python treats x as local throughout the entire function. The print(x) before assignment fails because the local x has no value yet.","breakdown":["Python sees x = 20 inside fn() and treats x as LOCAL for the whole function","print(x) tries to read the local x before it is assigned","Raises UnboundLocalError: local variable x referenced before assignment"]},{"id":"out_scope03","topic":"scope","difficulty":"medium","code":"def outer():\n    x = 5\n    def inner():\n        nonlocal x\n        x = 10\n    inner()\n    return x\n\nprint(outer())","opts":["5","10","Error","None"],"ans":1,"exp":"nonlocal allows inner() to modify the enclosing scope variable x. Without nonlocal, inner() would create its own local x.","breakdown":["outer() defines x = 5","inner() declares nonlocal x, then sets x = 10","This modifies outer's x, not a new local","return x in outer() returns the updated value: 10"]},{"id":"out_scope04","topic":"scope","difficulty":"easy","code":"def make_counter():\n    count = 0\n    def increment():\n        nonlocal count\n        count += 1\n        return count\n    return increment\n\ncounter = make_counter()\nprint(counter())\nprint(counter())","opts":["1\\n1","1\\n2","0\\n1","Error"],"ans":1,"exp":"This is a closure. The increment function remembers count between calls because of nonlocal.","breakdown":["make_counter() creates count=0 and returns increment, a closure","First call: count += 1 → count=1, returns 1","Second call: count is remembered from last call (closure), count += 1 → count=2, returns 2"]},{"id":"out_scope05","topic":"scope","difficulty":"hard","code":"def fn():\n    global y\n    y = 100\n\nfn()\nprint(y)","opts":["NameError","100","None","UnboundLocalError"],"ans":1,"exp":"global y declares that y inside fn() refers to the module-level global variable. Calling fn() creates y in the global scope.","breakdown":["fn() declares global y, meaning any assignment to y affects the global scope","y = 100 creates/sets the global variable y","After fn() runs, print(y) accesses the global y, which is now 100"]},{"id":"out_gen01_2","topic":"generators","difficulty":"medium","code":"def gen():\n    yield 1\n    yield 2\n    yield 3\n\ng = gen()\nprint(list(g))\nprint(list(g))","opts":["[1, 2, 3]\\n[1, 2, 3]","[1, 2, 3]\\n[]","[]\\n[1, 2, 3]","Error"],"ans":1,"exp":"Generators are exhausted after one full iteration. The second list(g) call has nothing left to yield.","breakdown":["g = gen() creates a generator object","First list(g) consumes all values: [1, 2, 3]","Generator is now exhausted","Second list(g) returns [] because there are no more values to yield"]},{"id":"out_gen02_2","topic":"generators","difficulty":"easy","code":"def countdown(n):\n    while n > 0:\n        yield n\n        n -= 1\n\nfor x in countdown(3):\n    print(x, end=\" \")","opts":["3 2 1","1 2 3","0 1 2","Error"],"ans":0,"exp":"The generator yields n, then decrements, repeating until n reaches 0. Output is 3, 2, 1 in that order.","breakdown":["n=3: yield 3, then n becomes 2","n=2: yield 2, then n becomes 1","n=1: yield 1, then n becomes 0","n=0: loop condition false, generator stops","Output: 3 2 1"]},{"id":"out_gen03","topic":"generators","difficulty":"medium","code":"g = (x**2 for x in range(3))\nprint(next(g))\nprint(next(g))\nprint(sum(g))","opts":["0\\n1\\n4","0\\n1\\n5","1\\n4\\n4","Error"],"ans":0,"exp":"A generator expression yields lazily. next() pulls values one at a time; remaining values are consumed by sum().","breakdown":["g yields 0, 1, 4 (squares of 0, 1, 2)","next(g) → 0","next(g) → 1","sum(g) sums the REMAINING values: just 4","Output: 0, 1, 4"]},{"id":"out_gen04","topic":"generators","difficulty":"hard","code":"def gen():\n    try:\n        yield 1\n        yield 2\n    except GeneratorExit:\n        print(\"closed\")\n\ng = gen()\nnext(g)\ng.close()","opts":["closed is not printed","closed","1\\nclosed","Error"],"ans":1,"exp":"g.close() raises GeneratorExit inside the generator at the point where it is paused. The except block catches it and prints \"closed\".","breakdown":["next(g) runs until the first yield, returning 1 (not printed here)","g.close() sends GeneratorExit into the generator at the paused yield point","The except GeneratorExit block catches it and prints \"closed\""]},{"id":"out_id01","topic":"is_vs_eq","difficulty":"medium","code":"a = [1, 2, 3]\nb = [1, 2, 3]\nprint(a == b)\nprint(a is b)","opts":["True\\nTrue","True\\nFalse","False\\nTrue","False\\nFalse"],"ans":1,"exp":"== compares values (equal lists). is compares identity (different objects in memory, even with same content).","breakdown":["a == b → True, because both lists have the same elements in the same order","a is b → False, because a and b are two SEPARATE list objects in memory"]},{"id":"out_id02","topic":"is_vs_eq","difficulty":"hard","code":"x = 256\ny = 256\nprint(x is y)\n\na = 257\nb = 257\nprint(a is b)","opts":["True\\nTrue","True\\nFalse","False\\nTrue","False\\nFalse"],"ans":1,"exp":"CPython caches small integers from -5 to 256. 256 is within the cache range, so x is y is True. 257 is outside the range, so a and b are separate objects.","breakdown":["x = 256, y = 256 → both reference the SAME cached int object → x is y is True","a = 257, b = 257 → outside CPython's integer cache (-5 to 256) → separate objects → a is b is False","This is an implementation detail of CPython, not guaranteed Python behaviour"]},{"id":"out_id03","topic":"is_vs_eq","difficulty":"easy","code":"x = None\nprint(x == None)\nprint(x is None)","opts":["True\\nTrue","True\\nFalse","False\\nTrue","False\\nFalse"],"ans":0,"exp":"Both work for None comparison, but is None is the Pythonic and recommended way since None is a singleton.","breakdown":["x == None → True (value comparison works)","x is None → True (identity comparison works because None is a singleton)","Best practice: always use \"is None\" not \"== None\""]},{"id":"out_id04","topic":"is_vs_eq","difficulty":"medium","code":"a = \"hello\"\nb = \"hello\"\nprint(a is b)\n\nc = \"hello world\"\nd = \"hello world\"\nprint(c is d)","opts":["True\\nTrue","True\\nFalse","False\\nTrue","False\\nFalse"],"ans":1,"exp":"CPython interns short string literals that look like identifiers, so a is b can be True. Strings with spaces are usually not auto-interned.","breakdown":["a = \"hello\", b = \"hello\" → both interned to the same object → a is b is True","c and d contain a space → typically not auto-interned → separate objects → c is d is False","Never rely on string identity in real code: always use == for value comparison"]},{"id":"out_exc01","topic":"exceptions","difficulty":"medium","code":"try:\n    print(\"A\")\n    raise ValueError(\"oops\")\n    print(\"B\")\nexcept ValueError:\n    print(\"C\")\nelse:\n    print(\"D\")\nfinally:\n    print(\"E\")","opts":["A C D E","A C E","A B C E","A C D"],"ans":1,"exp":"B never runs because the exception interrupts execution. else is skipped because an exception WAS raised. finally always runs.","breakdown":["print(\"A\") runs","raise ValueError interrupts before print(\"B\")","except ValueError catches it, prints \"C\"","else is SKIPPED because an exception occurred","finally always runs, prints \"E\"","Output: A C E"]},{"id":"out_exc02","topic":"exceptions","difficulty":"easy","code":"try:\n    x = 10 / 0\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero\")\nexcept Exception:\n    print(\"Other error\")","opts":["Cannot divide by zero","Other error","Both print","Error"],"ans":0,"exp":"Python checks except blocks in order and stops at the first match. ZeroDivisionError matches the first except block.","breakdown":["10 / 0 raises ZeroDivisionError","First except ZeroDivisionError matches, prints \"Cannot divide by zero\"","Second except block is never reached"]},{"id":"out_exc03","topic":"exceptions","difficulty":"hard","code":"def fn():\n    try:\n        return 1\n    finally:\n        print(\"cleanup\")\n\nprint(fn())","opts":["1","cleanup\\n1","1\\ncleanup","Error"],"ans":1,"exp":"finally runs even when there is a return in try. The function does not actually return until finally completes.","breakdown":["try block hits return 1, but Python does not exit yet","finally block runs first, printing \"cleanup\"","THEN the function returns 1","print(fn()) prints \"cleanup\" first, then \"1\""]},{"id":"out_exc04","topic":"exceptions","difficulty":"medium","code":"d = {\"a\": 1}\ntry:\n    print(d[\"b\"])\nexcept KeyError as e:\n    print(f\"Key not found: {e}\")","opts":["Key not found: b","Key not found: 'b'","KeyError","None"],"ans":1,"exp":"When a KeyError is converted to a string via f-string, it shows the repr of the missing key, which includes quotes.","breakdown":["d[\"b\"] raises KeyError(\"b\")","str(e) on a KeyError gives the repr of the missing key, with quotes: 'b'","f-string prints: Key not found: 'b'"]},{"id":"out_bi01","topic":"builtins","difficulty":"easy","code":"print(list(enumerate([\"a\", \"b\", \"c\"], start=1)))","opts":["[(0, 'a'), (1, 'b'), (2, 'c')]","[(1, 'a'), (2, 'b'), (3, 'c')]","['a', 'b', 'c']","Error"],"ans":1,"exp":"enumerate(iterable, start=1) begins counting from 1 instead of the default 0.","breakdown":["enumerate with start=1 pairs each element with an index starting at 1","\"a\" gets index 1, \"b\" gets 2, \"c\" gets 3","Result: [(1, \"a\"), (2, \"b\"), (3, \"c\")]"]},{"id":"out_bi02","topic":"builtins","difficulty":"medium","code":"print(list(zip([1, 2, 3], [\"a\", \"b\"])))","opts":["[(1, 'a'), (2, 'b'), (3, None)]","[(1, 'a'), (2, 'b')]","[(1, 'a'), (2, 'b'), (3,)]","Error"],"ans":1,"exp":"zip() stops at the SHORTEST iterable. Since the second list has only 2 elements, only 2 pairs are produced.","breakdown":["zip pairs elements positionally: (1,\"a\"), (2,\"b\")","The first list has a third element (3) but the second list does not","zip stops silently at the shorter length: no error, no None padding","Result: [(1,\"a\"), (2,\"b\")]"]},{"id":"out_bi03","topic":"builtins","difficulty":"medium","code":"print(sorted([\"banana\", \"Apple\", \"cherry\"]))","opts":["['Apple', 'banana', 'cherry']","['apple', 'banana', 'cherry']","['banana', 'Apple', 'cherry']","Error"],"ans":0,"exp":"String comparison is case-sensitive in Python. Uppercase letters have lower ASCII/Unicode values than lowercase, so \"Apple\" sorts before \"banana\".","breakdown":["Default string sort uses character ordinal (ASCII/Unicode) values","Uppercase letters (A-Z, 65-90) come before lowercase (a-z, 97-122)","\"Apple\" (starts with A=65) sorts before \"banana\" (starts with b=98)","Result: ['Apple', 'banana', 'cherry']"]},{"id":"out_bi04","topic":"builtins","difficulty":"hard","code":"print(any([0, \"\", None, False]))\nprint(all([1, \"x\", True]))","opts":["False\\nTrue","True\\nFalse","False\\nFalse","True\\nTrue"],"ans":0,"exp":"any() returns True if at least one element is truthy. all() returns True only if every element is truthy.","breakdown":["any([0, \"\", None, False]) → all elements are falsy → any returns False","all([1, \"x\", True]) → all elements are truthy → all returns True","Output: False, True"]},{"id":"out_comp01","topic":"comprehensions","difficulty":"medium","code":"lst = [1, 2, 3, 4, 5]\nresult = [x for x in lst if x % 2 == 0]\nprint(result)","opts":["[1, 3, 5]","[2, 4]","[1, 2, 3, 4, 5]","Error"],"ans":1,"exp":"The comprehension filters out odd numbers, keeping only those divisible by 2 with no remainder.","breakdown":["For each x in [1,2,3,4,5], check if x % 2 == 0","1: 1%2=1, skip. 2: 2%2=0, keep. 3: skip. 4: keep. 5: skip.","Result: [2, 4]"]},{"id":"out_comp02","topic":"comprehensions","difficulty":"hard","code":"matrix = [[1, 2], [3, 4], [5, 6]]\nflat = [x for row in matrix for x in row if x % 2 == 0]\nprint(flat)","opts":["[2, 4, 6]","[1, 3, 5]","[1, 2, 3, 4, 5, 6]","Error"],"ans":0,"exp":"Nested comprehension flattens the matrix while filtering for even numbers. The for clauses read left to right (outer to inner).","breakdown":["Outer loop: row in matrix → [1,2], [3,4], [5,6]","Inner loop: x in row, with condition x % 2 == 0","From [1,2]: keep 2. From [3,4]: keep 4. From [5,6]: keep 6.","Result: [2, 4, 6]"]},{"id":"out_comp03","topic":"comprehensions","difficulty":"medium","code":"d = {\"a\": 1, \"b\": 2, \"c\": 3}\nresult = {v: k for k, v in d.items()}\nprint(result)","opts":["{'a': 1, 'b': 2, 'c': 3}","{1: 'a', 2: 'b', 3: 'c'}","{'1': 'a', '2': 'b'}","Error"],"ans":1,"exp":"This dict comprehension inverts the dictionary, swapping keys and values.","breakdown":["For each (k, v) pair in d.items(): \"a\":1, \"b\":2, \"c\":3","New dict uses v as key and k as value: {1:\"a\", 2:\"b\", 3:\"c\"}","Result: {1: \"a\", 2: \"b\", 3: \"c\"}"]},{"id":"out_comp04","topic":"comprehensions","difficulty":"easy","code":"print({x for x in [1, 1, 2, 2, 3]})","opts":["{1, 1, 2, 2, 3}","{1, 2, 3}","[1, 2, 3]","Error"],"ans":1,"exp":"Set comprehensions automatically remove duplicates since sets only contain unique elements.","breakdown":["Set comprehension {x for x in [1,1,2,2,3]} builds a set","Sets cannot contain duplicates","Result: {1, 2, 3}"]},{"id":"out_lam01","topic":"lambda","difficulty":"medium","code":"people = [(\"Alice\", 30), (\"Bob\", 25), (\"Carol\", 35)]\nresult = sorted(people, key=lambda p: p[1])\nprint(result)","opts":["[('Alice', 30), ('Bob', 25), ('Carol', 35)]","[('Bob', 25), ('Alice', 30), ('Carol', 35)]","[('Carol', 35), ('Alice', 30), ('Bob', 25)]","Error"],"ans":1,"exp":"The lambda extracts the second element (age) of each tuple as the sort key, sorting by age ascending.","breakdown":["key=lambda p: p[1] tells sorted() to compare ages, not names","Ages: 30, 25, 35 → sorted ascending: 25, 30, 35","Result: [(Bob,25), (Alice,30), (Carol,35)]"]},{"id":"out_lam02","topic":"lambda","difficulty":"easy","code":"square = lambda x: x ** 2\nprint(square(5))","opts":["10","25","5","Error"],"ans":1,"exp":"The lambda computes x squared. square(5) returns 5 ** 2 = 25.","breakdown":["lambda x: x ** 2 defines an anonymous function that squares its input","square(5) calls it with x=5","Result: 5 ** 2 = 25"]},{"id":"out_lam03","topic":"lambda","difficulty":"hard","code":"fns = [lambda x, i=i: x + i for i in range(3)]\nprint([f(10) for f in fns])","opts":["[12, 12, 12]","[10, 11, 12]","[10, 10, 10]","Error"],"ans":1,"exp":"Using i=i as a default argument captures the CURRENT value of i at lambda creation time, fixing the loop closure bug.","breakdown":["Each lambda has its own default i, captured at creation: 0, 1, 2","f(10) for the first lambda: 10 + 0 = 10","f(10) for the second: 10 + 1 = 11","f(10) for the third: 10 + 2 = 12","Result: [10, 11, 12]"]},{"id":"out_oop01","topic":"oop","difficulty":"medium","code":"class Animal:\n    def speak(self):\n        return \"...\"\n\nclass Dog(Animal):\n    def speak(self):\n        return \"Woof!\"\n\na = Animal()\nd = Dog()\nprint(a.speak())\nprint(d.speak())","opts":["...\\n...","Woof!\\nWoof!","...\\nWoof!","Error"],"ans":2,"exp":"Dog overrides the speak() method inherited from Animal. Each instance calls its own class's version.","breakdown":["a is an Animal instance, calls Animal.speak() → \"...\"","d is a Dog instance, Dog overrides speak() → \"Woof!\"","Output: \"...\" then \"Woof!\""]},{"id":"out_oop02","topic":"oop","difficulty":"hard","code":"class Counter:\n    count = 0\n    def __init__(self):\n        Counter.count += 1\n\na = Counter()\nb = Counter()\nc = Counter()\nprint(Counter.count)","opts":["0","1","3","Error"],"ans":2,"exp":"count is a class variable shared by all instances. Each __init__ call increments the SHARED class variable.","breakdown":["count starts at 0 (class variable)","Creating a: Counter.count += 1 → 1","Creating b: Counter.count += 1 → 2","Creating c: Counter.count += 1 → 3","Counter.count is now 3"]},{"id":"out_oop03","topic":"oop","difficulty":"medium","code":"class Base:\n    def __init__(self):\n        self.x = 1\n\nclass Derived(Base):\n    def __init__(self):\n        super().__init__()\n        self.y = 2\n\nd = Derived()\nprint(d.x, d.y)","opts":["1 2","2 1","Error: x not defined","None None"],"ans":0,"exp":"super().__init__() calls the parent class's __init__, which sets self.x. Then Derived sets self.y.","breakdown":["Derived.__init__ calls super().__init__() first","This runs Base.__init__, setting self.x = 1","Then Derived sets self.y = 2","d.x is 1, d.y is 2"]},{"id":"out_oop04","topic":"oop","difficulty":"hard","code":"class A:\n    def __init__(self):\n        self.__secret = 42\n\na = A()\nprint(a._A__secret)","opts":["42","AttributeError","None","Error"],"ans":0,"exp":"Name mangling renames __secret to _A__secret inside the class. It is still accessible externally using this mangled name.","breakdown":["self.__secret inside class A is name-mangled to self._A__secret","a._A__secret accesses the mangled attribute directly","This works and prints 42: proving __ is not TRUE privacy, just mangling"]},{"id":"out_str01","topic":"strings","difficulty":"easy","code":"s = \"Python\"\nprint(s[1:4])","opts":["Pyth","yth","ytho","ython"],"ans":1,"exp":"Slicing [1:4] takes characters at indices 1, 2, 3 (stop index 4 is exclusive).","breakdown":["s = \"Python\" → P(0) y(1) t(2) h(3) o(4) n(5)","s[1:4] takes indices 1, 2, 3 → \"y\", \"t\", \"h\"","Result: \"yth\""]},{"id":"out_str02","topic":"strings","difficulty":"medium","code":"s = \"  hello world  \"\nprint(s.strip().split())","opts":["['hello world']","['hello', 'world']","['  hello', 'world  ']","Error"],"ans":1,"exp":".strip() removes leading/trailing whitespace, then .split() with no arguments splits on any whitespace.","breakdown":["s.strip() → \"hello world\" (outer spaces removed)",".split() with no args splits on whitespace and removes empty strings","Result: [\"hello\", \"world\"]"]},{"id":"out_str03","topic":"strings","difficulty":"hard","code":"a = \"5\"\nb = 5\ntry:\n    print(a + b)\nexcept TypeError:\n    print(\"Type error occurred\")","opts":["10","55","Type error occurred","5 5"],"ans":2,"exp":"Python does not implicitly convert between str and int. Adding a string and an int raises TypeError.","breakdown":["a is str \"5\", b is int 5","a + b tries to concatenate a string with an int: not allowed","Raises TypeError, caught by except, prints \"Type error occurred\""]},{"id":"out_str04","topic":"strings","difficulty":"medium","code":"print(\"-\".join([\"2024\", \"01\", \"15\"]))","opts":["2024-01-15","2024 01 15","[\"2024\",\"01\",\"15\"]","Error"],"ans":0,"exp":"join() is called on the separator string and joins each element of the list using that separator.","breakdown":["\"-\".join(lst) joins each element of lst with \"-\" between them","[\"2024\", \"01\", \"15\"] becomes \"2024\" + \"-\" + \"01\" + \"-\" + \"15\"","Result: \"2024-01-15\""]},{"id":"out_loop01","topic":"loops","difficulty":"medium","code":"for i in range(5):\n    if i == 3:\n        break\n    print(i, end=\" \")\nelse:\n    print(\"done\")","opts":["0 1 2 done","0 1 2","0 1 2 3 done","0 1 2 3"],"ans":1,"exp":"break exits the loop when i==3, which also SKIPS the else clause entirely.","breakdown":["i=0: print 0. i=1: print 1. i=2: print 2.","i=3: condition true, break: loop exits immediately","else block is skipped because break was used","Output: 0 1 2 (no \"done\")"]},{"id":"out_loop02","topic":"loops","difficulty":"easy","code":"for i in range(3):\n    for j in range(2):\n        if j == 1:\n            continue\n        print(i, j)","opts":["(0,0) (1,0) (2,0)","(0,0) (0,1) (1,0) (1,1) (2,0) (2,1)","(0,0) (1,1) (2,0)","Error"],"ans":0,"exp":"continue skips printing when j==1, so only j==0 cases are printed for each i.","breakdown":["For each i (0,1,2), inner loop runs j=0,1","j=0: print(i, 0). j=1: continue (skip print)","Result pairs printed: (0,0), (1,0), (2,0)"]},{"id":"out_misc01","topic":"misc","difficulty":"medium","code":"x = 5\ny = 2\nprint(x ** y ** 2)","opts":["100","625","3125","30"],"ans":2,"exp":"** is right-associative. x ** y ** 2 evaluates as x ** (y ** 2), not (x ** y) ** 2.","breakdown":["** is right-associative: y ** 2 evaluates first → 2 ** 2 = 4","Then x ** 4 → 5 ** 4 = 625... wait recompute: 5**(2**2) = 5**4 = 625","Result: 625"]},{"id":"out_misc02","topic":"misc","difficulty":"hard","code":"print(-7 // 2)\nprint(-7 % 2)","opts":["-3\\n-1","-4\\n1","-3\\n1","-4\\n-1"],"ans":1,"exp":"Floor division rounds toward negative infinity, not toward zero. -7 // 2 = -4 (floor of -3.5).","breakdown":["-7 // 2: -3.5 floored toward negative infinity → -4","-7 % 2: remainder follows the sign of the divisor → 1","Check: (-4) * 2 + 1 = -8 + 1 = -7 ✓","Output: -4, 1"]},{"id":"out_misc03","topic":"misc","difficulty":"medium","code":"a = (1, 2, 3)\na = a + (4,)\nprint(a)","opts":["(1, 2, 3, 4)","(1, 2, 3)","Error: tuples are immutable","(4, 1, 2, 3)"],"ans":0,"exp":"Tuples are immutable, but the variable a can be REBOUND to a new tuple. + creates a new tuple, it does not mutate the original.","breakdown":["a + (4,) creates a NEW tuple by concatenation, since tuples support + (creates new object)","a is then rebound to this new tuple (1,2,3,4)","The original tuple object is unchanged, but a now points elsewhere","Result: (1, 2, 3, 4)"]},{"id":"out_misc04","topic":"misc","difficulty":"hard","code":"def fn(a, b=10, *args, **kwargs):\n    print(a, b, args, kwargs)\n\nfn(1, 2, 3, 4, x=5, y=6)","opts":["1 2 (3, 4) {'x': 5, 'y': 6}","1 10 (2, 3, 4) {'x': 5, 'y': 6}","1 2 [3, 4] {'x': 5, 'y': 6}","Error"],"ans":0,"exp":"a=1, b=2 (overriding default 10), remaining positional args (3,4) go to *args, keyword args go to **kwargs.","breakdown":["fn(1, 2, 3, 4, x=5, y=6) called with 4 positional and 2 keyword arguments","a=1, b=2 (b's default of 10 is overridden by the second positional arg)","Remaining positional args (3, 4) collected into args tuple","Keyword args (x=5, y=6) collected into kwargs dict","Output: 1 2 (3, 4) {'x': 5, 'y': 6}"]}]};
+  allQ = d.questions;
+  updateInfo();
 }
 
 function getPool() {
@@ -665,20 +715,14 @@ function renderQ() {
     const btn = document.createElement('button');
     btn.className = 'option-btn';
     btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65+i)}</span><span>${window.PyPrep.escapeHTML(opt)}</span>`;
-    if (a.chosen !== null) {
-      btn.disabled = true;
-      if (i === q.ans) btn.classList.add('correct');
-      else if (i === a.chosen) btn.classList.add('wrong');
-    } else {
-      btn.addEventListener('click', () => handleAnswer(i));
-    }
+    if (a.chosen === i) btn.classList.add('selected');
+    btn.addEventListener('click', () => handleAnswer(i));
     optsEl.appendChild(btn);
   });
 
-  // Explanation
+  // Hide explanation until test ends
   const panel = document.getElementById('exp-panel');
-  if (a.chosen !== null && instantFB) { showExplanation(q, a.correct); }
-  else { panel.classList.add('hidden'); }
+  panel.classList.add('hidden');
 
   updateDots();
   document.getElementById('prev-btn').disabled = currentIdx === 0;
@@ -703,33 +747,24 @@ function showExplanation(q, correct) {
   } else { breakdownEl.innerHTML = ''; }
 }
 
-// ── Handle Answer ─────────────────────────────────────────────
+// ── Handle Answer (selection only: evaluated at end) ──────────
 function handleAnswer(chosen) {
-  const q = testQ[currentIdx];
   const a = answers[currentIdx];
-  if (a.chosen !== null) return;
-
+  if (a.locked) return;
   a.chosen  = chosen;
-  a.correct = chosen === q.ans;
   a.skipped = false;
-
   document.querySelectorAll('.option-btn').forEach((btn, i) => {
-    btn.disabled = true;
-    if (i === q.ans) btn.classList.add('correct');
-    else if (i === chosen) btn.classList.add('wrong');
+    btn.classList.toggle('selected', i === chosen);
   });
-
-  if (instantFB) showExplanation(q, a.correct);
-  updateLiveScore();
   updateDots();
-  if (currentIdx === testQ.length-1) document.getElementById('next-btn').textContent = '✅ Finish';
+  updateLiveScore();
 }
 
 function updateLiveScore() {
-  const correct  = answers.filter(a => a.correct).length;
   const answered = answers.filter(a => a.chosen !== null).length;
-  document.getElementById('live-score').textContent = `✅ ${correct} / ${answered}`;
-  document.getElementById('live-acc').textContent   = answered ? `Accuracy: ${Math.round(correct/answered*100)}%` : 'Accuracy: —';
+  const total    = testQ.length;
+  document.getElementById('live-score').textContent = `${answered} / ${total} answered`;
+  document.getElementById('live-acc').textContent   = answered ? `${Math.round(answered/total*100)}% complete` : 'Select an answer';
 }
 
 // ── Dots ──────────────────────────────────────────────────────
@@ -768,6 +803,14 @@ document.getElementById('quit-btn').addEventListener('click', () => {
 // ── End Test ──────────────────────────────────────────────────
 function endTest() {
   if (timer) timer.stop();
+  // Evaluate all selections at end
+  answers.forEach((a, i) => {
+    if (a.chosen !== null) {
+      a.correct = a.chosen === testQ[i].ans;
+      a.skipped = false;
+      a.locked  = true;
+    }
+  });
   const elapsed = Math.round((Date.now() - startTime) / 1000);
   const correct = answers.filter(a => a.correct).length;
   const wrong   = answers.filter(a => !a.correct && !a.skipped).length;
@@ -775,6 +818,16 @@ function endTest() {
   const pct     = Math.round(correct / testQ.length * 100);
 
   window.PyPrep.Progress.recordTest(lastConfig.topic !== 'all' ? lastConfig.topic : 'output_mixed', correct, testQ.length);
+  if (window.PyPrepFeatures) {
+    window.PyPrepFeatures.XPSystem.recordTestComplete(correct, testQ.length);
+    testQ.forEach((q, i) => {
+      if (!answers[i].correct && answers[i].chosen !== null) {
+        window.PyPrepFeatures.SpacedRepetition.addWrong(q.id, 'output', { code: q.code, opts: q.opts, ans: q.ans, exp: q.exp, topic: q.topic });
+      } else if (answers[i].correct) {
+        window.PyPrepFeatures.SpacedRepetition.removeWrong(q.id);
+      }
+    });
+  }
 
   showScreen('result-screen');
 
@@ -826,7 +879,7 @@ function buildReview(filter) {
     const item = document.createElement('div');
     item.className = `review-item ${a.correct ? 'correct' : 'wrong'}`;
     item.innerHTML = `
-      <div class="review-code">${window.PyPrep.escapeHTML(q.code)}</div>
+      <pre class="review-code" style="white-space:pre-wrap;word-break:break-word;">${window.PyPrep.escapeHTML(q.code)}</pre>
       <div class="review-item__ans">
         Your answer: <span class="${a.correct?'correct':'wrong'}">${a.chosen!==null ? window.PyPrep.escapeHTML(q.opts[a.chosen]) : 'Skipped'}</span>
         ${!a.correct ? ` &nbsp;|&nbsp; Correct: <span class="correct">${window.PyPrep.escapeHTML(q.opts[q.ans])}</span>` : ''}
@@ -840,10 +893,43 @@ function buildReview(filter) {
 document.getElementById('rev-all-btn').addEventListener('click',   () => { buildReview('all');   document.getElementById('rev-all-btn').classList.add('selected');   document.getElementById('rev-wrong-btn').classList.remove('selected'); });
 document.getElementById('rev-wrong-btn').addEventListener('click', () => { buildReview('wrong'); document.getElementById('rev-wrong-btn').classList.add('selected'); document.getElementById('rev-all-btn').classList.remove('selected'); });
 
+document.getElementById('share-btn')?.addEventListener('click', () => {
+  const correct = answers.filter(a=>a.correct).length;
+  const pct     = Math.round(correct/testQ.length*100);
+  const elapsed = Math.round((Date.now()-startTime)/1000);
+  if (window.ShareCard) ShareCard.generate({
+    score:pct, correct, total:testQ.length,
+    time:window.PyPrep.formatTime(elapsed), title:'Guess the Output'
+  });
+});
 document.getElementById('retry-btn').addEventListener('click', startTest);
 document.getElementById('new-btn').addEventListener('click',   () => showScreen('config-screen'));
 
 document.addEventListener('DOMContentLoaded', () => { loadData(); });
+
+// ── Keyboard Navigation ────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  // Arrow Right / L = Next question
+  if (e.key === 'ArrowRight' || e.key === 'l') {
+    document.getElementById('next-btn')?.click();
+  }
+  // Arrow Left / J = Previous question
+  if (e.key === 'ArrowLeft' || e.key === 'j') {
+    document.getElementById('prev-btn')?.click();
+  }
+  // 1-4 = select option A-D
+  if (['1','2','3','4'].includes(e.key)) {
+    const idx = parseInt(e.key) - 1;
+    const btns = document.querySelectorAll('.option-btn');
+    if (btns[idx] && !btns[idx].disabled) btns[idx].click();
+  }
+  // Enter = submit
+  if (e.key === 'Enter') {
+    const submitBtn = document.getElementById('submit-answer-btn');
+    if (submitBtn && submitBtn.style.display !== 'none') submitBtn.click();
+  }
+});
+
 </script>
 </body>
 </html>

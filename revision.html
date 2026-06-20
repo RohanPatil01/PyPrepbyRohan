@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Last-Minute Python Interview Revision — Python in 15 Minutes, Python in 30 Minutes, and Interview Day Revision. High-value points only." />
-  <title>Last-Minute Revision — PyPrep Pro</title>
+  <meta name="description" content="Last-Minute Python Interview Revision - Python in 15 Minutes, Python in 30 Minutes, and Interview Day Revision. High-value points only." />
+  <title>Last-Minute Revision - PyPrepbyRohan</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
@@ -150,7 +150,7 @@
       margin-top: 12px; overflow-x: auto; white-space: pre;
       position: relative;
     }
-    [data-theme="dark"] .mini-code { background: #03080f; }
+    [data-theme="light"] .mini-code { background: #03080f; }
     .mini-code .kw  { color: #7c5cfc; font-weight: 600; }
     .mini-code .fn  { color: #4f8ef7; }
     .mini-code .str { color: #4cde9a; }
@@ -260,7 +260,7 @@
     <div class="navbar__inner">
       <a href="index.html" class="navbar__logo">
         <div class="navbar__logo-icon">🐍</div>
-        PyPrep<span class="accent">Pro</span>
+        <span class="navbar__logo-text"><span class="logo-main">PyPrep</span><span class="logo-by">byRohan</span></span>
       </a>
       <nav class="navbar__nav">
         <a href="questions.html"  class="navbar__link">Interview Q&A</a>
@@ -273,6 +273,8 @@
         <a href="revision.html"   class="navbar__link active">Revision</a>
       </nav>
       <div class="navbar__actions">
+        <button class="global-search-btn" title="Search (Ctrl+K)">🔍 <span>Search</span> <kbd>Ctrl K</kbd></button>
+        <span class="xp-badge">🌱 Beginner</span>
         <button class="theme-toggle" title="Toggle Theme">🌙</button>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
@@ -295,12 +297,12 @@
   <div class="container">
     <div class="section-header__eyebrow" style="margin-bottom:12px;">⚡ Last-Minute Revision</div>
     <h1 style="margin-bottom:8px;">Interview Day Rescue Kit</h1>
-    <p style="max-width:580px;">Three focused revision modes. Only the highest-value points — no fluff. Open the right kit based on how much time you have left.</p>
+    <p style="max-width:580px;">Three focused revision modes. Only the highest-value points: no fluff. Open the right kit based on how much time you have left.</p>
   </div>
 </div>
 
 <!-- ── Main ─────────────────────────────────────────────────── -->
-<div class="container" style="padding-bottom:80px;">
+<div class="container" style="padding-top:calc(var(--nav-height) + 32px);padding-bottom:80px;">
 
   <!-- Kit tabs -->
   <div class="kit-tabs">
@@ -329,7 +331,7 @@
     <div class="countdown-banner">
       <div class="countdown-banner__icon">🔥</div>
       <div>
-        <h3>Interview Day — Flash Cards</h3>
+        <h3>Interview Day - Flash Cards</h3>
         <p>Tap each card to reveal the answer. Scan all cards before you walk in.</p>
       </div>
       <div class="countdown-banner__timer" id="day-timer">00:00</div>
@@ -405,7 +407,7 @@
       <div class="countdown-banner__icon">⏱️</div>
       <div>
         <h3>15-Minute Revision Kit</h3>
-        <p>The absolute minimum. Read every section — don't skip any.</p>
+        <p>The absolute minimum. Read every section: don't skip any.</p>
       </div>
       <div class="countdown-banner__timer" id="fifteen-timer">15:00</div>
     </div>
@@ -414,7 +416,7 @@
     <div class="topic-block open reveal">
       <div class="topic-block__header" onclick="toggleBlock(this)">
         <div class="topic-block__icon">📦</div>
-        <div class="topic-block__title">Data Types — Must Know</div>
+        <div class="topic-block__title">Data Types - Must Know</div>
         <span class="topic-block__count">8 points</span>
         <div class="topic-block__chevron">▼</div>
       </div>
@@ -426,8 +428,8 @@
             <div class="bullet-item"><code>set</code> = unordered, unique elements, O(1) lookup</div>
             <div class="bullet-item"><code>dict</code> = key-value, ordered (3.7+), keys must be hashable</div>
             <div class="bullet-item"><code>bool</code> is a subclass of <code>int</code>: True=1, False=0</div>
-            <div class="bullet-item"><code>None</code> is a singleton — always compare with <code>is None</code></div>
-            <div class="bullet-item">Use <code>isinstance(x, int)</code> not <code>type(x) == int</code> — handles inheritance</div>
+            <div class="bullet-item"><code>None</code> is a singleton: always compare with <code>is None</code></div>
+            <div class="bullet-item">Use <code>isinstance(x, int)</code> not <code>type(x) == int</code>: handles inheritance</div>
             <div class="bullet-item">Empty containers are falsy: <code>[], {}, set(), '', 0, None</code> all evaluate to False</div>
           </div>
         </div>
@@ -438,16 +440,16 @@
     <div class="topic-block reveal">
       <div class="topic-block__header" onclick="toggleBlock(this)">
         <div class="topic-block__icon">📝</div>
-        <div class="topic-block__title">Strings — Key Points</div>
+        <div class="topic-block__title">Strings - Key Points</div>
         <span class="topic-block__count">6 points</span>
         <div class="topic-block__chevron">▼</div>
       </div>
       <div class="topic-block__body">
         <div class="topic-block__content">
           <div class="bullet-list">
-            <div class="bullet-item">Strings are <strong>immutable</strong> — any modification creates a new string</div>
+            <div class="bullet-item">Strings are <strong>immutable</strong>: any modification creates a new string</div>
             <div class="bullet-item">Reverse: <code>s[::-1]</code> &nbsp;|&nbsp; Slice: <code>s[start:stop:step]</code></div>
-            <div class="bullet-item"><code>join()</code> is faster than <code>+=</code> in loops — use <code>''.join(lst)</code></div>
+            <div class="bullet-item"><code>join()</code> is faster than <code>+=</code> in loops: use <code>''.join(lst)</code></div>
             <div class="bullet-item">f-strings (3.6+) are fastest: <code>f'Hello {name}'</code></div>
             <div class="bullet-item"><code>split()</code> → list &nbsp;|&nbsp; <code>strip()</code> → removes whitespace &nbsp;|&nbsp; <code>replace()</code> → new string</div>
             <div class="bullet-item"><code>find()</code> returns -1 if not found &nbsp;|&nbsp; <code>index()</code> raises ValueError</div>
@@ -460,7 +462,7 @@
     <div class="topic-block reveal">
       <div class="topic-block__header" onclick="toggleBlock(this)">
         <div class="topic-block__icon">📋</div>
-        <div class="topic-block__title">Lists &amp; Dicts — Critical Facts</div>
+        <div class="topic-block__title">Lists &amp; Dicts - Critical Facts</div>
         <span class="topic-block__count">8 points</span>
         <div class="topic-block__chevron">▼</div>
       </div>
@@ -471,8 +473,8 @@
             <div class="bullet-item"><code>pop()</code> removes last &nbsp;|&nbsp; <code>pop(0)</code> removes first (O(n)) &nbsp;|&nbsp; <code>remove(x)</code> by value</div>
             <div class="bullet-item"><code>sort()</code> in-place, returns None &nbsp;|&nbsp; <code>sorted()</code> returns new list</div>
             <div class="bullet-item">Shallow copy: <code>a[:]</code>, <code>a.copy()</code>, <code>list(a)</code> &nbsp;|&nbsp; Deep copy: <code>copy.deepcopy(a)</code></div>
-            <div class="bullet-item"><code>d.get(key, default)</code> — safe key access, never raises KeyError</div>
-            <div class="bullet-item"><code>d.setdefault(key, [])</code> — inserts if absent, returns existing if present</div>
+            <div class="bullet-item"><code>d.get(key, default)</code>: safe key access, never raises KeyError</div>
+            <div class="bullet-item"><code>d.setdefault(key, [])</code>: inserts if absent, returns existing if present</div>
             <div class="bullet-item">Merge dicts: <code>{**d1, **d2}</code> or <code>d1 | d2</code> (3.9+)</div>
             <div class="bullet-item">Frequency count: <code>from collections import Counter; Counter(lst)</code></div>
           </div>
@@ -484,7 +486,7 @@
     <div class="topic-block reveal">
       <div class="topic-block__header" onclick="toggleBlock(this)">
         <div class="topic-block__icon">⚙️</div>
-        <div class="topic-block__title">Functions — Essential Rules</div>
+        <div class="topic-block__title">Functions - Essential Rules</div>
         <span class="topic-block__count">7 points</span>
         <div class="topic-block__chevron">▼</div>
       </div>
@@ -507,7 +509,7 @@
     <div class="topic-block reveal">
       <div class="topic-block__header" onclick="toggleBlock(this)">
         <div class="topic-block__icon">🏗️</div>
-        <div class="topic-block__title">OOP — Bare Minimum</div>
+        <div class="topic-block__title">OOP - Bare Minimum</div>
         <span class="topic-block__count">6 points</span>
         <div class="topic-block__chevron">▼</div>
       </div>
@@ -519,7 +521,7 @@
             <div class="bullet-item"><code>self</code> = reference to current instance (not a keyword, just convention)</div>
             <div class="bullet-item">Instance method: takes <code>self</code> &nbsp;|&nbsp; Class method: <code>@classmethod</code>, takes <code>cls</code> &nbsp;|&nbsp; Static: <code>@staticmethod</code></div>
             <div class="bullet-item"><code>super().__init__()</code> calls parent initialiser in child class</div>
-            <div class="bullet-item">MRO (Method Resolution Order): Python uses C3 linearisation — view with <code>ClassName.__mro__</code></div>
+            <div class="bullet-item">MRO (Method Resolution Order): Python uses C3 linearisation: view with <code>ClassName.__mro__</code></div>
           </div>
         </div>
       </div>
@@ -554,7 +556,7 @@
           <div class="bullet-item">Python is <strong>interpreted, dynamically typed, garbage-collected</strong></div>
           <div class="bullet-item">GIL (Global Interpreter Lock) allows only one thread to execute Python bytecode at a time</div>
           <div class="bullet-item"><code>is</code> = identity (same object) &nbsp;|&nbsp; <code>==</code> = equality (same value)</div>
-          <div class="bullet-item">Integer caching: CPython caches <code>-5</code> to <code>256</code> — <code>a is b</code> may be True for small ints</div>
+          <div class="bullet-item">Integer caching: CPython caches <code>-5</code> to <code>256</code>: <code>a is b</code> may be True for small ints</div>
           <div class="bullet-item">Exponentiation is right-associative: <code>2 ** 3 ** 2</code> = <code>2 ** 9</code> = 512</div>
         </div>
       </div></div>
@@ -571,9 +573,9 @@
       <div class="topic-block__body"><div class="topic-block__content">
         <div class="bullet-list">
           <div class="bullet-item">Mutable: list, dict, set &nbsp;|&nbsp; Immutable: int, float, str, tuple, frozenset, bool</div>
-          <div class="bullet-item">Assignment <code>b = a</code> creates an <strong>alias</strong>, not a copy — both point to same object</div>
+          <div class="bullet-item">Assignment <code>b = a</code> creates an <strong>alias</strong>, not a copy: both point to same object</div>
           <div class="bullet-item">Shallow copy: new outer container, nested objects are shared</div>
-          <div class="bullet-item">Deep copy (<code>copy.deepcopy()</code>): fully independent — all nested objects are new</div>
+          <div class="bullet-item">Deep copy (<code>copy.deepcopy()</code>): fully independent: all nested objects are new</div>
           <div class="bullet-item">Immutable objects are safe to use as dict keys &amp; set elements (hashable)</div>
           <div class="bullet-item">For lists: <code>+=</code> calls <code>__iadd__</code> which mutates in-place; <code>x = x + [1]</code> creates a new list</div>
         </div>
@@ -601,9 +603,9 @@ c[<span class="num">1</span>].append(<span class="num">0</span>)
         <div class="bullet-list">
           <div class="bullet-item">List comprehension: <code>[x**2 for x in range(10) if x%2==0]</code></div>
           <div class="bullet-item">Dict comprehension: <code>{k: v for k, v in d.items() if v &gt; 0}</code></div>
-          <div class="bullet-item">Generator expression (lazy): <code>(x**2 for x in range(1000000))</code> — no list in memory</div>
-          <div class="bullet-item">Generator function: uses <code>yield</code> — pauses and resumes execution</div>
-          <div class="bullet-item">Generators can only be iterated <strong>once</strong> — after exhaustion, they return nothing</div>
+          <div class="bullet-item">Generator expression (lazy): <code>(x**2 for x in range(1000000))</code>: no list in memory</div>
+          <div class="bullet-item">Generator function: uses <code>yield</code>: pauses and resumes execution</div>
+          <div class="bullet-item">Generators can only be iterated <strong>once</strong>: after exhaustion, they return nothing</div>
         </div>
       </div></div>
     </div>
@@ -619,10 +621,10 @@ c[<span class="num">1</span>].append(<span class="num">0</span>)
       <div class="topic-block__body"><div class="topic-block__content">
         <div class="bullet-list">
           <div class="bullet-item">LEGB: <strong>L</strong>ocal → <strong>E</strong>nclosing → <strong>G</strong>lobal → <strong>B</strong>uilt-in</div>
-          <div class="bullet-item">If Python sees any assignment to a name in a function, it treats it as local throughout — even before the assignment (→ UnboundLocalError)</div>
+          <div class="bullet-item">If Python sees any assignment to a name in a function, it treats it as local throughout: even before the assignment (→ UnboundLocalError)</div>
           <div class="bullet-item">Use <code>global x</code> to write to global &nbsp;|&nbsp; <code>nonlocal x</code> to write to enclosing scope</div>
           <div class="bullet-item">Closure = inner function that captures variables from outer function's scope</div>
-          <div class="bullet-item">Loop closure bug: all lambdas in a loop share the same loop variable — fix with <code>lambda x, i=i: ...</code></div>
+          <div class="bullet-item">Loop closure bug: all lambdas in a loop share the same loop variable: fix with <code>lambda x, i=i: ...</code></div>
           <div class="bullet-item">Decorator = function that wraps another function. <code>@dec</code> is sugar for <code>fn = dec(fn)</code></div>
           <div class="bullet-item">Always use <code>@functools.wraps(func)</code> inside decorators to preserve metadata</div>
         </div>
@@ -633,20 +635,20 @@ c[<span class="num">1</span>].append(<span class="num">0</span>)
     <div class="topic-block reveal">
       <div class="topic-block__header" onclick="toggleBlock(this)">
         <div class="topic-block__icon">🏗️</div>
-        <div class="topic-block__title">OOP — Full Coverage</div>
+        <div class="topic-block__title">OOP - Full Coverage</div>
         <span class="topic-block__count">8 points</span>
         <div class="topic-block__chevron">▼</div>
       </div>
       <div class="topic-block__body"><div class="topic-block__content">
         <div class="bullet-list">
           <div class="bullet-item">Pillars: <strong>Encapsulation</strong> (data + methods), <strong>Abstraction</strong> (hide complexity), <strong>Inheritance</strong> (reuse), <strong>Polymorphism</strong> (same interface, different behaviour)</div>
-          <div class="bullet-item"><code>__new__</code> creates instance &nbsp;|&nbsp; <code>__init__</code> initialises it — <code>__new__</code> runs first</div>
-          <div class="bullet-item">Class attribute (shared) vs instance attribute (per object) — <code>a.x = 10</code> creates instance attr, shadowing class attr</div>
-          <div class="bullet-item"><code>@classmethod</code> takes <code>cls</code> — used for factory methods &nbsp;|&nbsp; <code>@staticmethod</code> takes neither</div>
+          <div class="bullet-item"><code>__new__</code> creates instance &nbsp;|&nbsp; <code>__init__</code> initialises it: <code>__new__</code> runs first</div>
+          <div class="bullet-item">Class attribute (shared) vs instance attribute (per object) - <code>a.x = 10</code> creates instance attr, shadowing class attr</div>
+          <div class="bullet-item"><code>@classmethod</code> takes <code>cls</code>: used for factory methods &nbsp;|&nbsp; <code>@staticmethod</code> takes neither</div>
           <div class="bullet-item"><code>@property</code> lets you access a method like an attribute</div>
-          <div class="bullet-item">Multiple inheritance uses MRO (C3 linearisation) — resolves diamond problem</div>
+          <div class="bullet-item">Multiple inheritance uses MRO (C3 linearisation) - resolves diamond problem</div>
           <div class="bullet-item">Dunder methods: <code>__str__</code>, <code>__repr__</code>, <code>__len__</code>, <code>__eq__</code>, <code>__lt__</code>, <code>__add__</code>, <code>__iter__</code></div>
-          <div class="bullet-item">Duck typing: if it walks like a duck and quacks like a duck, it's a duck — Python checks behaviour, not type</div>
+          <div class="bullet-item">Duck typing: if it walks like a duck and quacks like a duck, it's a duck - Python checks behaviour, not type</div>
         </div>
       </div></div>
     </div>
@@ -664,7 +666,7 @@ c[<span class="num">1</span>].append(<span class="num">0</span>)
           <div class="bullet-item"><code>try → except → else → finally</code>: else runs only if no exception; finally always runs</div>
           <div class="bullet-item">Catch specific exceptions first, broad ones last. Avoid bare <code>except:</code></div>
           <div class="bullet-item">Custom exception: <code>class MyError(Exception): pass</code></div>
-          <div class="bullet-item">Always use <code>with open()</code> — context manager guarantees file is closed even on error</div>
+          <div class="bullet-item">Always use <code>with open()</code>: context manager guarantees file is closed even on error</div>
           <div class="bullet-item">Modes: <code>'r'</code> read, <code>'w'</code> write (overwrite), <code>'a'</code> append, <code>'x'</code> create new</div>
           <div class="bullet-item">CSV: <code>csv.DictReader(f)</code> gives each row as a dict keyed by column headers</div>
         </div>
@@ -721,19 +723,19 @@ stack.pop()        <span class="cm"># pop</span></div>
     <div class="topic-block reveal">
       <div class="topic-block__header" onclick="toggleBlock(this)">
         <div class="topic-block__icon">📊</div>
-        <div class="topic-block__title">Time Complexities — Quick Table</div>
+        <div class="topic-block__title">Time Complexities - Quick Table</div>
         <span class="topic-block__count">Reference</span>
         <div class="topic-block__chevron">▼</div>
       </div>
       <div class="topic-block__body"><div class="topic-block__content" style="padding-top:14px;">
         <table class="quick-table">
           <tr><th>Operation</th><th>List</th><th>Dict / Set</th></tr>
-          <tr><td>Access by index</td><td>O(1)</td><td>—</td></tr>
+          <tr><td>Access by index</td><td>O(1)</td><td>-</td></tr>
           <tr><td>Append / push</td><td>O(1) amortized</td><td>O(1)</td></tr>
-          <tr><td>Insert at index 0</td><td>O(n)</td><td>—</td></tr>
+          <tr><td>Insert at index 0</td><td>O(n)</td><td>-</td></tr>
           <tr><td>Search / in</td><td>O(n)</td><td>O(1) avg</td></tr>
           <tr><td>Delete by value</td><td>O(n)</td><td>O(1) avg</td></tr>
-          <tr><td>Sort</td><td>O(n log n)</td><td>—</td></tr>
+          <tr><td>Sort</td><td>O(n log n)</td><td>-</td></tr>
           <tr><td>len()</td><td>O(1)</td><td>O(1)</td></tr>
         </table>
       </div></div>
@@ -744,16 +746,65 @@ stack.pop()        <span class="cm"># pop</span></div>
 </div><!-- end container -->
 
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer" aria-label="Footer">
   <div class="container">
-    <div class="footer__bottom" style="border-top:none;padding-top:0;">
-      <p>© 2025 PyPrep Pro · Built by <a href="https://github.com/rohanjpatil01" target="_blank" rel="noopener">Rohan Patil</a></p>
-      <p><a href="https://instagram.com/rohanjpatil01" target="_blank" rel="noopener" style="margin-right:14px;">@rohanjpatil01</a><a href="index.html">← Home</a></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;padding:48px 0 32px;border-bottom:1px solid var(--border-glass);flex-wrap:wrap;">
+
+      <!-- Brand col -->
+      <div>
+        <a href="index.html" class="navbar__logo" style="text-decoration:none;margin-bottom:16px;display:inline-flex;">
+          <div class="navbar__logo-icon">🐍</div>
+          <span class="navbar__logo-text"><span class="logo-main">PyPrep</span><span class="logo-by">byRohan</span></span>
+        </a>
+        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-top:12px;max-width:220px;">Python interview prep platform. Practice MCQs, output questions, coding challenges and full mock interviews.</p>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" title="GitHub" class="footer-social footer-social--github">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/rohanpatil01/" target="_blank" rel="noopener" title="LinkedIn" class="footer-social footer-social--linkedin">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/rohanjpatil01" target="_blank" rel="noopener" title="Instagram" class="footer-social footer-social--instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Practice col -->
+      <div>
+        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:14px;">Practice</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="questions.html" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">📋 Interview Q&amp;A</a>
+          <a href="mcq.html"       style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🎯 MCQ Arena</a>
+          <a href="output.html"    style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">💻 Guess the Output</a>
+          <a href="coding.html"    style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⌨️ Coding Challenges</a>
+          <a href="mock.html"      style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🎙️ Mock Interview</a>
+        </div>
+      </div>
+
+      <!-- Resources col -->
+      <div>
+        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:14px;">Resources</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="cheatsheet.html" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">📄 Cheat Sheets</a>
+          <a href="patterns.html"   style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🧠 Interview Patterns</a>
+          <a href="revision.html"   style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⚡ Last-Minute Revision</a>
+          <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⭐ Star on GitHub</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom" style="padding-top:20px;border-top:none;">
+      <p style="font-size:0.82rem;color:var(--text-muted);">© 2026 <strong style="color:var(--text-secondary);">PyPrepbyRohan</strong> · Built with ❤️ by <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" style="color:var(--brand-primary);font-weight:600;">Rohan Patil</a></p>
+      <p style="font-size:0.78rem;color:var(--text-muted);">No data collected · Fully local · Always free · 🐍 v1.0</p>
     </div>
   </div>
 </footer>
 <button class="scroll-top" aria-label="Scroll to top">↑</button>
 <script src="js/main.js"></script>
+<script src="js/features.js"></script>
 <script>
 'use strict';
 
@@ -761,20 +812,20 @@ stack.pop()        <span class="cm"># pop</span></div>
 const FLASH_CARDS = [
   { q:'What is the difference between a list and a tuple?', a:'List is mutable (can be changed). Tuple is immutable (cannot). Tuples are faster and can be dict keys. Use tuple for fixed data, list for collections that change.' },
   { q:'What does "b = a" do for a list?', a:'It creates an alias, not a copy. Both a and b point to the same list object. Mutating b also mutates a. Use b = a.copy() for a new list.' },
-  { q:'What is the mutable default argument bug?', a:'Default args are created once at function definition. def fn(lst=[]): lst.append(1) — the same list is reused across calls. Fix: use None as default, create inside the function.' },
-  { q:'What is the difference between is and ==?', a:'== checks value equality. is checks identity (same object in memory). Always use "is None" — never "== None".' },
+  { q:'What is the mutable default argument bug?', a:'Default args are created once at function definition. def fn(lst=[]): lst.append(1) - the same list is reused across calls. Fix: use None as default, create inside the function.' },
+  { q:'What is the difference between is and ==?', a:'== checks value equality. is checks identity (same object in memory). Always use "is None": never "== None".' },
   { q:'What is LEGB?', a:'The scope lookup order: Local → Enclosing → Global → Built-in. Python searches in this order when resolving a name.' },
   { q:'What does a function return if it has no return statement?', a:'None. A bare return or no return statement both return None implicitly.' },
   { q:'What is the difference between shallow copy and deep copy?', a:'Shallow copy creates a new outer container but nested objects are still shared. Deep copy (copy.deepcopy()) creates fully independent copies of everything.' },
   { q:'What does *args and **kwargs do?', a:'*args captures extra positional arguments as a tuple. **kwargs captures extra keyword arguments as a dict. Used when you don\'t know how many arguments will be passed.' },
-  { q:'What is a lambda function?', a:'An anonymous, single-expression function. lambda x: x**2. Use for short throwaway functions — especially as key arguments to sorted(), map(), filter().' },
+  { q:'What is a lambda function?', a:'An anonymous, single-expression function. lambda x: x**2. Use for short throwaway functions: especially as key arguments to sorted(), map(), filter().' },
   { q:'What is a closure?', a:'An inner function that remembers variables from its enclosing scope even after the outer function has returned. The inner function "closes over" those variables.' },
   { q:'What is the difference between sort() and sorted()?', a:'list.sort() modifies the list in-place and returns None. sorted(iterable) returns a new sorted list and works on any iterable.' },
-  { q:'Explain try / except / else / finally.', a:'try: risky code. except: runs if exception raised. else: runs only if NO exception. finally: ALWAYS runs — used for cleanup like closing files.' },
+  { q:'Explain try / except / else / finally.', a:'try: risky code. except: runs if exception raised. else: runs only if NO exception. finally: ALWAYS runs: used for cleanup like closing files.' },
   { q:'What are the 4 pillars of OOP?', a:'Encapsulation (bundle data + methods), Abstraction (hide complexity), Inheritance (reuse via parent class), Polymorphism (same interface, different behaviour).' },
-  { q:'What is the difference between @classmethod and @staticmethod?', a:'@classmethod receives cls as first argument — used for factory methods. @staticmethod receives neither self nor cls — pure utility function with no class/instance access.' },
+  { q:'What is the difference between @classmethod and @staticmethod?', a:'@classmethod receives cls as first argument: used for factory methods. @staticmethod receives neither self nor cls: pure utility function with no class/instance access.' },
   { q:'What is a generator?', a:'A function with yield. Returns a generator object that produces values lazily one at a time. Uses far less memory than building a full list. Can only be iterated once.' },
-  { q:'How does dict.get() differ from dict[]?', a:'dict[key] raises KeyError if key is absent. dict.get(key, default) returns None (or the default) — safe access without exceptions.' },
+  { q:'How does dict.get() differ from dict[]?', a:'dict[key] raises KeyError if key is absent. dict.get(key, default) returns None (or the default) - safe access without exceptions.' },
 ];
 
 /* ── Render flash cards ───────────────────────────────── */

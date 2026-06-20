@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Python Interview Patterns — Understand the concepts interviewers repeatedly test. Mutable vs Immutable, is vs ==, Scope, Closures, Lambda and more." />
-  <title>Interview Patterns — PyPrep Pro</title>
+  <meta name="description" content="Python Interview Patterns - Understand the concepts interviewers repeatedly test. Mutable vs Immutable, is vs ==, Scope, Closures, Lambda and more." />
+  <title>Interview Patterns - PyPrepbyRohan</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
@@ -127,7 +127,7 @@
       overflow-x: auto; white-space: pre;
       position: relative;
     }
-    [data-theme="dark"] .pt-code { background: #03080f; }
+    [data-theme="light"] .pt-code { background: #03080f; }
     .pt-code .kw  { color: #7c5cfc; font-weight: 600; }
     .pt-code .fn  { color: #4f8ef7; }
     .pt-code .str { color: #4cde9a; }
@@ -203,7 +203,7 @@
     <div class="navbar__inner">
       <a href="index.html" class="navbar__logo">
         <div class="navbar__logo-icon">🐍</div>
-        PyPrep<span class="accent">Pro</span>
+        <span class="navbar__logo-text"><span class="logo-main">PyPrep</span><span class="logo-by">byRohan</span></span>
       </a>
       <nav class="navbar__nav">
         <a href="questions.html"  class="navbar__link">Interview Q&A</a>
@@ -216,6 +216,8 @@
         <a href="revision.html"   class="navbar__link">Revision</a>
       </nav>
       <div class="navbar__actions">
+        <button class="global-search-btn" title="Search (Ctrl+K)">🔍 <span>Search</span> <kbd>Ctrl K</kbd></button>
+        <span class="xp-badge">🌱 Beginner</span>
         <button class="theme-toggle" title="Toggle Theme">🌙</button>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
@@ -237,28 +239,28 @@
   <div class="container">
     <div class="section-header__eyebrow" style="margin-bottom:12px;">🧠 Interview Patterns</div>
     <h1 style="margin-bottom:8px;">Think Like an Interviewer</h1>
-    <p style="max-width:580px;">These are the concepts interviewers test again and again. Don't just memorise answers — understand the thinking behind each pattern.</p>
+    <p style="max-width:580px;">These are the concepts interviewers test again and again. Don't just memorise answers: understand the thinking behind each pattern.</p>
   </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding-top:calc(var(--nav-height) + 32px);">
   <div class="pt-layout">
 
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar__card">
         <div class="sidebar__heading">🧠 Patterns</div>
-        <button class="nav-link active" onclick="scrollTo('mutability')">🔒 Mutable vs Immutable</button>
-        <button class="nav-link" onclick="scrollTo('isvseq')">🔍 is vs ==</button>
-        <button class="nav-link" onclick="scrollTo('scope')">🌐 Variable Scope (LEGB)</button>
-        <button class="nav-link" onclick="scrollTo('closures')">📦 Closures</button>
-        <button class="nav-link" onclick="scrollTo('defaultargs')">⚠️ Mutable Default Args</button>
-        <button class="nav-link" onclick="scrollTo('copying')">📋 Copy vs Deep Copy</button>
-        <button class="nav-link" onclick="scrollTo('lambda')">λ Lambda Functions</button>
-        <button class="nav-link" onclick="scrollTo('comprehensions')">🔄 Comprehensions</button>
-        <button class="nav-link" onclick="scrollTo('args')">📥 Function Arguments</button>
-        <button class="nav-link" onclick="scrollTo('generators')">⚡ Generators</button>
-        <button class="nav-link" onclick="scrollTo('decorators')">🎀 Decorators</button>
+        <button class="nav-link active" onclick="scrollToSection('mutability')">🔒 Mutable vs Immutable</button>
+        <button class="nav-link" onclick="scrollToSection('isvseq')">🔍 is vs ==</button>
+        <button class="nav-link" onclick="scrollToSection('scope')">🌐 Variable Scope (LEGB)</button>
+        <button class="nav-link" onclick="scrollToSection('closures')">📦 Closures</button>
+        <button class="nav-link" onclick="scrollToSection('defaultargs')">⚠️ Mutable Default Args</button>
+        <button class="nav-link" onclick="scrollToSection('copying')">📋 Copy vs Deep Copy</button>
+        <button class="nav-link" onclick="scrollToSection('lambda')">λ Lambda Functions</button>
+        <button class="nav-link" onclick="scrollToSection('comprehensions')">🔄 Comprehensions</button>
+        <button class="nav-link" onclick="scrollToSection('args')">📥 Function Arguments</button>
+        <button class="nav-link" onclick="scrollToSection('generators')">⚡ Generators</button>
+        <button class="nav-link" onclick="scrollToSection('decorators')">🎀 Decorators</button>
       </div>
     </aside>
 
@@ -275,18 +277,18 @@
 
         <div class="concept-card">
           <div class="concept-card__title">The Core Idea</div>
-          <div class="concept-card__body">Mutable objects can be changed in-place after creation. Immutable objects cannot — any operation creates a new object. This affects aliasing, function arguments, and dictionary keys.</div>
+          <div class="concept-card__body">Mutable objects can be changed in-place after creation. Immutable objects cannot: any operation creates a new object. This affects aliasing, function arguments, and dictionary keys.</div>
           <div class="rule-grid">
             <div class="rule-box good"><div class="rule-box__label">✅ Mutable</div><div class="rule-box__text">list, dict, set, bytearray<br>Changed in-place. Multiple variables can share and modify the same object.</div></div>
             <div class="rule-box bad"><div class="rule-box__label">🔒 Immutable</div><div class="rule-box__text">int, float, str, tuple, frozenset, bool<br>Cannot be changed. Any "change" creates a new object.</div></div>
           </div>
-          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Mutable — alias problem</span>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Mutable - alias problem</span>
 a = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]
-b = a          <span class="cm"># b is NOT a copy — same object</span>
+b = a          <span class="cm"># b is NOT a copy - same object</span>
 b.append(<span class="num">4</span>)
 <span class="bi">print</span>(a)       <span class="out"># [1, 2, 3, 4]  ← a was changed!</span>
 
-<span class="cm"># Immutable — no alias problem</span>
+<span class="cm"># Immutable - no alias problem</span>
 x = <span class="str">"hello"</span>
 y = x
 y = y + <span class="str">" world"</span>  <span class="cm"># creates NEW string</span>
@@ -296,7 +298,7 @@ y = y + <span class="str">" world"</span>  <span class="cm"># creates NEW string
 b = a.copy()   <span class="cm"># or a[:] or list(a)</span></div>
           <div class="interviewer-tip">
             <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
-            Interviewers use this to test whether you understand Python's reference model. The classic trap is passing a list to a function and modifying it — the caller's list also changes. Always think: "Is this a new object or the same one?"
+            Interviewers use this to test whether you understand Python's reference model. The classic trap is passing a list to a function and modifying it: the caller's list also changes. Always think: "Is this a new object or the same one?"
           </div>
         </div>
       </div>
@@ -315,23 +317,23 @@ b = a.copy()   <span class="cm"># or a[:] or list(a)</span></div>
           <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Lists</span>
 a = [<span class="num">1</span>, <span class="num">2</span>]
 b = [<span class="num">1</span>, <span class="num">2</span>]
-<span class="bi">print</span>(a == b)   <span class="out"># True  — same values</span>
-<span class="bi">print</span>(a <span class="kw">is</span> b)   <span class="out"># False — different objects</span>
+<span class="bi">print</span>(a == b)   <span class="out"># True  - same values</span>
+<span class="bi">print</span>(a <span class="kw">is</span> b)   <span class="out"># False - different objects</span>
 
 <span class="cm"># Integer caching (-5 to 256)</span>
 x = <span class="num">256</span>;  y = <span class="num">256</span>
-<span class="bi">print</span>(x <span class="kw">is</span> y)   <span class="out"># True  — CPython caches small ints</span>
+<span class="bi">print</span>(x <span class="kw">is</span> y)   <span class="out"># True  - CPython caches small ints</span>
 x = <span class="num">257</span>;  y = <span class="num">257</span>
-<span class="bi">print</span>(x <span class="kw">is</span> y)   <span class="out"># False — outside cache range</span>
+<span class="bi">print</span>(x <span class="kw">is</span> y)   <span class="out"># False - outside cache range</span>
 
-<span class="cm"># None — always use 'is'</span>
+<span class="cm"># None - always use 'is'</span>
 <span class="kw">if</span> x <span class="kw">is</span> <span class="kw">None</span>:   <span class="cm"># ✅ correct</span>
     pass
 <span class="kw">if</span> x == <span class="kw">None</span>:  <span class="cm"># ⚠️ works but not idiomatic</span>
     pass</div>
           <div class="interviewer-tip">
             <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
-            They want to see if you understand Python's memory model. Always use <code>is None</code> / <code>is not None</code> — never <code>== None</code>. Also, never rely on <code>is</code> for integer comparison beyond the -5 to 256 cache — it's an implementation detail.
+            They want to see if you understand Python's memory model. Always use <code>is None</code> / <code>is not None</code>: never <code>== None</code>. Also, never rely on <code>is</code> for integer comparison beyond the -5 to 256 cache: it's an implementation detail.
           </div>
         </div>
       </div>
@@ -340,7 +342,7 @@ x = <span class="num">257</span>;  y = <span class="num">257</span>
       <div class="pattern-section reveal" id="scope">
         <div class="pattern-header">
           <div class="pattern-header__icon">🌐</div>
-          <h3 class="pattern-header__title">Variable Scope — LEGB Rule</h3>
+          <h3 class="pattern-header__title">Variable Scope - LEGB Rule</h3>
           <span class="pattern-header__badge">Very Common</span>
         </div>
 
@@ -349,10 +351,10 @@ x = <span class="num">257</span>;  y = <span class="num">257</span>
           <div class="concept-card__body">When Python resolves a name, it searches in this order: <strong>L</strong>ocal → <strong>E</strong>nclosing → <strong>G</strong>lobal → <strong>B</strong>uilt-in. The first match wins.</div>
           <table class="summary-table">
             <tr><th>Scope</th><th>Where</th><th>Keyword to modify</th></tr>
-            <tr><td>Local</td><td>Inside current function</td><td>—</td></tr>
+            <tr><td>Local</td><td>Inside current function</td><td>-</td></tr>
             <tr><td>Enclosing</td><td>Outer function (nested)</td><td>nonlocal</td></tr>
             <tr><td>Global</td><td>Module level</td><td>global</td></tr>
-            <tr><td>Built-in</td><td>Python builtins (len, print…)</td><td>—</td></tr>
+            <tr><td>Built-in</td><td>Python builtins (len, print…)</td><td>-</td></tr>
           </table>
           <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button>x = <span class="str">'global'</span>
 
@@ -367,7 +369,7 @@ x = <span class="num">257</span>;  y = <span class="num">257</span>
 outer()
 <span class="bi">print</span>(x)           <span class="out"># 'global'</span>
 
-<span class="cm"># Classic gotcha — UnboundLocalError</span>
+<span class="cm"># Classic gotcha - UnboundLocalError</span>
 x = <span class="num">10</span>
 <span class="kw">def</span> <span class="fn">fn</span>():
     <span class="bi">print</span>(x)   <span class="cm"># ❌ UnboundLocalError!</span>
@@ -380,7 +382,7 @@ x = <span class="num">10</span>
     x = <span class="num">20</span></div>
           <div class="interviewer-tip">
             <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
-            The UnboundLocalError trap catches many developers off guard. If Python sees an assignment to a name anywhere in a function, it treats that name as local throughout the entire function — even before the assignment line.
+            The UnboundLocalError trap catches many developers off guard. If Python sees an assignment to a name anywhere in a function, it treats that name as local throughout the entire function: even before the assignment line.
           </div>
         </div>
       </div>
@@ -408,14 +410,14 @@ triple = make_multiplier(<span class="num">3</span>)
 
 <span class="cm"># Classic loop closure bug</span>
 fns = [<span class="kw">lambda</span> x: x + i <span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="num">3</span>)]
-<span class="bi">print</span>(fns[<span class="num">0</span>](<span class="num">10</span>))  <span class="out"># 12 — NOT 10! All lambdas share i=2</span>
+<span class="bi">print</span>(fns[<span class="num">0</span>](<span class="num">10</span>))  <span class="out"># 12 - NOT 10! All lambdas share i=2</span>
 
 <span class="cm"># Fix: capture with default argument</span>
 fns = [<span class="kw">lambda</span> x, i=i: x + i <span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="num">3</span>)]
 <span class="bi">print</span>(fns[<span class="num">0</span>](<span class="num">10</span>))  <span class="out"># 10 ✅</span></div>
           <div class="interviewer-tip">
             <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
-            The loop closure bug is one of the most famous Python gotchas. All lambdas in a loop share the same variable — not its value at creation time. The fix using default args <code>i=i</code> captures the value at that moment.
+            The loop closure bug is one of the most famous Python gotchas. All lambdas in a loop share the same variable: not its value at creation time. The fix using default args <code>i=i</code> captures the value at that moment.
           </div>
         </div>
       </div>
@@ -430,8 +432,8 @@ fns = [<span class="kw">lambda</span> x, i=i: x + i <span class="kw">for</span> 
 
         <div class="concept-card">
           <div class="concept-card__title">The Trap</div>
-          <div class="concept-card__body">Default argument values are evaluated <strong>once</strong> when the function is defined — not on each call. If the default is a mutable object (list, dict), it's shared across all calls that use it.</div>
-          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># ❌ Bug — shared mutable default</span>
+          <div class="concept-card__body">Default argument values are evaluated <strong>once</strong> when the function is defined: not on each call. If the default is a mutable object (list, dict), it's shared across all calls that use it.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># ❌ Bug - shared mutable default</span>
 <span class="kw">def</span> <span class="fn">add_item</span>(item, lst=[]):
     lst.append(item)
     <span class="kw">return</span> lst
@@ -440,7 +442,7 @@ fns = [<span class="kw">lambda</span> x, i=i: x + i <span class="kw">for</span> 
 <span class="bi">print</span>(add_item(<span class="num">2</span>))   <span class="out"># [1, 2]  ← NOT [2]!</span>
 <span class="bi">print</span>(add_item(<span class="num">3</span>))   <span class="out"># [1, 2, 3]</span>
 
-<span class="cm"># ✅ Fix — use None as sentinel</span>
+<span class="cm"># ✅ Fix - use None as sentinel</span>
 <span class="kw">def</span> <span class="fn">add_item</span>(item, lst=<span class="kw">None</span>):
     <span class="kw">if</span> lst <span class="kw">is</span> <span class="kw">None</span>:
         lst = []
@@ -489,7 +491,7 @@ deep[<span class="num">0</span>].append(<span class="num">99</span>)
 <span class="bi">print</span>(original)   <span class="out"># [[1, 2], [3, 4]]  ← fully independent ✅</span></div>
           <div class="interviewer-tip">
             <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
-            For flat lists, shallow copy is fine. The danger is with nested structures — shallow copy only duplicates the outer container. Interviewers pair this with the mutability question to test whether you understand shared references.
+            For flat lists, shallow copy is fine. The danger is with nested structures: shallow copy only duplicates the outer container. Interviewers pair this with the mutability question to test whether you understand shared references.
           </div>
         </div>
       </div>
@@ -504,7 +506,7 @@ deep[<span class="num">0</span>].append(<span class="num">99</span>)
 
         <div class="concept-card">
           <div class="concept-card__title">When to Use Lambda</div>
-          <div class="concept-card__body">Lambdas are anonymous, single-expression functions. Use them for short, throwaway functions — especially as <code>key</code> arguments to <code>sorted()</code>, <code>min()</code>, <code>max()</code>, or as arguments to <code>map()</code>/<code>filter()</code>.</div>
+          <div class="concept-card__body">Lambdas are anonymous, single-expression functions. Use them for short, throwaway functions: especially as <code>key</code> arguments to <code>sorted()</code>, <code>min()</code>, <code>max()</code>, or as arguments to <code>map()</code>/<code>filter()</code>.</div>
           <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Good uses of lambda</span>
 people = [{<span class="str">'name'</span>:<span class="str">'Alice'</span>,<span class="str">'age'</span>:<span class="num">30</span>}, {<span class="str">'name'</span>:<span class="str">'Bob'</span>,<span class="str">'age'</span>:<span class="num">25</span>}]
 <span class="bi">sorted</span>(people, key=<span class="kw">lambda</span> p: p[<span class="str">'age'</span>])
@@ -515,14 +517,14 @@ people = [{<span class="str">'name'</span>:<span class="str">'Alice'</span>,<spa
 <span class="cm"># Conditional expression in lambda</span>
 classify = <span class="kw">lambda</span> x: <span class="str">'even'</span> <span class="kw">if</span> x % <span class="num">2</span> == <span class="num">0</span> <span class="kw">else</span> <span class="str">'odd'</span>
 
-<span class="cm"># Lambda vs def — when def is better</span>
+<span class="cm"># Lambda vs def - when def is better</span>
 <span class="cm"># ❌ avoid: named lambdas</span>
 square = <span class="kw">lambda</span> x: x**<span class="num">2</span>   <span class="cm"># use def instead</span>
 <span class="cm"># ✅ use def for reusable, named functions</span>
 <span class="kw">def</span> <span class="fn">square</span>(x): <span class="kw">return</span> x**<span class="num">2</span></div>
           <div class="interviewer-tip">
             <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
-            Interviewers often ask: "What's the difference between lambda and def?" Key answer: lambda is limited to one expression, has no statements, and is anonymous. PEP 8 discourages assigning lambdas to names — use <code>def</code> instead.
+            Interviewers often ask: "What's the difference between lambda and def?" Key answer: lambda is limited to one expression, has no statements, and is anonymous. PEP 8 discourages assigning lambdas to names: use <code>def</code> instead.
           </div>
         </div>
       </div>
@@ -537,20 +539,20 @@ square = <span class="kw">lambda</span> x: x**<span class="num">2</span>   <span
 
         <div class="concept-card">
           <div class="concept-card__title">Comprehension vs Generator vs Loop</div>
-          <div class="concept-card__body">Comprehensions are concise and fast for building collections. Use a generator expression (parentheses) when you only need to iterate once — saves memory. Use a regular loop when logic is complex.</div>
-          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button"><span class="cm"># List — creates full list in memory</span>
+          <div class="concept-card__body">Comprehensions are concise and fast for building collections. Use a generator expression (parentheses) when you only need to iterate once: saves memory. Use a regular loop when logic is complex.</div>
+          <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button"><span class="cm"># List - creates full list in memory</span>
 squares = [x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">10</span>)]
 
-<span class="cm"># Generator — lazy, one value at a time</span>
+<span class="cm"># Generator - lazy, one value at a time</span>
 gen = (x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">10</span>))
 total = <span class="bi">sum</span>(x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="num">1000000</span>))  <span class="cm"># memory efficient</span>
 
-<span class="cm"># Dict comprehension — common interview task</span>
+<span class="cm"># Dict comprehension - common interview task</span>
 word_len = {w: <span class="bi">len</span>(w) <span class="kw">for</span> w <span class="kw">in</span> words}
 inv_dict  = {v: k <span class="kw">for</span> k, v <span class="kw">in</span> d.items()}
 filtered  = {k: v <span class="kw">for</span> k, v <span class="kw">in</span> d.items() <span class="kw">if</span> v > <span class="num">0</span>}
 
-<span class="cm"># Nested comprehension — flatten matrix</span>
+<span class="cm"># Nested comprehension - flatten matrix</span>
 flat = [x <span class="kw">for</span> row <span class="kw">in</span> matrix <span class="kw">for</span> x <span class="kw">in</span> row]</div>
         </div>
       </div>
@@ -598,7 +600,7 @@ nums = [<span class="num">1</span>, <span class="num">2</span>, <span class="num
 
         <div class="concept-card">
           <div class="concept-card__title">Why Generators Matter</div>
-          <div class="concept-card__body">Generators produce values lazily — one at a time on demand. They use far less memory than building a full list. A function with <code>yield</code> becomes a generator function.</div>
+          <div class="concept-card__body">Generators produce values lazily: one at a time on demand. They use far less memory than building a full list. A function with <code>yield</code> becomes a generator function.</div>
           <div class="pt-code"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm"># Generator function</span>
 <span class="kw">def</span> <span class="fn">countdown</span>(n):
     <span class="kw">while</span> n > <span class="num">0</span>:
@@ -654,7 +656,7 @@ slow_fn()   <span class="out"># slow_fn took 0.1001s</span>
 <span class="cm"># slow_fn = timer(slow_fn)</span></div>
           <div class="interviewer-tip">
             <div class="interviewer-tip__label">🎯 Why interviewers ask this</div>
-            Decorators show mastery of first-class functions and closures. Always use <code>@functools.wraps(func)</code> in your wrapper — without it, the decorated function loses its <code>__name__</code> and <code>__doc__</code> metadata.
+            Decorators show mastery of first-class functions and closures. Always use <code>@functools.wraps(func)</code> in your wrapper: without it, the decorated function loses its <code>__name__</code> and <code>__doc__</code> metadata.
           </div>
         </div>
       </div>
@@ -663,18 +665,67 @@ slow_fn()   <span class="out"># slow_fn took 0.1001s</span>
   </div>
 </div>
 
-<footer class="footer">
+<footer class="footer" aria-label="Footer">
   <div class="container">
-    <div class="footer__bottom" style="border-top:none;padding-top:0;">
-      <p>© 2025 PyPrep Pro · Built by <a href="https://github.com/rohanjpatil01" target="_blank" rel="noopener">Rohan Patil</a></p>
-      <p><a href="https://instagram.com/rohanjpatil01" target="_blank" rel="noopener" style="margin-right:14px;">@rohanjpatil01</a><a href="index.html">← Home</a></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;padding:48px 0 32px;border-bottom:1px solid var(--border-glass);flex-wrap:wrap;">
+
+      <!-- Brand col -->
+      <div>
+        <a href="index.html" class="navbar__logo" style="text-decoration:none;margin-bottom:16px;display:inline-flex;">
+          <div class="navbar__logo-icon">🐍</div>
+          <span class="navbar__logo-text"><span class="logo-main">PyPrep</span><span class="logo-by">byRohan</span></span>
+        </a>
+        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-top:12px;max-width:220px;">Python interview prep platform. Practice MCQs, output questions, coding challenges and full mock interviews.</p>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" title="GitHub" class="footer-social footer-social--github">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/rohanpatil01/" target="_blank" rel="noopener" title="LinkedIn" class="footer-social footer-social--linkedin">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/rohanjpatil01" target="_blank" rel="noopener" title="Instagram" class="footer-social footer-social--instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Practice col -->
+      <div>
+        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:14px;">Practice</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="questions.html" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">📋 Interview Q&amp;A</a>
+          <a href="mcq.html"       style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🎯 MCQ Arena</a>
+          <a href="output.html"    style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">💻 Guess the Output</a>
+          <a href="coding.html"    style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⌨️ Coding Challenges</a>
+          <a href="mock.html"      style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🎙️ Mock Interview</a>
+        </div>
+      </div>
+
+      <!-- Resources col -->
+      <div>
+        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:14px;">Resources</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="cheatsheet.html" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">📄 Cheat Sheets</a>
+          <a href="patterns.html"   style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">🧠 Interview Patterns</a>
+          <a href="revision.html"   style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⚡ Last-Minute Revision</a>
+          <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" style="font-size:0.875rem;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--brand-primary)'" onmouseout="this.style.color='var(--text-secondary)'">⭐ Star on GitHub</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom" style="padding-top:20px;border-top:none;">
+      <p style="font-size:0.82rem;color:var(--text-muted);">© 2026 <strong style="color:var(--text-secondary);">PyPrepbyRohan</strong> · Built with ❤️ by <a href="https://github.com/RohanPatil01" target="_blank" rel="noopener" style="color:var(--brand-primary);font-weight:600;">Rohan Patil</a></p>
+      <p style="font-size:0.78rem;color:var(--text-muted);">No data collected · Fully local · Always free · 🐍 v1.0</p>
     </div>
   </div>
 </footer>
 <button class="scroll-top" aria-label="Scroll to top">↑</button>
 <script src="js/main.js"></script>
+<script src="js/features.js"></script>
 <script>
-function scrollTo(id) {
+function scrollToSection(id) {
   document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   event.target.classList.add('active');
