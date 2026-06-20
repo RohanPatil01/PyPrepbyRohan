@@ -122,6 +122,7 @@
     .topic-section__header {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 14px;
       margin-bottom: 20px;
       padding: 18px 22px;
@@ -321,6 +322,7 @@
     /* ── Responsive ──────────────────────────────────── */
     @media (max-width: 900px) {
       .questions-layout { grid-template-columns: 1fr; }
+      .questions-layout > * { min-width: 0; }
       .sidebar { position: static; max-height: none; }
       .sidebar__topics { flex-direction: row; flex-wrap: wrap; }
       .sidebar__topic-btn { width: auto; }

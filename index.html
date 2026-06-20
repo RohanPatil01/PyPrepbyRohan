@@ -217,6 +217,7 @@
       -webkit-backdrop-filter: var(--blur-glass);
       border: 1px solid var(--border-glass);
       box-shadow: var(--shadow-card);
+      min-width: 0;
     }
 
     .readiness__circle {
@@ -734,7 +735,7 @@
             </div>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-width:320px;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-width:min(320px, 100%);">
           <div style="text-align:center;padding:16px;border-radius:var(--radius-md);background:var(--bg-secondary);border:1px solid var(--border-glass);">
             <div style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;" id="stat-tests">0</div>
             <div class="text-muted" style="font-size:0.78rem;">Tests Taken</div>
