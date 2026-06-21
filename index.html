@@ -7,7 +7,7 @@
   <title>PyPrepbyRohan - Python Interview Preparation</title>
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%237c5cfc'/%3E%3Cpath fill='white' fill-opacity='0.95' d='M50.5 18c-3.4 0-6.7.3-9.6.8-8.5 1.5-10 4.6-10 10.4v7.6h20v2.5H24c-5.8 0-10.9 3.5-12.5 10.2-1.8 7.6-1.9 12.3 0 20.2 1.4 6 4.7 10.2 10.5 10.2h6.8V69.2c0-6.6 5.7-12.4 12.6-12.4h19.8c5.5 0 10-4.6 10-10.1V29.2c0-5.4-4.6-9.4-10-10.4-3.5-.6-7.1-.9-10.7-.8zM40 24.3c2.1 0 3.8 1.7 3.8 3.8s-1.7 3.8-3.8 3.8-3.8-1.7-3.8-3.8 1.7-3.8 3.8-3.8z'/%3E%3Cpath fill='white' fill-opacity='0.95' d='M73 39.4v7.2c0 6.9-5.9 12.7-12.6 12.7H40.6c-5.4 0-10 4.6-10 10.1v19c0 5.4 4.7 8.6 10 10.1 6.4 1.8 12.4 2.2 19.8 0 5-1.4 10-4.4 10-10.1v-7.6H40.4v-2.5h29.7c5.8 0 8-4 10-10.1 2-6.3 2-12.3 0-20.2-1.4-5.7-4.2-9.9-10-9.9zM63 80.7c2.1 0 3.8 1.7 3.8 3.8s-1.7 3.8-3.8 3.8-3.8-1.7-3.8-3.8 1.7-3.8 3.8-3.8z'/%3E%3C/svg%3E" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css" />
@@ -173,11 +173,12 @@
 
     /* Python logo decoration */
     .hero__python-logo {
-      font-size: 5rem;
-      text-align: center;
-      margin-bottom: 16px;
-      animation: float 5s ease-in-out infinite;
+      width: 90px;
+      height: 90px;
       display: block;
+      margin: 0 auto 16px;
+      animation: float 5s ease-in-out infinite;
+      filter: drop-shadow(0 8px 20px rgba(124,92,252,0.35));
     }
 
     /* ── Quick Actions ────────────────────────────────────── */
@@ -217,7 +218,6 @@
       -webkit-backdrop-filter: var(--blur-glass);
       border: 1px solid var(--border-glass);
       box-shadow: var(--shadow-card);
-      min-width: 0;
     }
 
     .readiness__circle {
@@ -374,7 +374,7 @@
       <!-- Left: Copy -->
       <div class="hero__content">
         <div class="hero__eyebrow">
-          🐍 &nbsp;Python Interview Preparation Platform
+          ✨ &nbsp;Python Interview Preparation Platform
         </div>
 
         <h1 class="hero__title">
@@ -411,7 +411,18 @@
           <div class="hero__floating-badge">✨ 500+ Questions</div>
 
           <div class="hero__card-main">
-            <span class="hero__python-logo">🐍</span>
+            <svg class="hero__python-logo" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="pyTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#4f8ef7"/>
+                  <stop offset="100%" stop-color="#7c5cfc"/>
+                </linearGradient>
+              </defs>
+              <rect x="8" y="8" width="112" height="112" rx="26" fill="url(#pyTop)" opacity="0.12"/>
+              <path d="M44 40 L20 64 L44 88" fill="none" stroke="url(#pyTop)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M84 40 L108 64 L84 88" fill="none" stroke="url(#pyTop)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M72 28 L56 100" fill="none" stroke="url(#pyTop)" stroke-width="9" stroke-linecap="round"/>
+            </svg>
 
             <div class="code-block" style="font-size:0.8rem;">
 <code><span class="cm"># Python Interview Ready? Let's find out!</span>
@@ -501,25 +512,25 @@
 
       <div class="stat-card reveal">
         <div class="stat-card__icon" style="background:rgba(79,142,247,0.15);">📋</div>
-        <div class="stat-card__number text-gradient" data-count="190" data-suffix="+">0</div>
+        <div class="stat-card__number text-gradient" data-count="500" data-suffix="+">0</div>
         <div class="stat-card__label">Interview Questions</div>
       </div>
 
       <div class="stat-card reveal anim-delay-1">
         <div class="stat-card__icon" style="background:rgba(124,92,252,0.15);">🎯</div>
-        <div class="stat-card__number" style="background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-count="200" data-suffix="+">0</div>
+        <div class="stat-card__number" style="background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-count="300" data-suffix="+">0</div>
         <div class="stat-card__label">MCQ Questions</div>
       </div>
 
       <div class="stat-card reveal anim-delay-2">
         <div class="stat-card__icon" style="background:rgba(0,212,170,0.15);">💻</div>
-        <div class="stat-card__number" style="background:linear-gradient(135deg,#7c5cfc,#ff5c5c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-count="100" data-suffix="+">0</div>
+        <div class="stat-card__number" style="background:linear-gradient(135deg,#7c5cfc,#ff5c5c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-count="150" data-suffix="+">0</div>
         <div class="stat-card__label">Output Questions</div>
       </div>
 
       <div class="stat-card reveal anim-delay-3">
         <div class="stat-card__icon" style="background:rgba(255,179,71,0.15);">⌨️</div>
-        <div class="stat-card__number" style="background:var(--grad-warm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-count="30" data-suffix="+">0</div>
+        <div class="stat-card__number" style="background:var(--grad-warm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-count="100" data-suffix="+">0</div>
         <div class="stat-card__label">Coding Challenges</div>
       </div>
 
@@ -735,7 +746,7 @@
             </div>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-width:min(320px, 100%);">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-width:320px;">
           <div style="text-align:center;padding:16px;border-radius:var(--radius-md);background:var(--bg-secondary);border:1px solid var(--border-glass);">
             <div style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;" id="stat-tests">0</div>
             <div class="text-muted" style="font-size:0.78rem;">Tests Taken</div>

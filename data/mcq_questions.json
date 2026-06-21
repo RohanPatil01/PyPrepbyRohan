@@ -1220,7 +1220,7 @@
         "2.33"
       ],
       "ans": 1,
-      "exp": "% is the modulo operator: returns the remainder. 7 // 3 = 2 (floor division), and 2 * 3 = 6, so 7 % 3 = 7 - 6 = 1."
+      "exp": "% is the modulo operator: returns the remainder. 7 / 3 = 2 remainder 1. Wait - 7 // 3 = 2, 2*3 = 6, 7-6 = 1. So 7%3 = 1."
     },
     {
       "id": "mcq_op02",

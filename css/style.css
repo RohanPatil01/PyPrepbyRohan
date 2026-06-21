@@ -226,7 +226,6 @@ p { color: var(--text-secondary); }
   box-shadow: var(--shadow-card);
   border-radius: var(--radius-lg);
   padding: 28px;
-  min-width: 0;
   transition: all var(--transition);
 }
 
@@ -1266,23 +1265,21 @@ p { color: var(--text-secondary); }
   .global-search-btn { padding: 7px 10px; }
   .xp-badge span:last-child { display: none; }
 }
-
-/* Hide the navbar XP badge on phones — at narrow widths it pushes the
-   hamburger button off-screen and out of reach. The badge itself isn't
-   critical nav info, so it's safe to drop here. */
-@media (max-width: 480px) {
-  .navbar__actions .xp-badge { display: none; }
-}
-
-/* On very narrow phones (~320px, e.g. iPhone SE) the "byRohan" half of the
-   wordmark plus the 3 action icons still don't fit. Trim the wordmark to
-   just "PyPrep" so the hamburger stays on-screen and tappable. */
-@media (max-width: 360px) {
-  .navbar__logo .logo-by { display: none; }
-  .navbar__inner { padding: 0 2px; gap: 6px; }
-}
 @media (max-width: 1100px) {
   .navbar__link { padding: 7px 8px; font-size: 0.82rem; }
+}
+@media (max-width: 600px) {
+  .global-search-btn { display: none; }
+  .xp-badge { padding: 4px 8px; }
+  .xp-badge span { display: none; }
+  .navbar__logo { font-size: 1rem; }
+  .navbar__logo-icon { width: 28px; height: 28px; font-size: 0.85rem; }
+  .navbar__inner { gap: 8px; }
+  .theme-toggle { width: 32px; height: 32px; }
+  .hamburger { width: 32px; height: 32px; }
+}
+@media (max-width: 380px) {
+  .xp-badge { display: none; }
 }
 
 /* ── Footer Responsive ───────────────────────────────────── */

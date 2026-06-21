@@ -1,1 +1,1283 @@
-{"meta":{"total":33,"version":"1.0"},"challenges":[{"id":"cc_e01","difficulty":"easy","topic":"strings","title":"Reverse a String","statement":"Write a function that takes a string and returns it reversed.","input":"s = 'hello'","output":"'olleh'","solution":"def reverse_string(s):\n    return s[::-1]\n\n# Test\nprint(reverse_string('hello'))  # olleh","alt_solution":"def reverse_string(s):\n    return ''.join(reversed(s))\n\n# Or using a loop:\ndef reverse_string_loop(s):\n    result = ''\n    for char in s:\n        result = char + result\n    return result","complexity":"Time: O(n) — must visit each character once.\nSpace: O(n) — new string of same length is created.","followups":["How would you reverse only the words in a sentence?","Can you reverse a string in-place? (Not in Python — strings are immutable)","What is the time complexity of string concatenation in a loop?"]},{"id":"cc_e02","difficulty":"easy","topic":"strings","title":"Check Palindrome","statement":"Write a function that returns True if a string is a palindrome (reads the same forwards and backwards), ignoring case and non-alphanumeric characters.","input":"s = 'A man a plan a canal Panama'","output":"True","solution":"def is_palindrome(s):\n    cleaned = ''.join(c.lower() for c in s if c.isalnum())\n    return cleaned == cleaned[::-1]\n\nprint(is_palindrome('A man a plan a canal Panama'))  # True\nprint(is_palindrome('hello'))                        # False","alt_solution":"def is_palindrome(s):\n    cleaned = ''.join(c.lower() for c in s if c.isalnum())\n    left, right = 0, len(cleaned) - 1\n    while left < right:\n        if cleaned[left] != cleaned[right]:\n            return False\n        left += 1\n        right -= 1\n    return True","complexity":"Time: O(n) — one pass to clean, one to compare.\nSpace: O(n) — cleaned string.","followups":["How do you check if a number is a palindrome?","What if you cannot use extra space?","How would you find all palindromic substrings?"]},{"id":"cc_e03","difficulty":"easy","topic":"strings","title":"Count Vowels","statement":"Write a function that counts the number of vowels (a, e, i, o, u) in a given string, case-insensitive.","input":"s = 'Hello World'","output":"3","solution":"def count_vowels(s):\n    return sum(1 for c in s.lower() if c in 'aeiou')\n\nprint(count_vowels('Hello World'))  # 3","alt_solution":"def count_vowels(s):\n    vowels = set('aeiouAEIOU')\n    return len([c for c in s if c in vowels])","complexity":"Time: O(n) — one pass through the string.\nSpace: O(1) — constant size vowel set.","followups":["How would you count consonants instead?","Can you do it without a loop using regex?","How would you return the vowel characters instead of just the count?"]},{"id":"cc_e04","difficulty":"easy","topic":"strings","title":"Check Anagram","statement":"Write a function that checks if two strings are anagrams of each other (same characters, different order). Ignore case and spaces.","input":"s1 = 'listen', s2 = 'silent'","output":"True","solution":"def is_anagram(s1, s2):\n    s1 = s1.replace(' ', '').lower()\n    s2 = s2.replace(' ', '').lower()\n    return sorted(s1) == sorted(s2)\n\nprint(is_anagram('listen', 'silent'))  # True\nprint(is_anagram('hello', 'world'))   # False","alt_solution":"from collections import Counter\n\ndef is_anagram(s1, s2):\n    s1 = s1.replace(' ', '').lower()\n    s2 = s2.replace(' ', '').lower()\n    return Counter(s1) == Counter(s2)","complexity":"Sort approach — Time: O(n log n). Counter approach — Time: O(n), Space: O(k) where k = unique chars.","followups":["Which approach is better for very large strings?","How would you find all anagram groups in a list of words?","What if you had to find anagrams in a large text file?"]},{"id":"cc_e05","difficulty":"easy","topic":"lists","title":"Find Maximum in a List","statement":"Write a function that returns the maximum value in a list without using the built-in max() function.","input":"lst = [3, 1, 7, 2, 9, 4]","output":"9","solution":"def find_max(lst):\n    if not lst:\n        return None\n    maximum = lst[0]\n    for num in lst[1:]:\n        if num > maximum:\n            maximum = num\n    return maximum\n\nprint(find_max([3, 1, 7, 2, 9, 4]))  # 9","alt_solution":"import functools\n\ndef find_max(lst):\n    return functools.reduce(lambda a, b: a if a > b else b, lst)","complexity":"Time: O(n) — single pass.\nSpace: O(1) — only one variable stored.","followups":["How do you find the second largest element?","How would you find the max in a 2D list?","What if the list contains None values?"]},{"id":"cc_e06","difficulty":"easy","topic":"lists","title":"Remove Duplicates from a List","statement":"Write a function that removes duplicates from a list while preserving the original order.","input":"lst = [1, 2, 2, 3, 4, 3, 5]","output":"[1, 2, 3, 4, 5]","solution":"def remove_duplicates(lst):\n    seen = set()\n    result = []\n    for item in lst:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\nprint(remove_duplicates([1, 2, 2, 3, 4, 3, 5]))  # [1, 2, 3, 4, 5]","alt_solution":"def remove_duplicates(lst):\n    return list(dict.fromkeys(lst))\n\n# dict.fromkeys preserves insertion order (Python 3.7+)\n# Simple but loses info about which were duplicates","complexity":"Time: O(n) — one pass, set lookups are O(1).\nSpace: O(n) — seen set + result list.","followups":["Why doesn't list(set(lst)) preserve order?","What is dict.fromkeys() and how does it work?","How would you remove duplicates from a list of dicts?"]},{"id":"cc_e07","difficulty":"easy","topic":"lists","title":"Flatten a Nested List","statement":"Write a function that flattens a one-level nested list (list of lists) into a single flat list.","input":"lst = [[1, 2], [3, 4], [5]]","output":"[1, 2, 3, 4, 5]","solution":"def flatten(lst):\n    return [item for sublist in lst for item in sublist]\n\nprint(flatten([[1, 2], [3, 4], [5]]))  # [1, 2, 3, 4, 5]","alt_solution":"import itertools\n\ndef flatten(lst):\n    return list(itertools.chain.from_iterable(lst))\n\n# Or using sum():\ndef flatten_sum(lst):\n    return sum(lst, [])","complexity":"Time: O(n) where n = total elements.\nSpace: O(n) — new flat list.","followups":["How would you flatten a deeply nested list (arbitrary depth)?","What is itertools.chain.from_iterable()?","How does sum(lst, []) work for flattening?"]},{"id":"cc_e08","difficulty":"easy","topic":"lists","title":"Two Sum","statement":"Given a list of integers and a target, return the indices of the two numbers that add up to the target. Assume exactly one solution exists.","input":"nums = [2, 7, 11, 15], target = 9","output":"[0, 1]","solution":"def two_sum(nums, target):\n    seen = {}  # value -> index\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n\nprint(two_sum([2, 7, 11, 15], 9))  # [0, 1]","alt_solution":"# Brute force O(n²) — for reference only:\ndef two_sum_brute(nums, target):\n    for i in range(len(nums)):\n        for j in range(i+1, len(nums)):\n            if nums[i] + nums[j] == target:\n                return [i, j]","complexity":"Hash map approach — Time: O(n), Space: O(n).\nBrute force — Time: O(n²), Space: O(1). Hash map is optimal.","followups":["What if multiple solutions exist?","How would you solve Three Sum?","What if the array is sorted — can you do better on space?"]},{"id":"cc_e09","difficulty":"easy","topic":"dictionaries","title":"Word Frequency Counter","statement":"Write a function that takes a string and returns a dictionary of each word's frequency count.","input":"text = 'the cat sat on the mat the cat'","output":"{'the': 3, 'cat': 2, 'sat': 1, 'on': 1, 'mat': 1}","solution":"def word_frequency(text):\n    freq = {}\n    for word in text.split():\n        freq[word] = freq.get(word, 0) + 1\n    return freq\n\nprint(word_frequency('the cat sat on the mat the cat'))","alt_solution":"from collections import Counter\n\ndef word_frequency(text):\n    return dict(Counter(text.split()))\n\n# Counter is the Pythonic way for frequency counting","complexity":"Time: O(n) — one pass.\nSpace: O(k) — k = unique words.","followups":["How do you find the top 3 most frequent words?","What is collections.Counter?","How do you make this case-insensitive and ignore punctuation?"]},{"id":"cc_e10","difficulty":"easy","topic":"functions","title":"FizzBuzz","statement":"Write a function that prints numbers from 1 to n. For multiples of 3 print 'Fizz', for multiples of 5 print 'Buzz', for multiples of both print 'FizzBuzz'.","input":"n = 15","output":"1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz","solution":"def fizzbuzz(n):\n    for i in range(1, n + 1):\n        if i % 15 == 0:\n            print('FizzBuzz')\n        elif i % 3 == 0:\n            print('Fizz')\n        elif i % 5 == 0:\n            print('Buzz')\n        else:\n            print(i)\n\nfizzbuzz(15)","alt_solution":"def fizzbuzz(n):\n    for i in range(1, n + 1):\n        result = ''\n        if i % 3 == 0: result += 'Fizz'\n        if i % 5 == 0: result += 'Buzz'\n        print(result or i)\n\n# This approach extends naturally to FizzBuzzWoof etc.","complexity":"Time: O(n) — one pass.\nSpace: O(1) — no data structure needed.","followups":["Why check i%15 before i%3 and i%5?","How would you extend this to FizzBuzzWoof for multiples of 7?","Can you do FizzBuzz in one line using list comprehension?"]},{"id":"cc_e11","difficulty":"easy","topic":"functions","title":"Factorial","statement":"Write a function to compute the factorial of a non-negative integer n (n! = n × (n-1) × ... × 1). Return 1 for n=0.","input":"n = 5","output":"120","solution":"def factorial(n):\n    if n < 0:\n        raise ValueError('n must be non-negative')\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n\nprint(factorial(5))  # 120","alt_solution":"# Recursive approach:\ndef factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\n# Using math module:\nimport math\nprint(math.factorial(5))  # 120","complexity":"Time: O(n) — n multiplications.\nSpace: O(1) iterative, O(n) recursive (call stack).","followups":["What is Python's recursion limit and how does it affect factorial?","How do you compute factorial of large numbers?","What is memoization and how would you apply it here?"]},{"id":"cc_e12","difficulty":"easy","topic":"functions","title":"Fibonacci Sequence","statement":"Write a function that returns a list of the first n Fibonacci numbers. Fibonacci: each number is the sum of the previous two (0, 1, 1, 2, 3, 5, 8...).","input":"n = 8","output":"[0, 1, 1, 2, 3, 5, 8, 13]","solution":"def fibonacci(n):\n    if n <= 0: return []\n    if n == 1: return [0]\n    fib = [0, 1]\n    for _ in range(2, n):\n        fib.append(fib[-1] + fib[-2])\n    return fib\n\nprint(fibonacci(8))  # [0, 1, 1, 2, 3, 5, 8, 13]","alt_solution":"# Generator approach (memory efficient):\ndef fib_gen(n):\n    a, b = 0, 1\n    for _ in range(n):\n        yield a\n        a, b = b, a + b\n\nprint(list(fib_gen(8)))","complexity":"Time: O(n).\nSpace: O(n) for list, O(1) for generator.","followups":["What is the time complexity of the naive recursive Fibonacci?","How does memoization/dynamic programming improve it?","What is the golden ratio and its relation to Fibonacci?"]},{"id":"cc_m01","difficulty":"medium","topic":"strings","title":"Longest Common Prefix","statement":"Write a function to find the longest common prefix string among a list of strings. Return an empty string if there is no common prefix.","input":"strs = ['flower', 'flow', 'flight']","output":"'fl'","solution":"def longest_common_prefix(strs):\n    if not strs:\n        return ''\n    prefix = strs[0]\n    for s in strs[1:]:\n        while not s.startswith(prefix):\n            prefix = prefix[:-1]\n            if not prefix:\n                return ''\n    return prefix\n\nprint(longest_common_prefix(['flower','flow','flight']))  # 'fl'","alt_solution":"def longest_common_prefix(strs):\n    if not strs:\n        return ''\n    # zip(*strs) pairs up characters at same positions\n    prefix = []\n    for chars in zip(*strs):\n        if len(set(chars)) == 1:\n            prefix.append(chars[0])\n        else:\n            break\n    return ''.join(prefix)","complexity":"Time: O(S) where S = total characters across all strings.\nSpace: O(1) — only the prefix string stored.","followups":["How would you use binary search to solve this?","What if the list is very large — can you parallelize the comparison?","How does zip(*strs) work here?"]},{"id":"cc_m02","difficulty":"medium","topic":"strings","title":"Valid Parentheses","statement":"Write a function that determines if a string containing only '(', ')', '{', '}', '[', ']' is valid. A string is valid if every opening bracket has a matching closing bracket in correct order.","input":"s = '({[]})'","output":"True","solution":"def is_valid(s):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in s:\n        if char in mapping:\n            top = stack.pop() if stack else '#'\n            if mapping[char] != top:\n                return False\n        else:\n            stack.append(char)\n    return not stack\n\nprint(is_valid('({[]})'))  # True\nprint(is_valid('([)]'))    # False","alt_solution":"# Without dict — using explicit checks:\ndef is_valid(s):\n    stack = []\n    for char in s:\n        if char in '([{':\n            stack.append(char)\n        elif not stack:\n            return False\n        elif char == ')' and stack[-1] != '(':\n            return False\n        elif char == ']' and stack[-1] != '[':\n            return False\n        elif char == '}' and stack[-1] != '{':\n            return False\n        else:\n            stack.pop()\n    return len(stack) == 0","complexity":"Time: O(n) — one pass.\nSpace: O(n) — stack can hold up to n/2 elements.","followups":["What data structure is used and why?","How would you find the position of the first unmatched bracket?","Can you solve this without a stack?"]},{"id":"cc_m03","difficulty":"medium","topic":"dictionaries","title":"Group Anagrams","statement":"Given a list of strings, group all anagrams together and return a list of groups.","input":"words = ['eat','tea','tan','ate','nat','bat']","output":"[['eat','tea','ate'], ['tan','nat'], ['bat']]","solution":"from collections import defaultdict\n\ndef group_anagrams(words):\n    groups = defaultdict(list)\n    for word in words:\n        key = tuple(sorted(word))\n        groups[key].append(word)\n    return list(groups.values())\n\nprint(group_anagrams(['eat','tea','tan','ate','nat','bat']))","alt_solution":"# Using character count as key:\ndef group_anagrams(words):\n    groups = {}\n    for word in words:\n        count = [0] * 26\n        for c in word:\n            count[ord(c) - ord('a')] += 1\n        key = tuple(count)\n        groups.setdefault(key, []).append(word)\n    return list(groups.values())","complexity":"Sort key — Time: O(n * k log k) where k = avg word length.\nCount key — Time: O(n * k). Space: O(n * k).","followups":["Why use tuple(sorted(word)) as the key instead of sorted(word)?","What is defaultdict and how does it differ from a regular dict?","How would you scale this for millions of words?"]},{"id":"cc_m04","difficulty":"medium","topic":"lists","title":"Maximum Subarray Sum (Kadane's Algorithm)","statement":"Find the contiguous subarray with the largest sum and return that sum.","input":"nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]","output":"6  (subarray [4, -1, 2, 1])","solution":"def max_subarray(nums):\n    max_sum = current_sum = nums[0]\n    for num in nums[1:]:\n        current_sum = max(num, current_sum + num)\n        max_sum = max(max_sum, current_sum)\n    return max_sum\n\nprint(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))  # 6","alt_solution":"# Divide and Conquer O(n log n) — for reference:\ndef max_subarray_dc(nums):\n    def helper(l, r):\n        if l == r: return nums[l]\n        mid = (l + r) // 2\n        left = helper(l, mid)\n        right = helper(mid+1, r)\n        # Cross sum\n        ls = rs = float('-inf')\n        s = 0\n        for i in range(mid, l-1, -1):\n            s += nums[i]; ls = max(ls, s)\n        s = 0\n        for i in range(mid+1, r+1):\n            s += nums[i]; rs = max(rs, s)\n        return max(left, right, ls + rs)\n    return helper(0, len(nums)-1)","complexity":"Kadane's — Time: O(n), Space: O(1). Optimal solution.","followups":["Can you also return the start and end indices of the subarray?","What if all numbers are negative?","How does Kadane's algorithm work conceptually?"]},{"id":"cc_m05","difficulty":"medium","topic":"dictionaries","title":"First Non-Repeating Character","statement":"Given a string, find the first character that does not repeat. Return the character or -1 if all repeat.","input":"s = 'leetcode'","output":"'l'","solution":"from collections import OrderedDict\n\ndef first_unique_char(s):\n    count = {}\n    for c in s:\n        count[c] = count.get(c, 0) + 1\n    for c in s:\n        if count[c] == 1:\n            return c\n    return -1\n\nprint(first_unique_char('leetcode'))  # 'l'\nprint(first_unique_char('aabb'))     # -1","alt_solution":"from collections import Counter\n\ndef first_unique_char(s):\n    count = Counter(s)\n    for i, c in enumerate(s):\n        if count[c] == 1:\n            return c  # return i for index\n    return -1","complexity":"Time: O(n) — two passes.\nSpace: O(1) — at most 26 keys (lowercase letters).","followups":["How do you find the first repeating character instead?","Can you do it in a single pass?","How would you handle Unicode characters?"]},{"id":"cc_m06","difficulty":"medium","topic":"lists","title":"Rotate a List","statement":"Given a list and an integer k, rotate the list to the right by k positions.","input":"nums = [1, 2, 3, 4, 5], k = 2","output":"[4, 5, 1, 2, 3]","solution":"def rotate(nums, k):\n    n = len(nums)\n    k = k % n  # handle k > n\n    return nums[-k:] + nums[:-k]\n\nprint(rotate([1, 2, 3, 4, 5], 2))  # [4, 5, 1, 2, 3]","alt_solution":"# In-place reversal — O(1) space:\ndef rotate_inplace(nums, k):\n    n = len(nums)\n    k = k % n\n    def reverse(l, r):\n        while l < r:\n            nums[l], nums[r] = nums[r], nums[l]\n            l += 1; r -= 1\n    reverse(0, n-1)\n    reverse(0, k-1)\n    reverse(k, n-1)\n    return nums","complexity":"Slice approach — Time: O(n), Space: O(n).\nReversal approach — Time: O(n), Space: O(1).","followups":["Why do we take k % n?","How does the three-reversal trick work?","How would you rotate a list to the LEFT by k positions?"]},{"id":"cc_m07","difficulty":"medium","topic":"dictionaries","title":"Longest Substring Without Repeating Characters","statement":"Given a string, find the length of the longest substring without repeating characters.","input":"s = 'abcabcbb'","output":"3  (substring 'abc')","solution":"def length_of_longest_substring(s):\n    char_index = {}\n    max_len = start = 0\n    for end, char in enumerate(s):\n        if char in char_index and char_index[char] >= start:\n            start = char_index[char] + 1\n        char_index[char] = end\n        max_len = max(max_len, end - start + 1)\n    return max_len\n\nprint(length_of_longest_substring('abcabcbb'))  # 3","alt_solution":"def length_of_longest_substring(s):\n    window = set()\n    left = max_len = 0\n    for right in range(len(s)):\n        while s[right] in window:\n            window.remove(s[left])\n            left += 1\n        window.add(s[right])\n        max_len = max(max_len, right - left + 1)\n    return max_len","complexity":"Time: O(n) — sliding window, each char visited at most twice.\nSpace: O(min(m, n)) — m = charset size.","followups":["What is the sliding window technique?","How would you also return the actual substring, not just its length?","How would you extend this to allow at most k repeating characters?"]},{"id":"cc_m08","difficulty":"medium","topic":"lists","title":"Merge Two Sorted Lists","statement":"Given two sorted lists, merge them into one sorted list without using built-in sort.","input":"l1 = [1, 3, 5], l2 = [2, 4, 6]","output":"[1, 2, 3, 4, 5, 6]","solution":"def merge_sorted(l1, l2):\n    result = []\n    i = j = 0\n    while i < len(l1) and j < len(l2):\n        if l1[i] <= l2[j]:\n            result.append(l1[i]); i += 1\n        else:\n            result.append(l2[j]); j += 1\n    result.extend(l1[i:])\n    result.extend(l2[j:])\n    return result\n\nprint(merge_sorted([1,3,5],[2,4,6]))  # [1,2,3,4,5,6]","alt_solution":"import heapq\n\ndef merge_sorted(l1, l2):\n    return list(heapq.merge(l1, l2))\n\n# heapq.merge works efficiently for already-sorted iterables","complexity":"Time: O(m + n) — one pass through both lists.\nSpace: O(m + n) — merged result.","followups":["How would you merge k sorted lists?","What is heapq.merge() and when would you use it?","How is this related to the merge step in merge sort?"]},{"id":"cc_m09","difficulty":"medium","topic":"functions","title":"Count Pairs with Given Sum","statement":"Given a list of integers and a target sum, return the count of all pairs that add up to the target.","input":"nums = [1, 5, 7, -1, 5], target = 6","output":"3  (pairs: (1,5), (7,-1), (1,5))","solution":"from collections import Counter\n\ndef count_pairs(nums, target):\n    count = 0\n    freq = Counter(nums)\n    for num in freq:\n        complement = target - num\n        if complement in freq:\n            if complement == num:\n                count += freq[num] * (freq[num] - 1) // 2\n            elif complement > num:\n                count += freq[num] * freq[complement]\n    return count\n\nprint(count_pairs([1, 5, 7, -1, 5], 6))  # 3","alt_solution":"def count_pairs(nums, target):\n    count = 0\n    seen = {}\n    for num in nums:\n        complement = target - num\n        if complement in seen:\n            count += seen[complement]\n        seen[num] = seen.get(num, 0) + 1\n    return count","complexity":"Time: O(n). Space: O(n).","followups":["How would you return the actual pairs instead of just count?","How would you handle negative numbers?","What if pairs must have distinct indices?"]},{"id":"cc_m10","difficulty":"medium","topic":"oop","title":"Design a Stack","statement":"Implement a Stack class with push(), pop(), peek(), is_empty(), and size() methods.","input":"s = Stack()\ns.push(1); s.push(2); s.push(3)\ns.pop()  # 3\ns.peek() # 2","output":"Stack works correctly with LIFO behavior","solution":"class Stack:\n    def __init__(self):\n        self._data = []\n\n    def push(self, item):\n        self._data.append(item)\n\n    def pop(self):\n        if self.is_empty():\n            raise IndexError('Pop from empty stack')\n        return self._data.pop()\n\n    def peek(self):\n        if self.is_empty():\n            raise IndexError('Peek at empty stack')\n        return self._data[-1]\n\n    def is_empty(self):\n        return len(self._data) == 0\n\n    def size(self):\n        return len(self._data)\n\n    def __repr__(self):\n        return f'Stack({self._data})'\n\n# Test\ns = Stack()\ns.push(1); s.push(2); s.push(3)\nprint(s.pop())   # 3\nprint(s.peek())  # 2\nprint(s.size())  # 2","alt_solution":"from collections import deque\n\nclass Stack:\n    def __init__(self):\n        self._data = deque()\n    def push(self, item): self._data.append(item)\n    def pop(self):  return self._data.pop()\n    def peek(self): return self._data[-1]\n    def is_empty(self): return len(self._data) == 0\n    def size(self): return len(self._data)","complexity":"All operations: O(1) amortized.","followups":["What is the difference between a stack and a queue?","How would you implement a queue using two stacks?","What is collections.deque and why might you prefer it?"]},{"id":"cc_m11","difficulty":"medium","topic":"functions","title":"Binary Search","statement":"Implement binary search to find the index of a target value in a sorted list. Return -1 if not found.","input":"nums = [1, 3, 5, 7, 9, 11], target = 7","output":"3","solution":"def binary_search(nums, target):\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        elif nums[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1\n\nprint(binary_search([1,3,5,7,9,11], 7))  # 3\nprint(binary_search([1,3,5,7,9,11], 4))  # -1","alt_solution":"import bisect\n\ndef binary_search(nums, target):\n    idx = bisect.bisect_left(nums, target)\n    if idx < len(nums) and nums[idx] == target:\n        return idx\n    return -1","complexity":"Time: O(log n) — halves the search space each iteration.\nSpace: O(1) — iterative.","followups":["Why use mid = left + (right-left)//2 instead of (left+right)//2?","How do you find the first or last occurrence of a target?","What is the bisect module?"]},{"id":"cc_m12","difficulty":"medium","topic":"lists","title":"Move Zeros to End","statement":"Given a list of integers, move all zeros to the end while maintaining the relative order of non-zero elements. Do it in-place.","input":"nums = [0, 1, 0, 3, 12]","output":"[1, 3, 12, 0, 0]","solution":"def move_zeros(nums):\n    pos = 0  # position for next non-zero\n    for i in range(len(nums)):\n        if nums[i] != 0:\n            nums[pos] = nums[i]\n            pos += 1\n    for i in range(pos, len(nums)):\n        nums[i] = 0\n    return nums\n\nprint(move_zeros([0, 1, 0, 3, 12]))  # [1, 3, 12, 0, 0]","alt_solution":"def move_zeros(nums):\n    # Two-pointer swap\n    left = 0\n    for right in range(len(nums)):\n        if nums[right] != 0:\n            nums[left], nums[right] = nums[right], nums[left]\n            left += 1\n    return nums","complexity":"Time: O(n). Space: O(1) — in-place.","followups":["How does the two-pointer technique work?","What if you need to move zeros to the beginning instead?","How would you move all negative numbers to the end?"]},{"id":"cc_m13","difficulty":"medium","topic":"strings","title":"Roman to Integer","statement":"Convert a Roman numeral string to an integer. Roman numerals: I=1, V=5, X=10, L=50, C=100, D=500, M=1000.","input":"s = 'MCMXCIV'","output":"1994","solution":"def roman_to_int(s):\n    values = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}\n    result = 0\n    for i in range(len(s)):\n        if i + 1 < len(s) and values[s[i]] < values[s[i+1]]:\n            result -= values[s[i]]\n        else:\n            result += values[s[i]]\n    return result\n\nprint(roman_to_int('MCMXCIV'))  # 1994","alt_solution":"def roman_to_int(s):\n    values = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}\n    result = sum(\n        -values[s[i]] if i+1 < len(s) and values[s[i]] < values[s[i+1]]\n        else values[s[i]]\n        for i in range(len(s))\n    )\n    return result","complexity":"Time: O(n). Space: O(1) — fixed-size mapping dict.","followups":["How do you convert an integer to a Roman numeral?","What is the subtractive notation rule in Roman numerals?","How would you validate a Roman numeral string?"]},{"id":"cc_h01","difficulty":"hard","topic":"lists","title":"Trapping Rain Water","statement":"Given an array of non-negative integers representing heights of bars, compute the total water that can be trapped between bars after it rains.","input":"height = [0,1,0,2,1,0,1,3,2,1,2,1]","output":"6","solution":"def trap(height):\n    if not height:\n        return 0\n    left, right = 0, len(height) - 1\n    left_max = right_max = water = 0\n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n    return water\n\nprint(trap([0,1,0,2,1,0,1,3,2,1,2,1]))  # 6","alt_solution":"# DP approach O(n) space:\ndef trap_dp(height):\n    n = len(height)\n    left_max  = [0]*n\n    right_max = [0]*n\n    left_max[0] = height[0]\n    for i in range(1, n):\n        left_max[i] = max(left_max[i-1], height[i])\n    right_max[n-1] = height[n-1]\n    for i in range(n-2, -1, -1):\n        right_max[i] = max(right_max[i+1], height[i])\n    return sum(min(left_max[i], right_max[i]) - height[i] for i in range(n))","complexity":"Two-pointer — Time: O(n), Space: O(1). Optimal.\nDP approach — Time: O(n), Space: O(n).","followups":["Why does the two-pointer approach work correctly?","How much water does each bar contribute?","What is the relationship between this problem and the container with most water problem?"]},{"id":"cc_h02","difficulty":"hard","topic":"strings","title":"Longest Palindromic Substring","statement":"Given a string, return the longest palindromic substring.","input":"s = 'babad'","output":"'bab' (or 'aba')","solution":"def longest_palindrome(s):\n    result = ''\n    for i in range(len(s)):\n        # Odd length\n        odd = expand(s, i, i)\n        # Even length\n        even = expand(s, i, i+1)\n        if len(odd) > len(result):  result = odd\n        if len(even) > len(result): result = even\n    return result\n\ndef expand(s, left, right):\n    while left >= 0 and right < len(s) and s[left] == s[right]:\n        left -= 1\n        right += 1\n    return s[left+1:right]\n\nprint(longest_palindrome('babad'))  # bab","alt_solution":"# DP approach:\ndef longest_palindrome_dp(s):\n    n = len(s)\n    dp = [[False]*n for _ in range(n)]\n    start = max_len = 0\n    for i in range(n): dp[i][i] = True\n    for length in range(2, n+1):\n        for i in range(n - length + 1):\n            j = i + length - 1\n            if s[i] == s[j] and (length == 2 or dp[i+1][j-1]):\n                dp[i][j] = True\n                if length > max_len:\n                    start, max_len = i, length\n    return s[start:start+max_len]","complexity":"Expand from center — Time: O(n²), Space: O(1).\nDP — Time: O(n²), Space: O(n²).","followups":["What is Manacher's algorithm and what is its time complexity?","How do you count the number of palindromic substrings?","What is the difference between a substring and a subsequence?"]},{"id":"cc_h03","difficulty":"hard","topic":"dictionaries","title":"LRU Cache","statement":"Design a data structure for a Least Recently Used (LRU) cache with get(key) and put(key, value) operations, both O(1). When capacity is exceeded, evict the least recently used item.","input":"cache = LRUCache(2)\ncache.put(1,1); cache.put(2,2)\ncache.get(1)    # 1\ncache.put(3,3)  # evicts key 2\ncache.get(2)    # -1 (not found)","output":"get(1)=1, get(2)=-1","solution":"from collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity):\n        self.cap = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key):\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)  # mark as recently used\n        return self.cache[key]\n\n    def put(self, key, value):\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.cap:\n            self.cache.popitem(last=False)  # evict LRU (front)","alt_solution":"# Manual doubly linked list + hashmap for true O(1):\nclass Node:\n    def __init__(self, k=0, v=0):\n        self.k, self.v = k, v\n        self.prev = self.next = None\n\nclass LRUCache:\n    def __init__(self, cap):\n        self.cap = cap\n        self.cache = {}\n        self.head, self.tail = Node(), Node()\n        self.head.next = self.tail\n        self.tail.prev = self.head\n\n    def _remove(self, node):\n        node.prev.next = node.next\n        node.next.prev = node.prev\n\n    def _insert(self, node):  # insert at tail\n        node.prev = self.tail.prev\n        node.next = self.tail\n        self.tail.prev.next = node\n        self.tail.prev = node\n\n    def get(self, key):\n        if key not in self.cache: return -1\n        self._remove(self.cache[key])\n        self._insert(self.cache[key])\n        return self.cache[key].v\n\n    def put(self, key, value):\n        if key in self.cache: self._remove(self.cache[key])\n        self.cache[key] = Node(key, value)\n        self._insert(self.cache[key])\n        if len(self.cache) > self.cap:\n            lru = self.head.next\n            self._remove(lru)\n            del self.cache[lru.k]","complexity":"OrderedDict approach: O(1) avg for get/put.\nLinked list approach: True O(1) for all operations.","followups":["What is OrderedDict.move_to_end()?","Why do we need a doubly linked list for true O(1)?","What is the difference between LRU and LFU cache?"]},{"id":"cc_h04","difficulty":"hard","topic":"functions","title":"Generate All Permutations","statement":"Given a list of distinct integers, return all possible permutations.","input":"nums = [1, 2, 3]","output":"[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]","solution":"def permutations(nums):\n    result = []\n    def backtrack(current, remaining):\n        if not remaining:\n            result.append(current[:])\n            return\n        for i in range(len(remaining)):\n            current.append(remaining[i])\n            backtrack(current, remaining[:i] + remaining[i+1:])\n            current.pop()\n    backtrack([], nums)\n    return result\n\nprint(permutations([1,2,3]))","alt_solution":"from itertools import permutations as iperms\n\ndef permutations(nums):\n    return [list(p) for p in iperms(nums)]\n\n# Or using swap-based backtracking:\ndef permutations_swap(nums):\n    result = []\n    def backtrack(start):\n        if start == len(nums):\n            result.append(nums[:])\n            return\n        for i in range(start, len(nums)):\n            nums[start], nums[i] = nums[i], nums[start]\n            backtrack(start + 1)\n            nums[start], nums[i] = nums[i], nums[start]\n    backtrack(0)\n    return result","complexity":"Time: O(n * n!) — n! permutations, each of length n.\nSpace: O(n) recursion depth + O(n * n!) for result.","followups":["What is backtracking?","How would you generate permutations with duplicate elements?","How does itertools.permutations() work internally?"]},{"id":"cc_h05","difficulty":"hard","topic":"oop","title":"Implement a Singleton Pattern","statement":"Implement a Singleton class in Python that ensures only one instance of the class is ever created.","input":"a = Singleton()\nb = Singleton()\nprint(a is b)  # True","output":"True","solution":"class Singleton:\n    _instance = None\n\n    def __new__(cls, *args, **kwargs):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n        return cls._instance\n\n    def __init__(self, value=None):\n        self.value = value\n\na = Singleton(42)\nb = Singleton(99)\nprint(a is b)       # True\nprint(a.value)      # 99 (same object, overwritten by b init)","alt_solution":"# Using a decorator:\ndef singleton(cls):\n    instances = {}\n    def get_instance(*args, **kwargs):\n        if cls not in instances:\n            instances[cls] = cls(*args, **kwargs)\n        return instances[cls]\n    return get_instance\n\n@singleton\nclass MyService:\n    def __init__(self):\n        self.data = []\n\na = MyService(); b = MyService()\nprint(a is b)  # True","complexity":"Time: O(1) for instance creation check.\nSpace: O(1) — only one instance stored.","followups":["Is the Singleton pattern thread-safe in Python?","What is __new__ vs __init__?","When would you use a Singleton? What are its drawbacks?"]},{"id":"cc_h06","difficulty":"hard","topic":"functions","title":"Memoization with Decorator","statement":"Implement a memoize decorator that caches the results of a function based on its arguments to avoid redundant computation. Test with Fibonacci.","input":"fib(10)","output":"55","solution":"def memoize(fn):\n    cache = {}\n    def wrapper(*args):\n        if args not in cache:\n            cache[args] = fn(*args)\n        return cache[args]\n    return wrapper\n\n@memoize\ndef fib(n):\n    if n <= 1:\n        return n\n    return fib(n-1) + fib(n-2)\n\nprint(fib(10))  # 55\nprint(fib(50))  # Works fast — no recomputation","alt_solution":"from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fib(n):\n    if n <= 1:\n        return n\n    return fib(n-1) + fib(n-2)\n\n# lru_cache is the built-in memoization decorator\nprint(fib(10))  # 55","complexity":"Without memo: O(2^n). With memo: O(n) — each subproblem solved once.\nSpace: O(n) — cache + call stack.","followups":["What is functools.lru_cache?","How does the cache handle unhashable arguments?","What is the difference between memoization and dynamic programming?"]},{"id":"cc_h07","difficulty":"hard","topic":"lists","title":"Product of Array Except Self","statement":"Given an array, return a new array where each element is the product of all elements except itself. Do not use division.","input":"nums = [1, 2, 3, 4]","output":"[24, 12, 8, 6]","solution":"def product_except_self(nums):\n    n = len(nums)\n    result = [1] * n\n    # Left pass: result[i] = product of all to the left\n    prefix = 1\n    for i in range(n):\n        result[i] = prefix\n        prefix *= nums[i]\n    # Right pass: multiply by product of all to the right\n    suffix = 1\n    for i in range(n-1, -1, -1):\n        result[i] *= suffix\n        suffix *= nums[i]\n    return result\n\nprint(product_except_self([1,2,3,4]))  # [24, 12, 8, 6]","alt_solution":"# With division (not allowed but for reference):\ndef product_division(nums):\n    from math import prod\n    total = prod(nums)\n    return [total // n for n in nums]  # Breaks with zeros","complexity":"Time: O(n) — two passes.\nSpace: O(1) extra (output array doesn't count).","followups":["Why is division not allowed and what edge case does it cause?","How would you handle zeros in the array?","Can you solve it in a single pass?"]},{"id":"cc_h08","difficulty":"hard","topic":"strings","title":"Word Break Problem","statement":"Given a string s and a list of words (dictionary), return True if s can be segmented into space-separated words all present in the dictionary.","input":"s = 'leetcode', wordDict = ['leet','code']","output":"True","solution":"def word_break(s, wordDict):\n    word_set = set(wordDict)\n    n = len(s)\n    dp = [False] * (n + 1)\n    dp[0] = True  # empty string is always valid\n    for i in range(1, n + 1):\n        for j in range(i):\n            if dp[j] and s[j:i] in word_set:\n                dp[i] = True\n                break\n    return dp[n]\n\nprint(word_break('leetcode', ['leet','code']))        # True\nprint(word_break('applepenapple', ['apple','pen']))   # True\nprint(word_break('catsandog', ['cats','dog','sand'])) # False","alt_solution":"from functools import lru_cache\n\ndef word_break(s, wordDict):\n    word_set = set(wordDict)\n    @lru_cache(maxsize=None)\n    def dp(start):\n        if start == len(s): return True\n        for end in range(start+1, len(s)+1):\n            if s[start:end] in word_set and dp(end):\n                return True\n        return False\n    return dp(0)","complexity":"Time: O(n²) — n² substrings, each O(n) check → O(n³) naive, O(n²) with set.\nSpace: O(n) dp array.","followups":["How does dynamic programming differ from recursion here?","How would you return all possible segmentations?","What if words can be reused?"]}]}
+{
+  "meta": {
+    "total": 75,
+    "version": "1.0"
+  },
+  "challenges": [
+    {
+      "id": "cc_e01",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Reverse a String",
+      "statement": "Write a function that takes a string and returns it reversed.",
+      "input": "s = 'hello'",
+      "output": "'olleh'",
+      "solution": "def reverse_string(s):\n    return s[::-1]\n\n# Test\nprint(reverse_string('hello'))  # olleh",
+      "alt_solution": "def reverse_string(s):\n    return ''.join(reversed(s))\n\n# Or using a loop:\ndef reverse_string_loop(s):\n    result = ''\n    for char in s:\n        result = char + result\n    return result",
+      "complexity": "Time: O(n): must visit each character once.\nSpace: O(n): new string of same length is created.",
+      "followups": [
+        "How would you reverse only the words in a sentence?",
+        "Can you reverse a string in-place? (Not in Python: strings are immutable)",
+        "What is the time complexity of string concatenation in a loop?"
+      ]
+    },
+    {
+      "id": "cc_e02",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Check Palindrome",
+      "statement": "Write a function that returns True if a string is a palindrome (reads the same forwards and backwards), ignoring case and non-alphanumeric characters.",
+      "input": "s = 'A man a plan a canal Panama'",
+      "output": "True",
+      "solution": "def is_palindrome(s):\n    cleaned = ''.join(c.lower() for c in s if c.isalnum())\n    return cleaned == cleaned[::-1]\n\nprint(is_palindrome('A man a plan a canal Panama'))  # True\nprint(is_palindrome('hello'))                        # False",
+      "alt_solution": "def is_palindrome(s):\n    cleaned = ''.join(c.lower() for c in s if c.isalnum())\n    left, right = 0, len(cleaned) - 1\n    while left < right:\n        if cleaned[left] != cleaned[right]:\n            return False\n        left += 1\n        right -= 1\n    return True",
+      "complexity": "Time: O(n): one pass to clean, one to compare.\nSpace: O(n): cleaned string.",
+      "followups": [
+        "How do you check if a number is a palindrome?",
+        "What if you cannot use extra space?",
+        "How would you find all palindromic substrings?"
+      ]
+    },
+    {
+      "id": "cc_e03",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Count Vowels",
+      "statement": "Write a function that counts the number of vowels (a, e, i, o, u) in a given string, case-insensitive.",
+      "input": "s = 'Hello World'",
+      "output": "3",
+      "solution": "def count_vowels(s):\n    return sum(1 for c in s.lower() if c in 'aeiou')\n\nprint(count_vowels('Hello World'))  # 3",
+      "alt_solution": "def count_vowels(s):\n    vowels = set('aeiouAEIOU')\n    return len([c for c in s if c in vowels])",
+      "complexity": "Time: O(n): one pass through the string.\nSpace: O(1): constant size vowel set.",
+      "followups": [
+        "How would you count consonants instead?",
+        "Can you do it without a loop using regex?",
+        "How would you return the vowel characters instead of just the count?"
+      ]
+    },
+    {
+      "id": "cc_e04",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Check Anagram",
+      "statement": "Write a function that checks if two strings are anagrams of each other (same characters, different order). Ignore case and spaces.",
+      "input": "s1 = 'listen', s2 = 'silent'",
+      "output": "True",
+      "solution": "def is_anagram(s1, s2):\n    s1 = s1.replace(' ', '').lower()\n    s2 = s2.replace(' ', '').lower()\n    return sorted(s1) == sorted(s2)\n\nprint(is_anagram('listen', 'silent'))  # True\nprint(is_anagram('hello', 'world'))   # False",
+      "alt_solution": "from collections import Counter\n\ndef is_anagram(s1, s2):\n    s1 = s1.replace(' ', '').lower()\n    s2 = s2.replace(' ', '').lower()\n    return Counter(s1) == Counter(s2)",
+      "complexity": "Sort approach - Time: O(n log n). Counter approach - Time: O(n), Space: O(k) where k = unique chars.",
+      "followups": [
+        "Which approach is better for very large strings?",
+        "How would you find all anagram groups in a list of words?",
+        "What if you had to find anagrams in a large text file?"
+      ]
+    },
+    {
+      "id": "cc_e05",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Find Maximum in a List",
+      "statement": "Write a function that returns the maximum value in a list without using the built-in max() function.",
+      "input": "lst = [3, 1, 7, 2, 9, 4]",
+      "output": "9",
+      "solution": "def find_max(lst):\n    if not lst:\n        return None\n    maximum = lst[0]\n    for num in lst[1:]:\n        if num > maximum:\n            maximum = num\n    return maximum\n\nprint(find_max([3, 1, 7, 2, 9, 4]))  # 9",
+      "alt_solution": "import functools\n\ndef find_max(lst):\n    return functools.reduce(lambda a, b: a if a > b else b, lst)",
+      "complexity": "Time: O(n): single pass.\nSpace: O(1): only one variable stored.",
+      "followups": [
+        "How do you find the second largest element?",
+        "How would you find the max in a 2D list?",
+        "What if the list contains None values?"
+      ]
+    },
+    {
+      "id": "cc_e06",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Remove Duplicates from a List",
+      "statement": "Write a function that removes duplicates from a list while preserving the original order.",
+      "input": "lst = [1, 2, 2, 3, 4, 3, 5]",
+      "output": "[1, 2, 3, 4, 5]",
+      "solution": "def remove_duplicates(lst):\n    seen = set()\n    result = []\n    for item in lst:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\nprint(remove_duplicates([1, 2, 2, 3, 4, 3, 5]))  # [1, 2, 3, 4, 5]",
+      "alt_solution": "def remove_duplicates(lst):\n    return list(dict.fromkeys(lst))\n\n# dict.fromkeys preserves insertion order (Python 3.7+)\n# Simple but loses info about which were duplicates",
+      "complexity": "Time: O(n): one pass, set lookups are O(1).\nSpace: O(n): seen set + result list.",
+      "followups": [
+        "Why doesn't list(set(lst)) preserve order?",
+        "What is dict.fromkeys() and how does it work?",
+        "How would you remove duplicates from a list of dicts?"
+      ]
+    },
+    {
+      "id": "cc_e07",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Flatten a Nested List",
+      "statement": "Write a function that flattens a one-level nested list (list of lists) into a single flat list.",
+      "input": "lst = [[1, 2], [3, 4], [5]]",
+      "output": "[1, 2, 3, 4, 5]",
+      "solution": "def flatten(lst):\n    return [item for sublist in lst for item in sublist]\n\nprint(flatten([[1, 2], [3, 4], [5]]))  # [1, 2, 3, 4, 5]",
+      "alt_solution": "import itertools\n\ndef flatten(lst):\n    return list(itertools.chain.from_iterable(lst))\n\n# Or using sum():\ndef flatten_sum(lst):\n    return sum(lst, [])",
+      "complexity": "Time: O(n) where n = total elements.\nSpace: O(n): new flat list.",
+      "followups": [
+        "How would you flatten a deeply nested list (arbitrary depth)?",
+        "What is itertools.chain.from_iterable()?",
+        "How does sum(lst, []) work for flattening?"
+      ]
+    },
+    {
+      "id": "cc_e08",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Two Sum",
+      "statement": "Given a list of integers and a target, return the indices of the two numbers that add up to the target. Assume exactly one solution exists.",
+      "input": "nums = [2, 7, 11, 15], target = 9",
+      "output": "[0, 1]",
+      "solution": "def two_sum(nums, target):\n    seen = {}  # value -> index\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n\nprint(two_sum([2, 7, 11, 15], 9))  # [0, 1]",
+      "alt_solution": "# Brute force O(n²): for reference only:\ndef two_sum_brute(nums, target):\n    for i in range(len(nums)):\n        for j in range(i+1, len(nums)):\n            if nums[i] + nums[j] == target:\n                return [i, j]",
+      "complexity": "Hash map approach - Time: O(n), Space: O(n).\nBrute force - Time: O(n²), Space: O(1). Hash map is optimal.",
+      "followups": [
+        "What if multiple solutions exist?",
+        "How would you solve Three Sum?",
+        "What if the array is sorted: can you do better on space?"
+      ]
+    },
+    {
+      "id": "cc_e09",
+      "difficulty": "easy",
+      "topic": "dictionaries",
+      "title": "Word Frequency Counter",
+      "statement": "Write a function that takes a string and returns a dictionary of each word's frequency count.",
+      "input": "text = 'the cat sat on the mat the cat'",
+      "output": "{'the': 3, 'cat': 2, 'sat': 1, 'on': 1, 'mat': 1}",
+      "solution": "def word_frequency(text):\n    freq = {}\n    for word in text.split():\n        freq[word] = freq.get(word, 0) + 1\n    return freq\n\nprint(word_frequency('the cat sat on the mat the cat'))",
+      "alt_solution": "from collections import Counter\n\ndef word_frequency(text):\n    return dict(Counter(text.split()))\n\n# Counter is the Pythonic way for frequency counting",
+      "complexity": "Time: O(n): one pass.\nSpace: O(k): k = unique words.",
+      "followups": [
+        "How do you find the top 3 most frequent words?",
+        "What is collections.Counter?",
+        "How do you make this case-insensitive and ignore punctuation?"
+      ]
+    },
+    {
+      "id": "cc_e10",
+      "difficulty": "easy",
+      "topic": "functions",
+      "title": "FizzBuzz",
+      "statement": "Write a function that prints numbers from 1 to n. For multiples of 3 print 'Fizz', for multiples of 5 print 'Buzz', for multiples of both print 'FizzBuzz'.",
+      "input": "n = 15",
+      "output": "1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz",
+      "solution": "def fizzbuzz(n):\n    for i in range(1, n + 1):\n        if i % 15 == 0:\n            print('FizzBuzz')\n        elif i % 3 == 0:\n            print('Fizz')\n        elif i % 5 == 0:\n            print('Buzz')\n        else:\n            print(i)\n\nfizzbuzz(15)",
+      "alt_solution": "def fizzbuzz(n):\n    for i in range(1, n + 1):\n        result = ''\n        if i % 3 == 0: result += 'Fizz'\n        if i % 5 == 0: result += 'Buzz'\n        print(result or i)\n\n# This approach extends naturally to FizzBuzzWoof etc.",
+      "complexity": "Time: O(n): one pass.\nSpace: O(1): no data structure needed.",
+      "followups": [
+        "Why check i%15 before i%3 and i%5?",
+        "How would you extend this to FizzBuzzWoof for multiples of 7?",
+        "Can you do FizzBuzz in one line using list comprehension?"
+      ]
+    },
+    {
+      "id": "cc_e11",
+      "difficulty": "easy",
+      "topic": "functions",
+      "title": "Factorial",
+      "statement": "Write a function to compute the factorial of a non-negative integer n (n! = n × (n-1) × ... × 1). Return 1 for n=0.",
+      "input": "n = 5",
+      "output": "120",
+      "solution": "def factorial(n):\n    if n < 0:\n        raise ValueError('n must be non-negative')\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n\nprint(factorial(5))  # 120",
+      "alt_solution": "# Recursive approach:\ndef factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\n# Using math module:\nimport math\nprint(math.factorial(5))  # 120",
+      "complexity": "Time: O(n): n multiplications.\nSpace: O(1) iterative, O(n) recursive (call stack).",
+      "followups": [
+        "What is Python's recursion limit and how does it affect factorial?",
+        "How do you compute factorial of large numbers?",
+        "What is memoization and how would you apply it here?"
+      ]
+    },
+    {
+      "id": "cc_e12",
+      "difficulty": "easy",
+      "topic": "functions",
+      "title": "Fibonacci Sequence",
+      "statement": "Write a function that returns a list of the first n Fibonacci numbers. Fibonacci: each number is the sum of the previous two (0, 1, 1, 2, 3, 5, 8...).",
+      "input": "n = 8",
+      "output": "[0, 1, 1, 2, 3, 5, 8, 13]",
+      "solution": "def fibonacci(n):\n    if n <= 0: return []\n    if n == 1: return [0]\n    fib = [0, 1]\n    for _ in range(2, n):\n        fib.append(fib[-1] + fib[-2])\n    return fib\n\nprint(fibonacci(8))  # [0, 1, 1, 2, 3, 5, 8, 13]",
+      "alt_solution": "# Generator approach (memory efficient):\ndef fib_gen(n):\n    a, b = 0, 1\n    for _ in range(n):\n        yield a\n        a, b = b, a + b\n\nprint(list(fib_gen(8)))",
+      "complexity": "Time: O(n).\nSpace: O(n) for list, O(1) for generator.",
+      "followups": [
+        "What is the time complexity of the naive recursive Fibonacci?",
+        "How does memoization/dynamic programming improve it?",
+        "What is the golden ratio and its relation to Fibonacci?"
+      ]
+    },
+    {
+      "id": "cc_m01",
+      "difficulty": "medium",
+      "topic": "strings",
+      "title": "Longest Common Prefix",
+      "statement": "Write a function to find the longest common prefix string among a list of strings. Return an empty string if there is no common prefix.",
+      "input": "strs = ['flower', 'flow', 'flight']",
+      "output": "'fl'",
+      "solution": "def longest_common_prefix(strs):\n    if not strs:\n        return ''\n    prefix = strs[0]\n    for s in strs[1:]:\n        while not s.startswith(prefix):\n            prefix = prefix[:-1]\n            if not prefix:\n                return ''\n    return prefix\n\nprint(longest_common_prefix(['flower','flow','flight']))  # 'fl'",
+      "alt_solution": "def longest_common_prefix(strs):\n    if not strs:\n        return ''\n    # zip(*strs) pairs up characters at same positions\n    prefix = []\n    for chars in zip(*strs):\n        if len(set(chars)) == 1:\n            prefix.append(chars[0])\n        else:\n            break\n    return ''.join(prefix)",
+      "complexity": "Time: O(S) where S = total characters across all strings.\nSpace: O(1): only the prefix string stored.",
+      "followups": [
+        "How would you use binary search to solve this?",
+        "What if the list is very large: can you parallelize the comparison?",
+        "How does zip(*strs) work here?"
+      ]
+    },
+    {
+      "id": "cc_m02",
+      "difficulty": "medium",
+      "topic": "strings",
+      "title": "Valid Parentheses",
+      "statement": "Write a function that determines if a string containing only '(', ')', '{', '}', '[', ']' is valid. A string is valid if every opening bracket has a matching closing bracket in correct order.",
+      "input": "s = '({[]})'",
+      "output": "True",
+      "solution": "def is_valid(s):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for char in s:\n        if char in mapping:\n            top = stack.pop() if stack else '#'\n            if mapping[char] != top:\n                return False\n        else:\n            stack.append(char)\n    return not stack\n\nprint(is_valid('({[]})'))  # True\nprint(is_valid('([)]'))    # False",
+      "alt_solution": "# Without dict: using explicit checks:\ndef is_valid(s):\n    stack = []\n    for char in s:\n        if char in '([{':\n            stack.append(char)\n        elif not stack:\n            return False\n        elif char == ')' and stack[-1] != '(':\n            return False\n        elif char == ']' and stack[-1] != '[':\n            return False\n        elif char == '}' and stack[-1] != '{':\n            return False\n        else:\n            stack.pop()\n    return len(stack) == 0",
+      "complexity": "Time: O(n): one pass.\nSpace: O(n): stack can hold up to n/2 elements.",
+      "followups": [
+        "What data structure is used and why?",
+        "How would you find the position of the first unmatched bracket?",
+        "Can you solve this without a stack?"
+      ]
+    },
+    {
+      "id": "cc_m03",
+      "difficulty": "medium",
+      "topic": "dictionaries",
+      "title": "Group Anagrams",
+      "statement": "Given a list of strings, group all anagrams together and return a list of groups.",
+      "input": "words = ['eat','tea','tan','ate','nat','bat']",
+      "output": "[['eat','tea','ate'], ['tan','nat'], ['bat']]",
+      "solution": "from collections import defaultdict\n\ndef group_anagrams(words):\n    groups = defaultdict(list)\n    for word in words:\n        key = tuple(sorted(word))\n        groups[key].append(word)\n    return list(groups.values())\n\nprint(group_anagrams(['eat','tea','tan','ate','nat','bat']))",
+      "alt_solution": "# Using character count as key:\ndef group_anagrams(words):\n    groups = {}\n    for word in words:\n        count = [0] * 26\n        for c in word:\n            count[ord(c) - ord('a')] += 1\n        key = tuple(count)\n        groups.setdefault(key, []).append(word)\n    return list(groups.values())",
+      "complexity": "Sort key - Time: O(n * k log k) where k = avg word length.\nCount key - Time: O(n * k). Space: O(n * k).",
+      "followups": [
+        "Why use tuple(sorted(word)) as the key instead of sorted(word)?",
+        "What is defaultdict and how does it differ from a regular dict?",
+        "How would you scale this for millions of words?"
+      ]
+    },
+    {
+      "id": "cc_m04",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Maximum Subarray Sum (Kadane's Algorithm)",
+      "statement": "Find the contiguous subarray with the largest sum and return that sum.",
+      "input": "nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]",
+      "output": "6  (subarray [4, -1, 2, 1])",
+      "solution": "def max_subarray(nums):\n    max_sum = current_sum = nums[0]\n    for num in nums[1:]:\n        current_sum = max(num, current_sum + num)\n        max_sum = max(max_sum, current_sum)\n    return max_sum\n\nprint(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))  # 6",
+      "alt_solution": "# Divide and Conquer O(n log n): for reference:\ndef max_subarray_dc(nums):\n    def helper(l, r):\n        if l == r: return nums[l]\n        mid = (l + r) // 2\n        left = helper(l, mid)\n        right = helper(mid+1, r)\n        # Cross sum\n        ls = rs = float('-inf')\n        s = 0\n        for i in range(mid, l-1, -1):\n            s += nums[i]; ls = max(ls, s)\n        s = 0\n        for i in range(mid+1, r+1):\n            s += nums[i]; rs = max(rs, s)\n        return max(left, right, ls + rs)\n    return helper(0, len(nums)-1)",
+      "complexity": "Kadane's - Time: O(n), Space: O(1). Optimal solution.",
+      "followups": [
+        "Can you also return the start and end indices of the subarray?",
+        "What if all numbers are negative?",
+        "How does Kadane's algorithm work conceptually?"
+      ]
+    },
+    {
+      "id": "cc_m05",
+      "difficulty": "medium",
+      "topic": "dictionaries",
+      "title": "First Non-Repeating Character",
+      "statement": "Given a string, find the first character that does not repeat. Return the character or -1 if all repeat.",
+      "input": "s = 'leetcode'",
+      "output": "'l'",
+      "solution": "from collections import OrderedDict\n\ndef first_unique_char(s):\n    count = {}\n    for c in s:\n        count[c] = count.get(c, 0) + 1\n    for c in s:\n        if count[c] == 1:\n            return c\n    return -1\n\nprint(first_unique_char('leetcode'))  # 'l'\nprint(first_unique_char('aabb'))     # -1",
+      "alt_solution": "from collections import Counter\n\ndef first_unique_char(s):\n    count = Counter(s)\n    for i, c in enumerate(s):\n        if count[c] == 1:\n            return c  # return i for index\n    return -1",
+      "complexity": "Time: O(n): two passes.\nSpace: O(1): at most 26 keys (lowercase letters).",
+      "followups": [
+        "How do you find the first repeating character instead?",
+        "Can you do it in a single pass?",
+        "How would you handle Unicode characters?"
+      ]
+    },
+    {
+      "id": "cc_m06",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Rotate a List",
+      "statement": "Given a list and an integer k, rotate the list to the right by k positions.",
+      "input": "nums = [1, 2, 3, 4, 5], k = 2",
+      "output": "[4, 5, 1, 2, 3]",
+      "solution": "def rotate(nums, k):\n    n = len(nums)\n    k = k % n  # handle k > n\n    return nums[-k:] + nums[:-k]\n\nprint(rotate([1, 2, 3, 4, 5], 2))  # [4, 5, 1, 2, 3]",
+      "alt_solution": "# In-place reversal - O(1) space:\ndef rotate_inplace(nums, k):\n    n = len(nums)\n    k = k % n\n    def reverse(l, r):\n        while l < r:\n            nums[l], nums[r] = nums[r], nums[l]\n            l += 1; r -= 1\n    reverse(0, n-1)\n    reverse(0, k-1)\n    reverse(k, n-1)\n    return nums",
+      "complexity": "Slice approach - Time: O(n), Space: O(n).\nReversal approach - Time: O(n), Space: O(1).",
+      "followups": [
+        "Why do we take k % n?",
+        "How does the three-reversal trick work?",
+        "How would you rotate a list to the LEFT by k positions?"
+      ]
+    },
+    {
+      "id": "cc_m07",
+      "difficulty": "medium",
+      "topic": "dictionaries",
+      "title": "Longest Substring Without Repeating Characters",
+      "statement": "Given a string, find the length of the longest substring without repeating characters.",
+      "input": "s = 'abcabcbb'",
+      "output": "3  (substring 'abc')",
+      "solution": "def length_of_longest_substring(s):\n    char_index = {}\n    max_len = start = 0\n    for end, char in enumerate(s):\n        if char in char_index and char_index[char] >= start:\n            start = char_index[char] + 1\n        char_index[char] = end\n        max_len = max(max_len, end - start + 1)\n    return max_len\n\nprint(length_of_longest_substring('abcabcbb'))  # 3",
+      "alt_solution": "def length_of_longest_substring(s):\n    window = set()\n    left = max_len = 0\n    for right in range(len(s)):\n        while s[right] in window:\n            window.remove(s[left])\n            left += 1\n        window.add(s[right])\n        max_len = max(max_len, right - left + 1)\n    return max_len",
+      "complexity": "Time: O(n): sliding window, each char visited at most twice.\nSpace: O(min(m, n)): m = charset size.",
+      "followups": [
+        "What is the sliding window technique?",
+        "How would you also return the actual substring, not just its length?",
+        "How would you extend this to allow at most k repeating characters?"
+      ]
+    },
+    {
+      "id": "cc_m08",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Merge Two Sorted Lists",
+      "statement": "Given two sorted lists, merge them into one sorted list without using built-in sort.",
+      "input": "l1 = [1, 3, 5], l2 = [2, 4, 6]",
+      "output": "[1, 2, 3, 4, 5, 6]",
+      "solution": "def merge_sorted(l1, l2):\n    result = []\n    i = j = 0\n    while i < len(l1) and j < len(l2):\n        if l1[i] <= l2[j]:\n            result.append(l1[i]); i += 1\n        else:\n            result.append(l2[j]); j += 1\n    result.extend(l1[i:])\n    result.extend(l2[j:])\n    return result\n\nprint(merge_sorted([1,3,5],[2,4,6]))  # [1,2,3,4,5,6]",
+      "alt_solution": "import heapq\n\ndef merge_sorted(l1, l2):\n    return list(heapq.merge(l1, l2))\n\n# heapq.merge works efficiently for already-sorted iterables",
+      "complexity": "Time: O(m + n): one pass through both lists.\nSpace: O(m + n): merged result.",
+      "followups": [
+        "How would you merge k sorted lists?",
+        "What is heapq.merge() and when would you use it?",
+        "How is this related to the merge step in merge sort?"
+      ]
+    },
+    {
+      "id": "cc_m09",
+      "difficulty": "medium",
+      "topic": "functions",
+      "title": "Count Pairs with Given Sum",
+      "statement": "Given a list of integers and a target sum, return the count of all pairs that add up to the target.",
+      "input": "nums = [1, 5, 7, -1, 5], target = 6",
+      "output": "3  (pairs: (1,5), (7,-1), (1,5))",
+      "solution": "from collections import Counter\n\ndef count_pairs(nums, target):\n    count = 0\n    freq = Counter(nums)\n    for num in freq:\n        complement = target - num\n        if complement in freq:\n            if complement == num:\n                count += freq[num] * (freq[num] - 1) // 2\n            elif complement > num:\n                count += freq[num] * freq[complement]\n    return count\n\nprint(count_pairs([1, 5, 7, -1, 5], 6))  # 3",
+      "alt_solution": "def count_pairs(nums, target):\n    count = 0\n    seen = {}\n    for num in nums:\n        complement = target - num\n        if complement in seen:\n            count += seen[complement]\n        seen[num] = seen.get(num, 0) + 1\n    return count",
+      "complexity": "Time: O(n). Space: O(n).",
+      "followups": [
+        "How would you return the actual pairs instead of just count?",
+        "How would you handle negative numbers?",
+        "What if pairs must have distinct indices?"
+      ]
+    },
+    {
+      "id": "cc_m10",
+      "difficulty": "medium",
+      "topic": "oop",
+      "title": "Design a Stack",
+      "statement": "Implement a Stack class with push(), pop(), peek(), is_empty(), and size() methods.",
+      "input": "s = Stack()\ns.push(1); s.push(2); s.push(3)\ns.pop()  # 3\ns.peek() # 2",
+      "output": "Stack works correctly with LIFO behavior",
+      "solution": "class Stack:\n    def __init__(self):\n        self._data = []\n\n    def push(self, item):\n        self._data.append(item)\n\n    def pop(self):\n        if self.is_empty():\n            raise IndexError('Pop from empty stack')\n        return self._data.pop()\n\n    def peek(self):\n        if self.is_empty():\n            raise IndexError('Peek at empty stack')\n        return self._data[-1]\n\n    def is_empty(self):\n        return len(self._data) == 0\n\n    def size(self):\n        return len(self._data)\n\n    def __repr__(self):\n        return f'Stack({self._data})'\n\n# Test\ns = Stack()\ns.push(1); s.push(2); s.push(3)\nprint(s.pop())   # 3\nprint(s.peek())  # 2\nprint(s.size())  # 2",
+      "alt_solution": "from collections import deque\n\nclass Stack:\n    def __init__(self):\n        self._data = deque()\n    def push(self, item): self._data.append(item)\n    def pop(self):  return self._data.pop()\n    def peek(self): return self._data[-1]\n    def is_empty(self): return len(self._data) == 0\n    def size(self): return len(self._data)",
+      "complexity": "All operations: O(1) amortized.",
+      "followups": [
+        "What is the difference between a stack and a queue?",
+        "How would you implement a queue using two stacks?",
+        "What is collections.deque and why might you prefer it?"
+      ]
+    },
+    {
+      "id": "cc_m11",
+      "difficulty": "medium",
+      "topic": "functions",
+      "title": "Binary Search",
+      "statement": "Implement binary search to find the index of a target value in a sorted list. Return -1 if not found.",
+      "input": "nums = [1, 3, 5, 7, 9, 11], target = 7",
+      "output": "3",
+      "solution": "def binary_search(nums, target):\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        elif nums[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1\n\nprint(binary_search([1,3,5,7,9,11], 7))  # 3\nprint(binary_search([1,3,5,7,9,11], 4))  # -1",
+      "alt_solution": "import bisect\n\ndef binary_search(nums, target):\n    idx = bisect.bisect_left(nums, target)\n    if idx < len(nums) and nums[idx] == target:\n        return idx\n    return -1",
+      "complexity": "Time: O(log n): halves the search space each iteration.\nSpace: O(1): iterative.",
+      "followups": [
+        "Why use mid = left + (right-left)//2 instead of (left+right)//2?",
+        "How do you find the first or last occurrence of a target?",
+        "What is the bisect module?"
+      ]
+    },
+    {
+      "id": "cc_m12",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Move Zeros to End",
+      "statement": "Given a list of integers, move all zeros to the end while maintaining the relative order of non-zero elements. Do it in-place.",
+      "input": "nums = [0, 1, 0, 3, 12]",
+      "output": "[1, 3, 12, 0, 0]",
+      "solution": "def move_zeros(nums):\n    pos = 0  # position for next non-zero\n    for i in range(len(nums)):\n        if nums[i] != 0:\n            nums[pos] = nums[i]\n            pos += 1\n    for i in range(pos, len(nums)):\n        nums[i] = 0\n    return nums\n\nprint(move_zeros([0, 1, 0, 3, 12]))  # [1, 3, 12, 0, 0]",
+      "alt_solution": "def move_zeros(nums):\n    # Two-pointer swap\n    left = 0\n    for right in range(len(nums)):\n        if nums[right] != 0:\n            nums[left], nums[right] = nums[right], nums[left]\n            left += 1\n    return nums",
+      "complexity": "Time: O(n). Space: O(1): in-place.",
+      "followups": [
+        "How does the two-pointer technique work?",
+        "What if you need to move zeros to the beginning instead?",
+        "How would you move all negative numbers to the end?"
+      ]
+    },
+    {
+      "id": "cc_m13",
+      "difficulty": "medium",
+      "topic": "strings",
+      "title": "Roman to Integer",
+      "statement": "Convert a Roman numeral string to an integer. Roman numerals: I=1, V=5, X=10, L=50, C=100, D=500, M=1000.",
+      "input": "s = 'MCMXCIV'",
+      "output": "1994",
+      "solution": "def roman_to_int(s):\n    values = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}\n    result = 0\n    for i in range(len(s)):\n        if i + 1 < len(s) and values[s[i]] < values[s[i+1]]:\n            result -= values[s[i]]\n        else:\n            result += values[s[i]]\n    return result\n\nprint(roman_to_int('MCMXCIV'))  # 1994",
+      "alt_solution": "def roman_to_int(s):\n    values = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}\n    result = sum(\n        -values[s[i]] if i+1 < len(s) and values[s[i]] < values[s[i+1]]\n        else values[s[i]]\n        for i in range(len(s))\n    )\n    return result",
+      "complexity": "Time: O(n). Space: O(1): fixed-size mapping dict.",
+      "followups": [
+        "How do you convert an integer to a Roman numeral?",
+        "What is the subtractive notation rule in Roman numerals?",
+        "How would you validate a Roman numeral string?"
+      ]
+    },
+    {
+      "id": "cc_h01",
+      "difficulty": "hard",
+      "topic": "lists",
+      "title": "Trapping Rain Water",
+      "statement": "Given an array of non-negative integers representing heights of bars, compute the total water that can be trapped between bars after it rains.",
+      "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+      "output": "6",
+      "solution": "def trap(height):\n    if not height:\n        return 0\n    left, right = 0, len(height) - 1\n    left_max = right_max = water = 0\n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n    return water\n\nprint(trap([0,1,0,2,1,0,1,3,2,1,2,1]))  # 6",
+      "alt_solution": "# DP approach O(n) space:\ndef trap_dp(height):\n    n = len(height)\n    left_max  = [0]*n\n    right_max = [0]*n\n    left_max[0] = height[0]\n    for i in range(1, n):\n        left_max[i] = max(left_max[i-1], height[i])\n    right_max[n-1] = height[n-1]\n    for i in range(n-2, -1, -1):\n        right_max[i] = max(right_max[i+1], height[i])\n    return sum(min(left_max[i], right_max[i]) - height[i] for i in range(n))",
+      "complexity": "Two-pointer - Time: O(n), Space: O(1). Optimal.\nDP approach - Time: O(n), Space: O(n).",
+      "followups": [
+        "Why does the two-pointer approach work correctly?",
+        "How much water does each bar contribute?",
+        "What is the relationship between this problem and the container with most water problem?"
+      ]
+    },
+    {
+      "id": "cc_h02",
+      "difficulty": "hard",
+      "topic": "strings",
+      "title": "Longest Palindromic Substring",
+      "statement": "Given a string, return the longest palindromic substring.",
+      "input": "s = 'babad'",
+      "output": "'bab' (or 'aba')",
+      "solution": "def longest_palindrome(s):\n    result = ''\n    for i in range(len(s)):\n        # Odd length\n        odd = expand(s, i, i)\n        # Even length\n        even = expand(s, i, i+1)\n        if len(odd) > len(result):  result = odd\n        if len(even) > len(result): result = even\n    return result\n\ndef expand(s, left, right):\n    while left >= 0 and right < len(s) and s[left] == s[right]:\n        left -= 1\n        right += 1\n    return s[left+1:right]\n\nprint(longest_palindrome('babad'))  # bab",
+      "alt_solution": "# DP approach:\ndef longest_palindrome_dp(s):\n    n = len(s)\n    dp = [[False]*n for _ in range(n)]\n    start = max_len = 0\n    for i in range(n): dp[i][i] = True\n    for length in range(2, n+1):\n        for i in range(n - length + 1):\n            j = i + length - 1\n            if s[i] == s[j] and (length == 2 or dp[i+1][j-1]):\n                dp[i][j] = True\n                if length > max_len:\n                    start, max_len = i, length\n    return s[start:start+max_len]",
+      "complexity": "Expand from center - Time: O(n²), Space: O(1).\nDP - Time: O(n²), Space: O(n²).",
+      "followups": [
+        "What is Manacher's algorithm and what is its time complexity?",
+        "How do you count the number of palindromic substrings?",
+        "What is the difference between a substring and a subsequence?"
+      ]
+    },
+    {
+      "id": "cc_h03",
+      "difficulty": "hard",
+      "topic": "dictionaries",
+      "title": "LRU Cache",
+      "statement": "Design a data structure for a Least Recently Used (LRU) cache with get(key) and put(key, value) operations, both O(1). When capacity is exceeded, evict the least recently used item.",
+      "input": "cache = LRUCache(2)\ncache.put(1,1); cache.put(2,2)\ncache.get(1)    # 1\ncache.put(3,3)  # evicts key 2\ncache.get(2)    # -1 (not found)",
+      "output": "get(1)=1, get(2)=-1",
+      "solution": "from collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity):\n        self.cap = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key):\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)  # mark as recently used\n        return self.cache[key]\n\n    def put(self, key, value):\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.cap:\n            self.cache.popitem(last=False)  # evict LRU (front)",
+      "alt_solution": "# Manual doubly linked list + hashmap for true O(1):\nclass Node:\n    def __init__(self, k=0, v=0):\n        self.k, self.v = k, v\n        self.prev = self.next = None\n\nclass LRUCache:\n    def __init__(self, cap):\n        self.cap = cap\n        self.cache = {}\n        self.head, self.tail = Node(), Node()\n        self.head.next = self.tail\n        self.tail.prev = self.head\n\n    def _remove(self, node):\n        node.prev.next = node.next\n        node.next.prev = node.prev\n\n    def _insert(self, node):  # insert at tail\n        node.prev = self.tail.prev\n        node.next = self.tail\n        self.tail.prev.next = node\n        self.tail.prev = node\n\n    def get(self, key):\n        if key not in self.cache: return -1\n        self._remove(self.cache[key])\n        self._insert(self.cache[key])\n        return self.cache[key].v\n\n    def put(self, key, value):\n        if key in self.cache: self._remove(self.cache[key])\n        self.cache[key] = Node(key, value)\n        self._insert(self.cache[key])\n        if len(self.cache) > self.cap:\n            lru = self.head.next\n            self._remove(lru)\n            del self.cache[lru.k]",
+      "complexity": "OrderedDict approach: O(1) avg for get/put.\nLinked list approach: True O(1) for all operations.",
+      "followups": [
+        "What is OrderedDict.move_to_end()?",
+        "Why do we need a doubly linked list for true O(1)?",
+        "What is the difference between LRU and LFU cache?"
+      ]
+    },
+    {
+      "id": "cc_h04",
+      "difficulty": "hard",
+      "topic": "functions",
+      "title": "Generate All Permutations",
+      "statement": "Given a list of distinct integers, return all possible permutations.",
+      "input": "nums = [1, 2, 3]",
+      "output": "[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]",
+      "solution": "def permutations(nums):\n    result = []\n    def backtrack(current, remaining):\n        if not remaining:\n            result.append(current[:])\n            return\n        for i in range(len(remaining)):\n            current.append(remaining[i])\n            backtrack(current, remaining[:i] + remaining[i+1:])\n            current.pop()\n    backtrack([], nums)\n    return result\n\nprint(permutations([1,2,3]))",
+      "alt_solution": "from itertools import permutations as iperms\n\ndef permutations(nums):\n    return [list(p) for p in iperms(nums)]\n\n# Or using swap-based backtracking:\ndef permutations_swap(nums):\n    result = []\n    def backtrack(start):\n        if start == len(nums):\n            result.append(nums[:])\n            return\n        for i in range(start, len(nums)):\n            nums[start], nums[i] = nums[i], nums[start]\n            backtrack(start + 1)\n            nums[start], nums[i] = nums[i], nums[start]\n    backtrack(0)\n    return result",
+      "complexity": "Time: O(n * n!): n! permutations, each of length n.\nSpace: O(n) recursion depth + O(n * n!) for result.",
+      "followups": [
+        "What is backtracking?",
+        "How would you generate permutations with duplicate elements?",
+        "How does itertools.permutations() work internally?"
+      ]
+    },
+    {
+      "id": "cc_h05",
+      "difficulty": "hard",
+      "topic": "oop",
+      "title": "Implement a Singleton Pattern",
+      "statement": "Implement a Singleton class in Python that ensures only one instance of the class is ever created.",
+      "input": "a = Singleton()\nb = Singleton()\nprint(a is b)  # True",
+      "output": "True",
+      "solution": "class Singleton:\n    _instance = None\n\n    def __new__(cls, *args, **kwargs):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n        return cls._instance\n\n    def __init__(self, value=None):\n        self.value = value\n\na = Singleton(42)\nb = Singleton(99)\nprint(a is b)       # True\nprint(a.value)      # 99 (same object, overwritten by b init)",
+      "alt_solution": "# Using a decorator:\ndef singleton(cls):\n    instances = {}\n    def get_instance(*args, **kwargs):\n        if cls not in instances:\n            instances[cls] = cls(*args, **kwargs)\n        return instances[cls]\n    return get_instance\n\n@singleton\nclass MyService:\n    def __init__(self):\n        self.data = []\n\na = MyService(); b = MyService()\nprint(a is b)  # True",
+      "complexity": "Time: O(1) for instance creation check.\nSpace: O(1): only one instance stored.",
+      "followups": [
+        "Is the Singleton pattern thread-safe in Python?",
+        "What is __new__ vs __init__?",
+        "When would you use a Singleton? What are its drawbacks?"
+      ]
+    },
+    {
+      "id": "cc_h06",
+      "difficulty": "hard",
+      "topic": "functions",
+      "title": "Memoization with Decorator",
+      "statement": "Implement a memoize decorator that caches the results of a function based on its arguments to avoid redundant computation. Test with Fibonacci.",
+      "input": "fib(10)",
+      "output": "55",
+      "solution": "def memoize(fn):\n    cache = {}\n    def wrapper(*args):\n        if args not in cache:\n            cache[args] = fn(*args)\n        return cache[args]\n    return wrapper\n\n@memoize\ndef fib(n):\n    if n <= 1:\n        return n\n    return fib(n-1) + fib(n-2)\n\nprint(fib(10))  # 55\nprint(fib(50))  # Works fast: no recomputation",
+      "alt_solution": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fib(n):\n    if n <= 1:\n        return n\n    return fib(n-1) + fib(n-2)\n\n# lru_cache is the built-in memoization decorator\nprint(fib(10))  # 55",
+      "complexity": "Without memo: O(2^n). With memo: O(n): each subproblem solved once.\nSpace: O(n): cache + call stack.",
+      "followups": [
+        "What is functools.lru_cache?",
+        "How does the cache handle unhashable arguments?",
+        "What is the difference between memoization and dynamic programming?"
+      ]
+    },
+    {
+      "id": "cc_h07",
+      "difficulty": "hard",
+      "topic": "lists",
+      "title": "Product of Array Except Self",
+      "statement": "Given an array, return a new array where each element is the product of all elements except itself. Do not use division.",
+      "input": "nums = [1, 2, 3, 4]",
+      "output": "[24, 12, 8, 6]",
+      "solution": "def product_except_self(nums):\n    n = len(nums)\n    result = [1] * n\n    # Left pass: result[i] = product of all to the left\n    prefix = 1\n    for i in range(n):\n        result[i] = prefix\n        prefix *= nums[i]\n    # Right pass: multiply by product of all to the right\n    suffix = 1\n    for i in range(n-1, -1, -1):\n        result[i] *= suffix\n        suffix *= nums[i]\n    return result\n\nprint(product_except_self([1,2,3,4]))  # [24, 12, 8, 6]",
+      "alt_solution": "# With division (not allowed but for reference):\ndef product_division(nums):\n    from math import prod\n    total = prod(nums)\n    return [total // n for n in nums]  # Breaks with zeros",
+      "complexity": "Time: O(n): two passes.\nSpace: O(1) extra (output array doesn't count).",
+      "followups": [
+        "Why is division not allowed and what edge case does it cause?",
+        "How would you handle zeros in the array?",
+        "Can you solve it in a single pass?"
+      ]
+    },
+    {
+      "id": "cc_h08",
+      "difficulty": "hard",
+      "topic": "strings",
+      "title": "Word Break Problem",
+      "statement": "Given a string s and a list of words (dictionary), return True if s can be segmented into space-separated words all present in the dictionary.",
+      "input": "s = 'leetcode', wordDict = ['leet','code']",
+      "output": "True",
+      "solution": "def word_break(s, wordDict):\n    word_set = set(wordDict)\n    n = len(s)\n    dp = [False] * (n + 1)\n    dp[0] = True  # empty string is always valid\n    for i in range(1, n + 1):\n        for j in range(i):\n            if dp[j] and s[j:i] in word_set:\n                dp[i] = True\n                break\n    return dp[n]\n\nprint(word_break('leetcode', ['leet','code']))        # True\nprint(word_break('applepenapple', ['apple','pen']))   # True\nprint(word_break('catsandog', ['cats','dog','sand'])) # False",
+      "alt_solution": "from functools import lru_cache\n\ndef word_break(s, wordDict):\n    word_set = set(wordDict)\n    @lru_cache(maxsize=None)\n    def dp(start):\n        if start == len(s): return True\n        for end in range(start+1, len(s)+1):\n            if s[start:end] in word_set and dp(end):\n                return True\n        return False\n    return dp(0)",
+      "complexity": "Time: O(n²): n² substrings, each O(n) check → O(n³) naive, O(n²) with set.\nSpace: O(n) dp array.",
+      "followups": [
+        "How does dynamic programming differ from recursion here?",
+        "How would you return all possible segmentations?",
+        "What if words can be reused?"
+      ]
+    },
+    {
+      "id": "cc_e13",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Find the Second Largest Number",
+      "statement": "Write a function that finds the second largest number in a list of integers without sorting.",
+      "input": "nums = [10, 5, 8, 20, 3]",
+      "output": "10",
+      "solution": "def second_largest(nums):\n    first = second = float('-inf')\n    for n in nums:\n        if n > first:\n            second = first\n            first = n\n        elif first > n > second:\n            second = n\n    return second\n\nprint(second_largest([10, 5, 8, 20, 3]))  # 10",
+      "alt_solution": "def second_largest_sorted(nums):\n    unique = sorted(set(nums), reverse=True)\n    return unique[1] if len(unique) > 1 else None\n\n# Simpler but O(n log n) instead of O(n)",
+      "complexity": "Time: O(n) for the single-pass solution, O(n log n) for the sorted approach.\nSpace: O(1) for single-pass, O(n) for sorted (creates new list).",
+      "followups": [
+        "What if the list has duplicates of the largest value?",
+        "How would you find the Kth largest element?",
+        "Can you do this without using sorted()?"
+      ]
+    },
+    {
+      "id": "cc_e14",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Count Character Frequency",
+      "statement": "Write a function that counts the frequency of each character in a string and returns a dictionary.",
+      "input": "s = 'hello'",
+      "output": "{'h': 1, 'e': 1, 'l': 2, 'o': 1}",
+      "solution": "def char_frequency(s):\n    freq = {}\n    for char in s:\n        freq[char] = freq.get(char, 0) + 1\n    return freq\n\nprint(char_frequency('hello'))",
+      "alt_solution": "from collections import Counter\n\ndef char_frequency_counter(s):\n    return dict(Counter(s))\n\n# Counter is the idiomatic Python way to count frequencies",
+      "complexity": "Time: O(n) where n is string length.\nSpace: O(k) where k is number of unique characters.",
+      "followups": [
+        "How would you find the most common character?",
+        "What is collections.Counter?",
+        "How would you ignore case (treat 'H' and 'h' as same)?"
+      ]
+    },
+    {
+      "id": "cc_e15",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Check if List is Sorted",
+      "statement": "Write a function that checks whether a list of numbers is sorted in ascending order.",
+      "input": "nums = [1, 2, 3, 4, 5]",
+      "output": "True",
+      "solution": "def is_sorted(nums):\n    for i in range(len(nums) - 1):\n        if nums[i] > nums[i+1]:\n            return False\n    return True\n\nprint(is_sorted([1, 2, 3, 4, 5]))  # True",
+      "alt_solution": "def is_sorted_pythonic(nums):\n    return all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n\n# Or compare with sorted version (less efficient):\ndef is_sorted_v2(nums):\n    return nums == sorted(nums)",
+      "complexity": "Time: O(n) for the loop approach. O(n log n) for the sorted() comparison approach.\nSpace: O(1) for loop, O(n) for sorted comparison.",
+      "followups": [
+        "How would you check descending order?",
+        "Can you make this work for any comparable type?",
+        "What edge cases should you handle (empty list, single element)?"
+      ]
+    },
+    {
+      "id": "cc_e16",
+      "difficulty": "easy",
+      "topic": "sets",
+      "title": "Find Common Elements in Two Lists",
+      "statement": "Write a function that returns the common elements between two lists, with no duplicates.",
+      "input": "a = [1, 2, 3, 4]\nb = [3, 4, 5, 6]",
+      "output": "{3, 4}",
+      "solution": "def common_elements(a, b):\n    return set(a) & set(b)\n\nprint(common_elements([1,2,3,4], [3,4,5,6]))  # {3, 4}",
+      "alt_solution": "def common_elements_list(a, b):\n    set_b = set(b)\n    return [x for x in set(a) if x in set_b]\n\n# Returns a list with no duplicates, order not guaranteed",
+      "complexity": "Time: O(n + m) where n, m are the lengths of the two lists.\nSpace: O(n + m) for the sets.",
+      "followups": [
+        "How is this different from comparing with nested loops?",
+        "What is the time complexity of nested loop comparison?",
+        "How would you preserve the original order?"
+      ]
+    },
+    {
+      "id": "cc_e17",
+      "difficulty": "easy",
+      "topic": "tuples",
+      "title": "Swap Two Variables Without a Temp",
+      "statement": "Write code that swaps the values of two variables without using a temporary variable.",
+      "input": "a = 5\nb = 10",
+      "output": "a = 10, b = 5",
+      "solution": "a, b = 5, 10\na, b = b, a\nprint(f'a = {a}, b = {b}')  # a = 10, b = 5",
+      "alt_solution": "# Arithmetic trick (works only for numbers, not recommended):\na = a + b\nb = a - b\na = a - b\n\n# Python's tuple unpacking swap is the idiomatic approach",
+      "complexity": "Time: O(1).\nSpace: O(1) - Python creates a temporary tuple internally but it is constant size.",
+      "followups": [
+        "How does Python implement a, b = b, a internally?",
+        "Can you swap elements within a list this way?",
+        "Would this work for swapping three variables in a cycle?"
+      ]
+    },
+    {
+      "id": "cc_e18",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Capitalize Each Word in a Sentence",
+      "statement": "Write a function that capitalizes the first letter of each word in a sentence.",
+      "input": "s = 'the quick brown fox'",
+      "output": "'The Quick Brown Fox'",
+      "solution": "def capitalize_words(s):\n    return ' '.join(word.capitalize() for word in s.split())\n\nprint(capitalize_words('the quick brown fox'))",
+      "alt_solution": "def capitalize_words_builtin(s):\n    return s.title()\n\n# Note: .title() also capitalizes letters after apostrophes,\n# e.g. \"don't\" becomes \"Don'T\" which can be wrong",
+      "complexity": "Time: O(n) where n is the length of the string.\nSpace: O(n) for the result string.",
+      "followups": [
+        "What is the difference between .capitalize() and .title()?",
+        "How would you handle multiple spaces between words?",
+        "What happens with .title() on words containing apostrophes?"
+      ]
+    },
+    {
+      "id": "cc_e19",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Find Missing Number in a Sequence",
+      "statement": "Given a list containing n distinct numbers from 0 to n, find the one number missing from the list.",
+      "input": "nums = [3, 0, 1]",
+      "output": "2",
+      "solution": "def find_missing(nums):\n    n = len(nums)\n    expected_sum = n * (n + 1) // 2\n    actual_sum = sum(nums)\n    return expected_sum - actual_sum\n\nprint(find_missing([3, 0, 1]))  # 2",
+      "alt_solution": "def find_missing_xor(nums):\n    result = len(nums)\n    for i, num in enumerate(nums):\n        result ^= i ^ num\n    return result\n\n# XOR approach avoids potential integer overflow in other languages",
+      "complexity": "Time: O(n) for both approaches.\nSpace: O(1): only a few variables used.",
+      "followups": [
+        "What if there are multiple missing numbers?",
+        "How does the XOR approach work?",
+        "Can you solve this using set difference?"
+      ]
+    },
+    {
+      "id": "cc_e20",
+      "difficulty": "easy",
+      "topic": "dictionaries",
+      "title": "Merge Two Dictionaries",
+      "statement": "Write a function that merges two dictionaries. If a key exists in both, the second dictionary's value should be used.",
+      "input": "d1 = {'a': 1, 'b': 2}\nd2 = {'b': 3, 'c': 4}",
+      "output": "{'a': 1, 'b': 3, 'c': 4}",
+      "solution": "def merge_dicts(d1, d2):\n    return {**d1, **d2}\n\nprint(merge_dicts({'a':1,'b':2}, {'b':3,'c':4}))",
+      "alt_solution": "def merge_dicts_py39(d1, d2):\n    return d1 | d2  # Python 3.9+ merge operator\n\ndef merge_dicts_update(d1, d2):\n    result = d1.copy()\n    result.update(d2)\n    return result",
+      "complexity": "Time: O(n + m) where n, m are the sizes of the dictionaries.\nSpace: O(n + m) for the new merged dict.",
+      "followups": [
+        "What is the | operator for dicts?",
+        "How would you merge and sum values for matching keys instead of overwriting?",
+        "What happens to nested dicts when merged this way?"
+      ]
+    },
+    {
+      "id": "cc_e21",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Chunk a List into Groups",
+      "statement": "Write a function that splits a list into chunks of a given size.",
+      "input": "lst = [1,2,3,4,5,6,7]\nsize = 3",
+      "output": "[[1,2,3], [4,5,6], [7]]",
+      "solution": "def chunk_list(lst, size):\n    return [lst[i:i+size] for i in range(0, len(lst), size)]\n\nprint(chunk_list([1,2,3,4,5,6,7], 3))",
+      "alt_solution": "def chunk_list_gen(lst, size):\n    for i in range(0, len(lst), size):\n        yield lst[i:i+size]\n\n# Generator version is more memory-efficient for large lists",
+      "complexity": "Time: O(n) where n is the list length.\nSpace: O(n) for the list comprehension version, O(1) extra for the generator (excluding output).",
+      "followups": [
+        "How would you pad the last chunk to be the same size?",
+        "What is the advantage of the generator version?",
+        "How would you chunk a string instead of a list?"
+      ]
+    },
+    {
+      "id": "cc_e22",
+      "difficulty": "easy",
+      "topic": "recursion",
+      "title": "Sum of Digits",
+      "statement": "Write a recursive function that returns the sum of digits of a positive integer.",
+      "input": "n = 12345",
+      "output": "15",
+      "solution": "def sum_of_digits(n):\n    if n < 10:\n        return n\n    return n % 10 + sum_of_digits(n // 10)\n\nprint(sum_of_digits(12345))  # 15",
+      "alt_solution": "def sum_of_digits_iterative(n):\n    total = 0\n    while n > 0:\n        total += n % 10\n        n //= 10\n    return total\n\n# Iterative avoids recursion depth limits for very large numbers",
+      "complexity": "Time: O(d) where d is the number of digits.\nSpace: O(d) for recursion (call stack), O(1) for iterative.",
+      "followups": [
+        "What is the base case here?",
+        "How would you sum digits until you get a single digit (digital root)?",
+        "Why might the iterative version be preferred for production code?"
+      ]
+    },
+    {
+      "id": "cc_e23",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Check if Two Strings are Anagrams (Case Insensitive)",
+      "statement": "Write a function that checks if two strings are anagrams, ignoring case and spaces.",
+      "input": "s1 = 'Listen'\ns2 = 'Silent'",
+      "output": "True",
+      "solution": "def is_anagram(s1, s2):\n    clean = lambda s: sorted(s.lower().replace(' ', ''))\n    return clean(s1) == clean(s2)\n\nprint(is_anagram('Listen', 'Silent'))  # True",
+      "alt_solution": "from collections import Counter\n\ndef is_anagram_counter(s1, s2):\n    clean = lambda s: s.lower().replace(' ', '')\n    return Counter(clean(s1)) == Counter(clean(s2))\n\n# Counter comparison avoids sorting overhead",
+      "complexity": "Time: O(n log n) for sorted approach, O(n) for Counter approach.\nSpace: O(n) for both.",
+      "followups": [
+        "What is the time complexity advantage of Counter over sorted()?",
+        "How would you handle punctuation in the strings?",
+        "Can you solve this with a single pass and no extra data structure?"
+      ]
+    },
+    {
+      "id": "cc_e24",
+      "difficulty": "easy",
+      "topic": "lists",
+      "title": "Rotate a List by K Positions",
+      "statement": "Write a function that rotates a list to the right by k positions.",
+      "input": "nums = [1,2,3,4,5]\nk = 2",
+      "output": "[4,5,1,2,3]",
+      "solution": "def rotate_list(nums, k):\n    k = k % len(nums)\n    return nums[-k:] + nums[:-k] if k != 0 else nums\n\nprint(rotate_list([1,2,3,4,5], 2))  # [4,5,1,2,3]",
+      "alt_solution": "def rotate_list_inplace(nums, k):\n    k = k % len(nums)\n    nums[:] = nums[-k:] + nums[:-k]\n\n# Modifies the list in-place instead of returning a new one",
+      "complexity": "Time: O(n) for slicing and concatenation.\nSpace: O(n) for the new list.",
+      "followups": [
+        "Why do we use k % len(nums)?",
+        "How would you rotate left instead of right?",
+        "Can you rotate the list in-place with O(1) extra space?"
+      ]
+    },
+    {
+      "id": "cc_e25",
+      "difficulty": "easy",
+      "topic": "sets",
+      "title": "Check if List Has Duplicates",
+      "statement": "Write a function that checks if a list contains any duplicate elements.",
+      "input": "nums = [1, 2, 3, 4]",
+      "output": "False",
+      "solution": "def has_duplicates(nums):\n    return len(nums) != len(set(nums))\n\nprint(has_duplicates([1, 2, 3, 4]))  # False\nprint(has_duplicates([1, 2, 2, 4]))  # True",
+      "alt_solution": "def has_duplicates_set(nums):\n    seen = set()\n    for n in nums:\n        if n in seen:\n            return True\n        seen.add(n)\n    return False\n\n# Stops early as soon as a duplicate is found",
+      "complexity": "Time: O(n) for both approaches.\nSpace: O(n) for the set.",
+      "followups": [
+        "Which approach is more efficient when a duplicate appears early?",
+        "How would you find WHICH elements are duplicated?",
+        "Can you solve this with O(1) space if the list is sorted?"
+      ]
+    },
+    {
+      "id": "cc_e26",
+      "difficulty": "easy",
+      "topic": "functions",
+      "title": "Check if a Number is Prime",
+      "statement": "Write a function that checks whether a given positive integer is a prime number.",
+      "input": "n = 17",
+      "output": "True",
+      "solution": "def is_prime(n):\n    if n < 2:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nprint(is_prime(17))  # True",
+      "alt_solution": "def is_prime_optimized(n):\n    if n < 2:\n        return False\n    if n in (2, 3):\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\n# Skips even numbers after checking 2 and 3: roughly 3x faster",
+      "complexity": "Time: O(sqrt(n)): only checking up to the square root is necessary.\nSpace: O(1).",
+      "followups": [
+        "Why do we only check up to sqrt(n)?",
+        "How would you find all primes up to N (Sieve of Eratosthenes)?",
+        "What is the time complexity of the Sieve of Eratosthenes?"
+      ]
+    },
+    {
+      "id": "cc_e27",
+      "difficulty": "easy",
+      "topic": "strings",
+      "title": "Remove All Duplicate Characters from a String",
+      "statement": "Write a function that removes duplicate characters from a string, keeping only the first occurrence of each.",
+      "input": "s = 'programming'",
+      "output": "'progamin'",
+      "solution": "def remove_duplicates(s):\n    seen = set()\n    result = []\n    for char in s:\n        if char not in seen:\n            seen.add(char)\n            result.append(char)\n    return ''.join(result)\n\nprint(remove_duplicates('programming'))  # 'progamin'",
+      "alt_solution": "def remove_duplicates_dict(s):\n    # dict.fromkeys preserves insertion order (Python 3.7+) and removes dupes\n    return ''.join(dict.fromkeys(s))\n\n# More concise one-liner using dict's order-preserving deduplication",
+      "complexity": "Time: O(n) where n is the string length.\nSpace: O(k) where k is the number of unique characters.",
+      "followups": [
+        "How does dict.fromkeys() preserve order while removing duplicates?",
+        "How would you keep the LAST occurrence instead of the first?",
+        "Can you solve this without using extra data structures?"
+      ]
+    },
+    {
+      "id": "cc_m13_2",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Find All Pairs with a Given Difference",
+      "statement": "Given a list of integers and a target difference k, find all pairs (a, b) such that a - b = k.",
+      "input": "nums = [1, 5, 3, 4, 2]\nk = 2",
+      "output": "[(3, 1), (5, 3), (4, 2)]",
+      "solution": "def pairs_with_diff(nums, k):\n    seen = set(nums)\n    result = []\n    for num in nums:\n        if num + k in seen:\n            result.append((num + k, num))\n    return result\n\nprint(pairs_with_diff([1,5,3,4,2], 2))",
+      "alt_solution": "def pairs_with_diff_sorted(nums, k):\n    nums = sorted(nums)\n    left, right = 0, 1\n    result = []\n    while right < len(nums):\n        diff = nums[right] - nums[left]\n        if diff == k:\n            result.append((nums[right], nums[left]))\n            left += 1; right += 1\n        elif diff < k:\n            right += 1\n        else:\n            left += 1\n    return result",
+      "complexity": "Time: O(n) for the set-based approach, O(n log n) for sorted two-pointer.\nSpace: O(n) for the set.",
+      "followups": [
+        "How would this change if k could be negative?",
+        "What if duplicates need to be handled differently?",
+        "Why is the two-pointer approach O(n log n) instead of O(n)?"
+      ]
+    },
+    {
+      "id": "cc_m14",
+      "difficulty": "medium",
+      "topic": "strings",
+      "title": "Implement String Compression",
+      "statement": "Write a function that compresses a string using counts of repeated characters. \"aabcccccaaa\" becomes \"a2b1c5a3\". If the compressed string is not shorter, return the original.",
+      "input": "s = 'aabcccccaaa'",
+      "output": "'a2b1c5a3'",
+      "solution": "def compress(s):\n    if not s:\n        return s\n    result = []\n    count = 1\n    for i in range(1, len(s) + 1):\n        if i < len(s) and s[i] == s[i-1]:\n            count += 1\n        else:\n            result.append(s[i-1] + str(count))\n            count = 1\n    compressed = ''.join(result)\n    return compressed if len(compressed) < len(s) else s\n\nprint(compress('aabcccccaaa'))  # 'a2b1c5a3'",
+      "alt_solution": "from itertools import groupby\n\ndef compress_groupby(s):\n    compressed = ''.join(f'{char}{len(list(group))}' for char, group in groupby(s))\n    return compressed if len(compressed) < len(s) else s\n\n# itertools.groupby groups consecutive identical elements",
+      "complexity": "Time: O(n) where n is the string length.\nSpace: O(n) for the result string.",
+      "followups": [
+        "What is itertools.groupby and how does it work?",
+        "How would you handle the edge case of a single character string?",
+        "What if the count is more than 9 (multi-digit)?"
+      ]
+    },
+    {
+      "id": "cc_m15",
+      "difficulty": "medium",
+      "topic": "dictionaries",
+      "title": "Find the Top K Frequent Elements",
+      "statement": "Given a list of integers, return the k most frequently occurring elements.",
+      "input": "nums = [1,1,1,2,2,3]\nk = 2",
+      "output": "[1, 2]",
+      "solution": "from collections import Counter\n\ndef top_k_frequent(nums, k):\n    counts = Counter(nums)\n    return [item for item, _ in counts.most_common(k)]\n\nprint(top_k_frequent([1,1,1,2,2,3], 2))  # [1, 2]",
+      "alt_solution": "import heapq\nfrom collections import Counter\n\ndef top_k_frequent_heap(nums, k):\n    counts = Counter(nums)\n    return heapq.nlargest(k, counts.keys(), key=counts.get)\n\n# heapq.nlargest is O(n log k), better when k is much smaller than n",
+      "complexity": "Time: O(n log n) for most_common, O(n log k) for heap approach.\nSpace: O(n) for the Counter.",
+      "followups": [
+        "What is the time complexity advantage of heapq.nlargest when k is small?",
+        "How would you solve this with O(n) time using bucket sort?",
+        "What does Counter.most_common() return without an argument?"
+      ]
+    },
+    {
+      "id": "cc_m16",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Implement Binary Search on a Rotated Sorted Array",
+      "statement": "Given a sorted array that has been rotated at an unknown pivot, find the index of a target value, or -1 if not found.",
+      "input": "nums = [4,5,6,7,0,1,2]\ntarget = 0",
+      "output": "4",
+      "solution": "def search_rotated(nums, target):\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[left] <= nums[mid]:\n            if nums[left] <= target < nums[mid]:\n                right = mid - 1\n            else:\n                left = mid + 1\n        else:\n            if nums[mid] < target <= nums[right]:\n                left = mid + 1\n            else:\n                right = mid - 1\n    return -1\n\nprint(search_rotated([4,5,6,7,0,1,2], 0))  # 4",
+      "alt_solution": "def search_rotated_simple(nums, target):\n    try:\n        return nums.index(target)\n    except ValueError:\n        return -1\n\n# Simpler but O(n), defeats the purpose of binary search efficiency",
+      "complexity": "Time: O(log n) for the binary search approach, O(n) for the simple approach.\nSpace: O(1).",
+      "followups": [
+        "Why do we check nums[left] <= nums[mid] to determine which half is sorted?",
+        "How would you handle duplicate values in the array?",
+        "What is the time complexity if the array has many duplicates?"
+      ]
+    },
+    {
+      "id": "cc_m17",
+      "difficulty": "medium",
+      "topic": "strings",
+      "title": "Check if a String Can Be Rearranged into a Palindrome",
+      "statement": "Write a function that checks if the characters of a string can be rearranged to form a palindrome.",
+      "input": "s = 'aabbcc'",
+      "output": "True",
+      "solution": "from collections import Counter\n\ndef can_form_palindrome(s):\n    counts = Counter(s)\n    odd_count = sum(1 for c in counts.values() if c % 2 != 0)\n    return odd_count <= 1\n\nprint(can_form_palindrome('aabbcc'))  # True",
+      "alt_solution": "def can_form_palindrome_set(s):\n    char_set = set()\n    for char in s:\n        if char in char_set:\n            char_set.remove(char)\n        else:\n            char_set.add(char)\n    return len(char_set) <= 1\n\n# Uses a set as a toggle: even counts cancel out, leaving only odd-count chars",
+      "complexity": "Time: O(n) for both approaches.\nSpace: O(k) where k is the number of unique characters.",
+      "followups": [
+        "Why can at most one character have an odd count?",
+        "How would you actually construct one valid palindrome arrangement?",
+        "Does this work for strings with spaces and punctuation?"
+      ]
+    },
+    {
+      "id": "cc_m18",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Find the Intersection of Two Sorted Arrays",
+      "statement": "Given two sorted arrays, find their intersection (common elements) efficiently using two pointers.",
+      "input": "a = [1,2,4,5,6]\nb = [2,3,5,7]",
+      "output": "[2, 5]",
+      "solution": "def intersection(a, b):\n    i, j = 0, 0\n    result = []\n    while i < len(a) and j < len(b):\n        if a[i] == b[j]:\n            result.append(a[i])\n            i += 1; j += 1\n        elif a[i] < b[j]:\n            i += 1\n        else:\n            j += 1\n    return result\n\nprint(intersection([1,2,4,5,6], [2,3,5,7]))  # [2, 5]",
+      "alt_solution": "def intersection_set(a, b):\n    return sorted(set(a) & set(b))\n\n# Simpler with sets, but doesn't take advantage of the inputs already being sorted",
+      "complexity": "Time: O(n + m) for the two-pointer approach since arrays are pre-sorted.\nSpace: O(min(n, m)) for the result.",
+      "followups": [
+        "Why is the two-pointer approach better than the set approach here?",
+        "How would this change if the arrays were not sorted?",
+        "How would you handle duplicate elements in the intersection?"
+      ]
+    },
+    {
+      "id": "cc_m19",
+      "difficulty": "medium",
+      "topic": "recursion",
+      "title": "Implement Power Function (Fast Exponentiation)",
+      "statement": "Implement a function that computes x raised to the power n in O(log n) time instead of O(n).",
+      "input": "x = 2, n = 10",
+      "output": "1024",
+      "solution": "def fast_power(x, n):\n    if n == 0:\n        return 1\n    if n < 0:\n        return 1 / fast_power(x, -n)\n    half = fast_power(x, n // 2)\n    if n % 2 == 0:\n        return half * half\n    return half * half * x\n\nprint(fast_power(2, 10))  # 1024",
+      "alt_solution": "def fast_power_iterative(x, n):\n    result = 1\n    if n < 0:\n        x = 1 / x\n        n = -n\n    while n > 0:\n        if n % 2 == 1:\n            result *= x\n        x *= x\n        n //= 2\n    return result\n\n# Iterative version avoids recursion overhead",
+      "complexity": "Time: O(log n) for both approaches, versus O(n) for naive repeated multiplication.\nSpace: O(log n) for recursion (call stack), O(1) for iterative.",
+      "followups": [
+        "Why is this called fast exponentiation or exponentiation by squaring?",
+        "How does Python's built-in pow() function compare?",
+        "Can you use this technique for matrix exponentiation?"
+      ]
+    },
+    {
+      "id": "cc_m20",
+      "difficulty": "medium",
+      "topic": "dictionaries",
+      "title": "Find All Anagram Groups in a List",
+      "statement": "Given a list of words, group them into sets of anagrams.",
+      "input": "words = ['eat', 'tea', 'tan', 'ate', 'nat', 'bat']",
+      "output": "[['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]",
+      "solution": "from collections import defaultdict\n\ndef group_anagrams(words):\n    groups = defaultdict(list)\n    for word in words:\n        key = ''.join(sorted(word))\n        groups[key].append(word)\n    return list(groups.values())\n\nprint(group_anagrams(['eat','tea','tan','ate','nat','bat']))",
+      "alt_solution": "from collections import defaultdict\n\ndef group_anagrams_count(words):\n    groups = defaultdict(list)\n    for word in words:\n        key = tuple(sorted(word))  # could also use a 26-length count tuple\n        groups[key].append(word)\n    return list(groups.values())\n\n# Using a character-count tuple as key avoids O(k log k) sorting per word",
+      "complexity": "Time: O(n * k log k) where n is number of words, k is max word length.\nSpace: O(n * k) for storing all groups.",
+      "followups": [
+        "Why is sorted(word) used as the dictionary key?",
+        "How would you make this O(n*k) instead of O(n*k log k)?",
+        "What does defaultdict(list) do differently from a regular dict?"
+      ]
+    },
+    {
+      "id": "cc_m21",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Find the Majority Element",
+      "statement": "Given a list, find the element that appears more than n/2 times (the majority element). Assume it always exists.",
+      "input": "nums = [2, 2, 1, 1, 1, 2, 2]",
+      "output": "2",
+      "solution": "def majority_element(nums):\n    count = 0\n    candidate = None\n    for num in nums:\n        if count == 0:\n            candidate = num\n        count += 1 if num == candidate else -1\n    return candidate\n\nprint(majority_element([2,2,1,1,1,2,2]))  # 2",
+      "alt_solution": "from collections import Counter\n\ndef majority_element_counter(nums):\n    counts = Counter(nums)\n    return counts.most_common(1)[0][0]\n\n# Simpler but uses O(n) extra space; Boyer-Moore uses O(1) space",
+      "complexity": "Time: O(n) for both approaches.\nSpace: O(1) for Boyer-Moore voting, O(n) for Counter.",
+      "followups": [
+        "What is the Boyer-Moore Voting Algorithm and why does it work?",
+        "What happens if no element appears more than n/2 times?",
+        "How would you find elements appearing more than n/3 times?"
+      ]
+    },
+    {
+      "id": "cc_m22",
+      "difficulty": "medium",
+      "topic": "strings",
+      "title": "Implement a Basic Run-Length Decoder",
+      "statement": "Given a run-length encoded string like \"a3b2c1\", decode it back to \"aaabbc\".",
+      "input": "s = 'a3b2c1'",
+      "output": "'aaabbc'",
+      "solution": "import re\n\ndef decode_rle(s):\n    result = []\n    for char, count in re.findall(r'([a-zA-Z])(\\d+)', s):\n        result.append(char * int(count))\n    return ''.join(result)\n\nprint(decode_rle('a3b2c1'))  # 'aaabbc'",
+      "alt_solution": "def decode_rle_manual(s):\n    result = []\n    i = 0\n    while i < len(s):\n        char = s[i]\n        i += 1\n        num_str = ''\n        while i < len(s) and s[i].isdigit():\n            num_str += s[i]\n            i += 1\n        result.append(char * int(num_str))\n    return ''.join(result)\n\n# Manual parsing without regex",
+      "complexity": "Time: O(n) where n is the length of the decoded output.\nSpace: O(n) for the result.",
+      "followups": [
+        "What is the regex pattern doing in the first solution?",
+        "How would you handle multi-digit counts like 'a12'?",
+        "What if the input format is invalid?"
+      ]
+    },
+    {
+      "id": "cc_m23",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Find All Triplets That Sum to Zero",
+      "statement": "Given a list of integers, find all unique triplets that sum to zero.",
+      "input": "nums = [-1, 0, 1, 2, -1, -4]",
+      "output": "[[-1, -1, 2], [-1, 0, 1]]",
+      "solution": "def three_sum(nums):\n    nums.sort()\n    result = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i-1]:\n            continue\n        left, right = i + 1, len(nums) - 1\n        while left < right:\n            total = nums[i] + nums[left] + nums[right]\n            if total == 0:\n                result.append([nums[i], nums[left], nums[right]])\n                while left < right and nums[left] == nums[left+1]:\n                    left += 1\n                while left < right and nums[right] == nums[right-1]:\n                    right -= 1\n                left += 1; right -= 1\n            elif total < 0:\n                left += 1\n            else:\n                right -= 1\n    return result\n\nprint(three_sum([-1,0,1,2,-1,-4]))",
+      "alt_solution": "def three_sum_set(nums):\n    nums.sort()\n    result = set()\n    for i in range(len(nums)):\n        seen = set()\n        for j in range(i+1, len(nums)):\n            complement = -nums[i] - nums[j]\n            if complement in seen:\n                result.add(tuple(sorted([nums[i], nums[j], complement])))\n            seen.add(nums[j])\n    return [list(t) for t in result]",
+      "complexity": "Time: O(n²) for the two-pointer approach (sorting is O(n log n), nested loop is O(n²)).\nSpace: O(n) for sorting and result storage.",
+      "followups": [
+        "Why do we sort the array first?",
+        "How do we avoid duplicate triplets in the result?",
+        "How would you extend this to find quadruplets that sum to zero?"
+      ]
+    },
+    {
+      "id": "cc_m24",
+      "difficulty": "medium",
+      "topic": "dictionaries",
+      "title": "Implement a Simple LFU Cache Counter",
+      "statement": "Implement a cache that tracks access frequency for each key and can report the least frequently used key.",
+      "input": "cache = LFUTracker()\ncache.access('a')\ncache.access('b')\ncache.access('a')",
+      "output": "least_frequent() returns 'b'",
+      "solution": "from collections import Counter\n\nclass LFUTracker:\n    def __init__(self):\n        self.counts = Counter()\n    \n    def access(self, key):\n        self.counts[key] += 1\n    \n    def least_frequent(self):\n        if not self.counts:\n            return None\n        return min(self.counts, key=self.counts.get)\n\ncache = LFUTracker()\ncache.access('a'); cache.access('b'); cache.access('a')\nprint(cache.least_frequent())  # 'b'",
+      "alt_solution": "class LFUTrackerManual:\n    def __init__(self):\n        self.counts = {}\n    \n    def access(self, key):\n        self.counts[key] = self.counts.get(key, 0) + 1\n    \n    def least_frequent(self):\n        if not self.counts:\n            return None\n        return min(self.counts.items(), key=lambda x: x[1])[0]",
+      "complexity": "Time: O(1) for access, O(n) for least_frequent (scanning all keys).\nSpace: O(n) for storing counts.",
+      "followups": [
+        "How would you make least_frequent() O(1) using a more complex data structure?",
+        "What is the difference between LFU and LRU caching?",
+        "How would you implement a full LFU cache with eviction?"
+      ]
+    },
+    {
+      "id": "cc_m25",
+      "difficulty": "medium",
+      "topic": "strings",
+      "title": "Validate a Simple Email Format",
+      "statement": "Write a function that checks if a string is a valid simple email format (contains exactly one @ and at least one . after it).",
+      "input": "email = 'user@example.com'",
+      "output": "True",
+      "solution": "def is_valid_email(email):\n    if email.count('@') != 1:\n        return False\n    local, domain = email.split('@')\n    if not local or not domain:\n        return False\n    if '.' not in domain:\n        return False\n    if domain.startswith('.') or domain.endswith('.'):\n        return False\n    return True\n\nprint(is_valid_email('user@example.com'))  # True",
+      "alt_solution": "import re\n\ndef is_valid_email_regex(email):\n    pattern = r'^[\\w.+-]+@[\\w-]+\\.[\\w.-]+$'\n    return bool(re.match(pattern, email))\n\n# Regex is more robust but harder to read; real validation needs RFC 5322 rules",
+      "complexity": "Time: O(n) where n is the length of the email string.\nSpace: O(1) excluding the split result.",
+      "followups": [
+        "Why is simple string validation often not enough for real email validation?",
+        "What edge cases does the regex catch that manual checking might miss?",
+        "How would you check for valid top-level domains?"
+      ]
+    },
+    {
+      "id": "cc_m26",
+      "difficulty": "medium",
+      "topic": "lists",
+      "title": "Find Minimum Window Containing All Characters",
+      "statement": "Given a string s and a string of target characters, find the smallest substring in s containing all target characters.",
+      "input": "s = 'ADOBECODEBANC'\ntarget = 'ABC'",
+      "output": "'BANC'",
+      "solution": "from collections import Counter\n\ndef min_window(s, target):\n    if not target or not s:\n        return ''\n    need = Counter(target)\n    missing = len(target)\n    left = start = end = 0\n    for right, char in enumerate(s, 1):\n        if need[char] > 0:\n            missing -= 1\n        need[char] -= 1\n        if missing == 0:\n            while left < right and need[s[left]] < 0:\n                need[s[left]] += 1\n                left += 1\n            if end == 0 or right - left < end - start:\n                start, end = left, right\n            need[s[left]] += 1\n            missing += 1\n            left += 1\n    return s[start:end]\n\nprint(min_window('ADOBECODEBANC', 'ABC'))  # 'BANC'",
+      "alt_solution": "# Brute force approach (much slower, for comparison):\ndef min_window_brute(s, target):\n    target_set = set(target)\n    best = ''\n    for i in range(len(s)):\n        for j in range(i, len(s)):\n            window = s[i:j+1]\n            if target_set <= set(window) and all(window.count(c) >= target.count(c) for c in target_set):\n                if not best or len(window) < len(best):\n                    best = window\n    return best",
+      "complexity": "Time: O(n) for the sliding window approach, O(n²) or worse for brute force.\nSpace: O(k) where k is the size of the target character set.",
+      "followups": [
+        "What is the sliding window technique and when is it applicable?",
+        "Why do we track 'missing' instead of comparing dictionaries directly?",
+        "How would this change if duplicate characters in target should be counted separately?"
+      ]
+    },
+    {
+      "id": "cc_m27",
+      "difficulty": "medium",
+      "topic": "oop",
+      "title": "Implement a Simple Queue Using Two Stacks",
+      "statement": "Implement a FIFO queue using only two stacks (lists with append/pop).",
+      "input": "q = QueueWithStacks()\nq.enqueue(1); q.enqueue(2); q.enqueue(3)\nq.dequeue()",
+      "output": "1",
+      "solution": "class QueueWithStacks:\n    def __init__(self):\n        self.in_stack = []\n        self.out_stack = []\n    \n    def enqueue(self, x):\n        self.in_stack.append(x)\n    \n    def dequeue(self):\n        if not self.out_stack:\n            while self.in_stack:\n                self.out_stack.append(self.in_stack.pop())\n        return self.out_stack.pop()\n\nq = QueueWithStacks()\nq.enqueue(1); q.enqueue(2); q.enqueue(3)\nprint(q.dequeue())  # 1",
+      "alt_solution": "# Using collections.deque directly (the practical real-world choice):\nfrom collections import deque\n\nclass SimpleQueue:\n    def __init__(self):\n        self.items = deque()\n    \n    def enqueue(self, x):\n        self.items.append(x)\n    \n    def dequeue(self):\n        return self.items.popleft()\n\n# deque gives O(1) operations on both ends, no need for two stacks",
+      "complexity": "Time: O(1) amortized for enqueue and dequeue with the two-stack approach.\nSpace: O(n) for storing all elements.",
+      "followups": [
+        "Why is the time complexity O(1) AMORTIZED, not strictly O(1)?",
+        "What is collections.deque and why is it better for real queues?",
+        "How would you implement a stack using two queues instead?"
+      ]
+    },
+    {
+      "id": "cc_h09",
+      "difficulty": "hard",
+      "topic": "lists",
+      "title": "Find the Median of Two Sorted Arrays",
+      "statement": "Given two sorted arrays, find the median of the combined array in O(log(min(n,m))) time.",
+      "input": "a = [1, 3]\nb = [2]",
+      "output": "2.0",
+      "solution": "def find_median(a, b):\n    if len(a) > len(b):\n        a, b = b, a\n    n, m = len(a), len(b)\n    lo, hi = 0, n\n    half = (n + m + 1) // 2\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = half - i\n        a_left = a[i-1] if i > 0 else float('-inf')\n        a_right = a[i] if i < n else float('inf')\n        b_left = b[j-1] if j > 0 else float('-inf')\n        b_right = b[j] if j < m else float('inf')\n        if a_left <= b_right and b_left <= a_right:\n            if (n + m) % 2 == 0:\n                return (max(a_left, b_left) + min(a_right, b_right)) / 2\n            return max(a_left, b_left)\n        elif a_left > b_right:\n            hi = i - 1\n        else:\n            lo = i + 1\n\nprint(find_median([1,3], [2]))  # 2.0",
+      "alt_solution": "def find_median_simple(a, b):\n    merged = sorted(a + b)\n    n = len(merged)\n    mid = n // 2\n    if n % 2 == 0:\n        return (merged[mid-1] + merged[mid]) / 2\n    return merged[mid]\n\n# Simple but O((n+m) log(n+m)): much slower than the binary search approach",
+      "complexity": "Time: O(log(min(n,m))) for the binary search approach, O((n+m)log(n+m)) for the simple merge.\nSpace: O(1) for binary search, O(n+m) for the merged array.",
+      "followups": [
+        "Why does the binary search approach use the SMALLER array?",
+        "What does the partition condition a_left <= b_right and b_left <= a_right mean?",
+        "How would you find the Kth smallest element across two sorted arrays?"
+      ]
+    },
+    {
+      "id": "cc_h10",
+      "difficulty": "hard",
+      "topic": "strings",
+      "title": "Implement Wildcard Pattern Matching",
+      "statement": "Implement pattern matching with support for \"?\" (matches any single character) and \"*\" (matches any sequence, including empty).",
+      "input": "s = 'aa'\npattern = 'a*'",
+      "output": "True",
+      "solution": "def is_match(s, p):\n    m, n = len(s), len(p)\n    dp = [[False] * (n + 1) for _ in range(m + 1)]\n    dp[0][0] = True\n    for j in range(1, n + 1):\n        if p[j-1] == '*':\n            dp[0][j] = dp[0][j-1]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if p[j-1] == '*':\n                dp[i][j] = dp[i-1][j] or dp[i][j-1]\n            elif p[j-1] == '?' or s[i-1] == p[j-1]:\n                dp[i][j] = dp[i-1][j-1]\n    return dp[m][n]\n\nprint(is_match('aa', 'a*'))  # True",
+      "alt_solution": "import fnmatch\n\ndef is_match_builtin(s, p):\n    return fnmatch.fnmatch(s, p)\n\n# Python's fnmatch module already implements wildcard matching,\n# but understanding the DP solution is what interviewers test for",
+      "complexity": "Time: O(m*n) for the DP solution where m, n are the lengths of s and p.\nSpace: O(m*n) for the DP table (can be optimized to O(n)).",
+      "followups": [
+        "What does dp[i][j] represent in this solution?",
+        "How would you optimize space to O(n) using rolling arrays?",
+        "How is this different from regular expression matching?"
+      ]
+    },
+    {
+      "id": "cc_h11",
+      "difficulty": "hard",
+      "topic": "dictionaries",
+      "title": "Design a Time-Based Key-Value Store",
+      "statement": "Design a data structure that stores key-value pairs with timestamps and can retrieve the value for a key at or before a given timestamp.",
+      "input": "store = TimeMap()\nstore.set('foo', 'bar', 1)\nstore.set('foo', 'bar2', 4)\nstore.get('foo', 2)",
+      "output": "'bar'",
+      "solution": "from collections import defaultdict\nimport bisect\n\nclass TimeMap:\n    def __init__(self):\n        self.store = defaultdict(list)\n    \n    def set(self, key, value, timestamp):\n        self.store[key].append((timestamp, value))\n    \n    def get(self, key, timestamp):\n        values = self.store[key]\n        if not values:\n            return ''\n        idx = bisect.bisect_right(values, (timestamp, chr(0x10ffff)))\n        return values[idx-1][1] if idx > 0 else ''\n\nstore = TimeMap()\nstore.set('foo', 'bar', 1)\nstore.set('foo', 'bar2', 4)\nprint(store.get('foo', 2))  # 'bar'",
+      "alt_solution": "class TimeMapLinear:\n    def __init__(self):\n        self.store = {}\n    \n    def set(self, key, value, timestamp):\n        self.store.setdefault(key, []).append((timestamp, value))\n    \n    def get(self, key, timestamp):\n        if key not in self.store:\n            return ''\n        result = ''\n        for ts, val in self.store[key]:\n            if ts <= timestamp:\n                result = val\n            else:\n                break\n        return result\n\n# O(n) linear scan per get(): simpler but slower for large histories",
+      "complexity": "Time: O(log n) for get() using binary search, O(1) for set().\nSpace: O(n) total for all stored values.",
+      "followups": [
+        "Why does bisect.bisect_right work here for finding the right timestamp?",
+        "What is the time complexity tradeoff between the binary search and linear scan approaches?",
+        "How would you support deleting old entries to save memory?"
+      ]
+    },
+    {
+      "id": "cc_h12",
+      "difficulty": "hard",
+      "topic": "lists",
+      "title": "Find the Longest Increasing Subsequence",
+      "statement": "Given a list of integers, find the length of the longest strictly increasing subsequence.",
+      "input": "nums = [10, 9, 2, 5, 3, 7, 101, 18]",
+      "output": "4",
+      "solution": "def length_of_lis(nums):\n    if not nums:\n        return 0\n    dp = [1] * len(nums)\n    for i in range(len(nums)):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                dp[i] = max(dp[i], dp[j] + 1)\n    return max(dp)\n\nprint(length_of_lis([10,9,2,5,3,7,101,18]))  # 4",
+      "alt_solution": "import bisect\n\ndef length_of_lis_binary_search(nums):\n    tails = []\n    for num in nums:\n        idx = bisect.bisect_left(tails, num)\n        if idx == len(tails):\n            tails.append(num)\n        else:\n            tails[idx] = num\n    return len(tails)\n\n# O(n log n) using patience sorting / binary search: much faster than O(n²) DP",
+      "complexity": "Time: O(n²) for the DP solution, O(n log n) for the binary search approach.\nSpace: O(n) for both.",
+      "followups": [
+        "What does dp[i] represent in the O(n²) solution?",
+        "How does the binary search approach work conceptually (patience sorting)?",
+        "How would you also reconstruct the actual subsequence, not just its length?"
+      ]
+    },
+    {
+      "id": "cc_h13",
+      "difficulty": "hard",
+      "topic": "strings",
+      "title": "Find All Substrings That Are Palindromes",
+      "statement": "Given a string, find all unique substrings that are palindromes of length 2 or more.",
+      "input": "s = 'aabaa'",
+      "output": "{'aa', 'aba', 'aabaa', 'baab' if present, ...} (palindromic substrings)",
+      "solution": "def find_palindromic_substrings(s):\n    n = len(s)\n    result = set()\n    \n    def expand(left, right):\n        while left >= 0 and right < n and s[left] == s[right]:\n            if right - left + 1 >= 2:\n                result.add(s[left:right+1])\n            left -= 1\n            right += 1\n    \n    for i in range(n):\n        expand(i, i)      # odd length\n        expand(i, i + 1)  # even length\n    return result\n\nprint(find_palindromic_substrings('aabaa'))",
+      "alt_solution": "def find_palindromic_substrings_brute(s):\n    n = len(s)\n    result = set()\n    for i in range(n):\n        for j in range(i+1, n):\n            sub = s[i:j+1]\n            if sub == sub[::-1]:\n                result.add(sub)\n    return result\n\n# Brute force: O(n^3) due to substring creation and reversal at each step",
+      "complexity": "Time: O(n²) for the expand-around-center approach, O(n³) for brute force.\nSpace: O(n²) worst case for storing all substrings.",
+      "followups": [
+        "What is the 'expand around center' technique?",
+        "Why do we need to check both odd-length and even-length centers?",
+        "How would you count the total NUMBER of palindromic substrings instead of listing them?"
+      ]
+    },
+    {
+      "id": "cc_h14",
+      "difficulty": "hard",
+      "topic": "oop",
+      "title": "Implement an LRU Cache with O(1) Operations",
+      "statement": "Design a Least Recently Used (LRU) cache that supports get and put operations in O(1) time.",
+      "input": "cache = LRUCache(2)\ncache.put(1, 1); cache.put(2, 2)\ncache.get(1)\ncache.put(3, 3)  # evicts key 2",
+      "output": "get(1) returns 1; after put(3,3), get(2) returns -1 (evicted)",
+      "solution": "from collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity):\n        self.cache = OrderedDict()\n        self.capacity = capacity\n    \n    def get(self, key):\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n    \n    def put(self, key, value):\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n\ncache = LRUCache(2)\ncache.put(1,1); cache.put(2,2)\nprint(cache.get(1))  # 1\ncache.put(3,3)\nprint(cache.get(2))  # -1 (evicted)",
+      "alt_solution": "# Manual doubly linked list + dict implementation (what OrderedDict does internally):\nclass Node:\n    def __init__(self, key=0, val=0):\n        self.key, self.val = key, val\n        self.prev = self.next = None\n\nclass LRUCacheManual:\n    def __init__(self, capacity):\n        self.cap = capacity\n        self.map = {}\n        self.head, self.tail = Node(), Node()\n        self.head.next, self.tail.prev = self.tail, self.head\n    \n    def _remove(self, node):\n        node.prev.next, node.next.prev = node.next, node.prev\n    \n    def _add(self, node):\n        node.prev, node.next = self.head, self.head.next\n        self.head.next.prev = node\n        self.head.next = node\n    \n    def get(self, key):\n        if key not in self.map:\n            return -1\n        node = self.map[key]\n        self._remove(node)\n        self._add(node)\n        return node.val\n    \n    def put(self, key, value):\n        if key in self.map:\n            self._remove(self.map[key])\n        node = Node(key, value)\n        self.map[key] = node\n        self._add(node)\n        if len(self.map) > self.cap:\n            lru = self.tail.prev\n            self._remove(lru)\n            del self.map[lru.key]",
+      "complexity": "Time: O(1) for both get() and put() in both implementations.\nSpace: O(capacity) for storing the cached items.",
+      "followups": [
+        "Why does OrderedDict give us O(1) move_to_end?",
+        "How does the manual doubly linked list implementation achieve O(1)?",
+        "How would you make this cache thread-safe?"
+      ]
+    },
+    {
+      "id": "cc_h15",
+      "difficulty": "hard",
+      "topic": "lists",
+      "title": "Find K Closest Points to the Origin",
+      "statement": "Given a list of points on a 2D plane, find the k points closest to the origin (0, 0).",
+      "input": "points = [[1,3],[-2,2],[5,8],[0,1]]\nk = 2",
+      "output": "[[-2, 2], [0, 1]]",
+      "solution": "import heapq\n\ndef k_closest(points, k):\n    return heapq.nsmallest(k, points, key=lambda p: p[0]**2 + p[1]**2)\n\nprint(k_closest([[1,3],[-2,2],[5,8],[0,1]], 2))",
+      "alt_solution": "def k_closest_sorted(points, k):\n    return sorted(points, key=lambda p: p[0]**2 + p[1]**2)[:k]\n\n# Simpler but O(n log n) versus O(n log k) for the heap approach.\n# Better when k is much smaller than the total number of points.",
+      "complexity": "Time: O(n log k) for heapq.nsmallest, O(n log n) for sorting.\nSpace: O(k) for the heap, O(n) for the sorted list.",
+      "followups": [
+        "Why is heapq.nsmallest more efficient than sorting when k << n?",
+        "Why do we compare squared distance instead of actual distance?",
+        "How would you solve this with a quickselect algorithm in O(n) average time?"
+      ]
+    },
+    {
+      "id": "cc_h16",
+      "difficulty": "hard",
+      "topic": "strings",
+      "title": "Implement a Basic Regular Expression Matcher (. and *)",
+      "statement": "Implement regular expression matching with support for \".\" (matches any single character) and \"*\" (matches zero or more of the preceding element).",
+      "input": "s = 'aa'\npattern = 'a*'",
+      "output": "True",
+      "solution": "def is_match(s, p):\n    memo = {}\n    \n    def dp(i, j):\n        if (i, j) in memo:\n            return memo[(i, j)]\n        if j == len(p):\n            result = i == len(s)\n        else:\n            first_match = i < len(s) and p[j] in (s[i], '.')\n            if j + 1 < len(p) and p[j+1] == '*':\n                result = dp(i, j+2) or (first_match and dp(i+1, j))\n            else:\n                result = first_match and dp(i+1, j+1)\n        memo[(i, j)] = result\n        return result\n    \n    return dp(0, 0)\n\nprint(is_match('aa', 'a*'))  # True",
+      "alt_solution": "import re\n\ndef is_match_builtin(s, p):\n    return bool(re.fullmatch(p, s))\n\n# Python's re module already implements this and much more,\n# but interviewers want to see you implement the core algorithm yourself",
+      "complexity": "Time: O(s_len * p_len) with memoization.\nSpace: O(s_len * p_len) for the memo dictionary.",
+      "followups": [
+        "Why do we need memoization here? What happens without it?",
+        "How is the * pattern handled differently from the . pattern?",
+        "What is the difference between this and wildcard matching with ? and *?"
+      ]
+    },
+    {
+      "id": "cc_h17",
+      "difficulty": "hard",
+      "topic": "lists",
+      "title": "Merge K Sorted Lists",
+      "statement": "Given k sorted lists of integers, merge them into a single sorted list efficiently.",
+      "input": "lists = [[1,4,5],[1,3,4],[2,6]]",
+      "output": "[1, 1, 2, 3, 4, 4, 5, 6]",
+      "solution": "import heapq\n\ndef merge_k_lists(lists):\n    heap = []\n    for i, lst in enumerate(lists):\n        if lst:\n            heapq.heappush(heap, (lst[0], i, 0))\n    result = []\n    while heap:\n        val, list_idx, elem_idx = heapq.heappop(heap)\n        result.append(val)\n        if elem_idx + 1 < len(lists[list_idx]):\n            next_val = lists[list_idx][elem_idx + 1]\n            heapq.heappush(heap, (next_val, list_idx, elem_idx + 1))\n    return result\n\nprint(merge_k_lists([[1,4,5],[1,3,4],[2,6]]))",
+      "alt_solution": "def merge_k_lists_simple(lists):\n    merged = []\n    for lst in lists:\n        merged.extend(lst)\n    return sorted(merged)\n\n# Simple but O(N log N) where N is total elements,\n# versus O(N log k) for the heap approach (k = number of lists)",
+      "complexity": "Time: O(N log k) for the heap approach where N is total elements and k is number of lists. O(N log N) for the simple sort.\nSpace: O(k) for the heap, O(N) for the result.",
+      "followups": [
+        "Why is the heap approach better than just concatenating and sorting when k is small?",
+        "Why do we include the list index and element index in the heap tuples?",
+        "How would you merge them using a divide-and-conquer approach instead?"
+      ]
+    },
+    {
+      "id": "cc_h18",
+      "difficulty": "hard",
+      "topic": "dictionaries",
+      "title": "Design a Data Structure for Insert, Delete, and GetRandom in O(1)",
+      "statement": "Design a data structure that supports insert, remove, and getRandom (returns a random existing element) all in O(1) average time.",
+      "input": "ds = RandomizedSet()\nds.insert(1); ds.insert(2)\nds.remove(1)\nds.getRandom()",
+      "output": "2 (the only remaining element)",
+      "solution": "import random\n\nclass RandomizedSet:\n    def __init__(self):\n        self.data = []\n        self.index_map = {}\n    \n    def insert(self, val):\n        if val in self.index_map:\n            return False\n        self.index_map[val] = len(self.data)\n        self.data.append(val)\n        return True\n    \n    def remove(self, val):\n        if val not in self.index_map:\n            return False\n        idx = self.index_map[val]\n        last = self.data[-1]\n        self.data[idx] = last\n        self.index_map[last] = idx\n        self.data.pop()\n        del self.index_map[val]\n        return True\n    \n    def getRandom(self):\n        return random.choice(self.data)\n\nds = RandomizedSet()\nds.insert(1); ds.insert(2)\nds.remove(1)\nprint(ds.getRandom())  # 2",
+      "alt_solution": "# A plain set gives O(1) insert/remove but NOT O(1) getRandom\n# (random.choice on a set requires converting to a list/tuple first, which is O(n))\nclass RandomizedSetNaive:\n    def __init__(self):\n        self.data = set()\n    \n    def insert(self, val):\n        if val in self.data:\n            return False\n        self.data.add(val)\n        return True\n    \n    def remove(self, val):\n        if val not in self.data:\n            return False\n        self.data.remove(val)\n        return True\n    \n    def getRandom(self):\n        return random.choice(list(self.data))  # O(n): defeats the purpose",
+      "complexity": "Time: O(1) average for insert, remove, and getRandom in the optimized solution.\nSpace: O(n) for storing all elements.",
+      "followups": [
+        "Why does a plain set fail to give O(1) getRandom?",
+        "What is the 'swap with last element' trick used in remove()?",
+        "How would you support duplicate values in this structure?"
+      ]
+    },
+    {
+      "id": "cc_h19",
+      "difficulty": "hard",
+      "topic": "recursion",
+      "title": "Solve N-Queens Problem",
+      "statement": "Given an integer n, find the number of distinct solutions to placing n queens on an n×n chessboard so that no two queens attack each other.",
+      "input": "n = 4",
+      "output": "2",
+      "solution": "def total_n_queens(n):\n    def backtrack(row, cols, diag1, diag2):\n        if row == n:\n            return 1\n        count = 0\n        for col in range(n):\n            d1, d2 = row - col, row + col\n            if col in cols or d1 in diag1 or d2 in diag2:\n                continue\n            cols.add(col); diag1.add(d1); diag2.add(d2)\n            count += backtrack(row + 1, cols, diag1, diag2)\n            cols.remove(col); diag1.remove(d1); diag2.remove(d2)\n        return count\n    return backtrack(0, set(), set(), set())\n\nprint(total_n_queens(4))  # 2",
+      "alt_solution": "def total_n_queens_bitmask(n):\n    def backtrack(row, cols, diag1, diag2):\n        if row == n:\n            return 1\n        count = 0\n        available = ((1 << n) - 1) & ~(cols | diag1 | diag2)\n        while available:\n            pos = available & (-available)\n            available -= pos\n            count += backtrack(row + 1, cols | pos, (diag1 | pos) << 1, (diag2 | pos) >> 1)\n        return count\n    return backtrack(0, 0, 0, 0)\n\n# Bitmask approach is much faster due to O(1) bitwise operations instead of set operations",
+      "complexity": "Time: O(n!) in the worst case for backtracking, but pruning makes it much faster in practice.\nSpace: O(n) for the recursion depth and tracking sets.",
+      "followups": [
+        "What do the diagonal sets (row-col and row+col) represent?",
+        "Why is backtracking (with undo) used here instead of just building new state?",
+        "How does the bitmask version achieve better performance?"
+      ]
+    },
+    {
+      "id": "cc_h20",
+      "difficulty": "hard",
+      "topic": "lists",
+      "title": "Find the Longest Consecutive Sequence",
+      "statement": "Given an unsorted array of integers, find the length of the longest sequence of consecutive integers, in O(n) time.",
+      "input": "nums = [100, 4, 200, 1, 3, 2]",
+      "output": "4",
+      "solution": "def longest_consecutive(nums):\n    num_set = set(nums)\n    longest = 0\n    for num in num_set:\n        if num - 1 not in num_set:  # only start counting from sequence beginnings\n            length = 1\n            while num + length in num_set:\n                length += 1\n            longest = max(longest, length)\n    return longest\n\nprint(longest_consecutive([100,4,200,1,3,2]))  # 4 (sequence: 1,2,3,4)",
+      "alt_solution": "def longest_consecutive_sorted(nums):\n    if not nums:\n        return 0\n    nums = sorted(set(nums))\n    longest = current = 1\n    for i in range(1, len(nums)):\n        if nums[i] == nums[i-1] + 1:\n            current += 1\n            longest = max(longest, current)\n        else:\n            current = 1\n    return longest\n\n# O(n log n) due to sorting, simpler to understand but slower than the set approach",
+      "complexity": "Time: O(n) for the set-based approach (each number is visited a constant number of times total).\nSpace: O(n) for the set.",
+      "followups": [
+        "Why does checking 'num - 1 not in num_set' guarantee O(n) total time, not O(n²)?",
+        "Why is this faster than simply sorting the array first?",
+        "How would you also return the actual sequence, not just its length?"
+      ]
+    }
+  ]
+}
